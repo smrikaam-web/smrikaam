@@ -1,14 +1,17 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import expressApp from './server/index.js';
 
 function apiServerPlugin() {
   return {
     name: 'api-server-middleware',
-    configureServer(server) {
+
+    async configureServer(server) {
+      const { default: expressApp } = await import('./server/index.js');
       server.middlewares.use(expressApp);
     },
-    configurePreviewServer(server) {
+
+    async configurePreviewServer(server) {
+      const { default: expressApp } = await import('./server/index.js');
       server.middlewares.use(expressApp);
     }
   };
