@@ -84,7 +84,9 @@ class Database {
       fs.writeFileSync(tmpFile, JSON.stringify(this.data, null, 2), 'utf8');
       fs.renameSync(tmpFile, DB_FILE);
     } catch (err) {
-      console.error('Error saving local snapshot:', err.message);
+      if (err.code !== 'EROFS') {
+        console.warn('Local snapshot save skipped:', err.message);
+      }
     }
   }
 

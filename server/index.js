@@ -34,8 +34,12 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Static public & uploads serving
 const PUBLIC_DIR = path.resolve(__dirname, '../public');
 const UPLOADS_DIR = path.resolve(__dirname, '../public/uploads');
+const TMP_UPLOADS_DIR = path.resolve('/tmp', 'uploads');
 app.use(express.static(PUBLIC_DIR));
 app.use('/uploads', express.static(UPLOADS_DIR));
+if (fs.existsSync(TMP_UPLOADS_DIR)) {
+  app.use('/uploads', express.static(TMP_UPLOADS_DIR));
+}
 
 // API Routes
 app.use('/api', apiRouter);

@@ -10,20 +10,24 @@ import { authenticateUser, requireAdminAuth, verifyToken } from '../services/aut
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Uploads directory: in public/uploads for direct browser serving, with fallback to /tmp in serverless
-let UPLOADS_DIR = path.resolve(__dirname, '../../public/uploads');
+// Uploads directory: on serverless (AWS Lambda / Vercel), /var/task is read-only, so use /tmp/uploads
+const isServerless = Boolean(process.env.VERCEL) ||
+  Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME) ||
+  Boolean(process.env.LAMBDA_TASK_ROOT) ||
+  process.env.NODE_ENV === 'production';
+
+let UPLOADS_DIR = isServerless ? path.resolve('/tmp', 'uploads') : path.resolve(__dirname, '../../public/uploads');
 try {
   if (!fs.existsSync(UPLOADS_DIR)) {
     fs.mkdirSync(UPLOADS_DIR, { recursive: true });
   }
 } catch (err) {
-  // If filesystem is read-only (e.g. AWS Lambda / Vercel serverless), fallback to /tmp/uploads
   UPLOADS_DIR = path.resolve('/tmp', 'uploads');
   if (!fs.existsSync(UPLOADS_DIR)) {
     try {
       fs.mkdirSync(UPLOADS_DIR, { recursive: true });
     } catch (e) {
-      console.warn('Could not create uploads directory in /tmp:', e.message);
+      // Ignored in serverless
     }
   }
 }
@@ -291,10 +295,20 @@ createResourceRoutes('locations', 'locations');
 // 3. MEDIA UPLOAD & LIBRARY
 // ============================================================
 
-router.get('/media', requireAdminAuth, (req, res) => {
+router.get('/media', requireAdminAuth, async (req, res) => {
   try {
     const { type, search } = req.query;
-    let items = db.getCollection('media');
+    let items = [];
+    if (db.usePostgres()) {
+      try {
+        items = await db.getAll('media', { status: 'all' });
+      } catch (e) {
+        items = [];
+      }
+    }
+    if (!items || items.length === 0) {
+      items = db.getCollection('media');
+    }
     if (type && type !== 'all') {
       items = items.filter((m) => m.type === type);
     }
@@ -308,7 +322,7 @@ router.get('/media', requireAdminAuth, (req, res) => {
   }
 });
 
-router.post('/media/upload', requireAdminAuth, upload.single('file'), (req, res) => {
+router.post('/media/upload', requireAdminAuth, upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded.' });
@@ -337,11 +351,19 @@ router.post('/media/upload', requireAdminAuth, upload.single('file'), (req, res)
       created_at: new Date().toISOString()
     };
 
+    if (db.usePostgres()) {
+      try {
+        await db.create('media', mediaItem, req.user);
+      } catch (err) {
+        console.warn('Postgres media insert warning:', err.message);
+      }
+    }
+
     const mediaCollection = db.getCollection('media');
     mediaCollection.unshift(mediaItem);
     db.save();
 
-    db.logActivity(`Uploaded ${type}: "${req.file.originalname}"`, `Saved as ${publicUrl}`, 'media_upload');
+    await db.logActivity(`Uploaded ${type}: "${req.file.originalname}"`, `Saved as ${publicUrl}`, 'media_upload');
 
     res.status(201).json(mediaItem);
   } catch (err) {
@@ -349,29 +371,63 @@ router.post('/media/upload', requireAdminAuth, upload.single('file'), (req, res)
   }
 });
 
-router.delete('/media/:id', requireAdminAuth, (req, res) => {
+router.delete('/media/:id', requireAdminAuth, async (req, res) => {
   try {
-    const mediaCollection = db.getCollection('media');
-    const index = mediaCollection.findIndex((m) => m.id === req.params.id);
-    if (index === -1) {
-      return res.status(404).json({ error: 'Media file not found.' });
-    }
-
-    const item = mediaCollection[index];
-    const filePath = path.join(UPLOADS_DIR, item.filename);
-
-    if (fs.existsSync(filePath)) {
+    let item = null;
+    if (db.usePostgres()) {
       try {
-        fs.unlinkSync(filePath);
+        item = await db.getById('media', req.params.id);
       } catch (e) {
-        console.warn('Could not delete file from disk:', e);
+        item = null;
       }
     }
 
-    mediaCollection.splice(index, 1);
-    db.save();
+    const mediaCollection = db.getCollection('media');
+    const index = mediaCollection.findIndex((m) => m.id === req.params.id);
+    if (!item && index !== -1) {
+      item = mediaCollection[index];
+    }
 
-    db.logActivity(`Deleted media file: "${item.originalName}"`, `Removed by Admin`, 'media_delete');
+    if (!item && index === -1) {
+      return res.status(404).json({ error: 'Media file not found.' });
+    }
+
+    if (item && item.filename) {
+      const candidatePaths = [
+        path.join(UPLOADS_DIR, item.filename),
+        path.join('/tmp', 'uploads', item.filename),
+        path.resolve(__dirname, '../../public/uploads', item.filename)
+      ];
+
+      for (const p of candidatePaths) {
+        if (fs.existsSync(p)) {
+          try {
+            fs.unlinkSync(p);
+          } catch (e) {
+            // Suppress EROFS cleanly on serverless read-only filesystems (/var/task)
+            if (e.code !== 'EROFS') {
+              console.warn('Could not delete file from disk:', e.message);
+            }
+          }
+        }
+      }
+    }
+
+    if (db.usePostgres()) {
+      try {
+        await db.delete('media', req.params.id, req.user, true);
+      } catch (err) {
+        console.warn('Postgres media delete warning:', err.message);
+      }
+    }
+
+    if (index !== -1) {
+      mediaCollection.splice(index, 1);
+      db.save();
+    }
+
+    const fileLabel = item?.originalName || item?.filename || req.params.id;
+    await db.logActivity(`Deleted media file: "${fileLabel}"`, `Removed by Admin`, 'media_delete');
 
     res.json({ success: true });
   } catch (err) {
