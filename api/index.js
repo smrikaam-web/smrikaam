@@ -1,3 +1,11 @@
+// Filter out non-actionable Node 22 internal library url.parse deprecation warnings
+if (typeof process !== 'undefined' && process.on) {
+  process.on('warning', (warning) => {
+    if (warning && warning.code === 'DEP0169') return;
+    console.warn(warning);
+  });
+}
+
 import app from '../server/index.js';
 import { postgres } from '../server/services/postgres.js';
 
