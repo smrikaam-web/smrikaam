@@ -6,6 +6,7 @@ if (typeof process !== 'undefined' && process.on) {
   });
 }
 
+import 'dotenv/config';
 import app from '../server/index.js';
 import { postgres } from '../server/services/postgres.js';
 

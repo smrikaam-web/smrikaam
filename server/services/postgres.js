@@ -1,10 +1,10 @@
+import 'dotenv/config';
 import pg from 'pg';
-import dotenv from 'dotenv';
 import { initialSeedData } from '../data/seedData.js';
 
-dotenv.config();
-
 const { Pool } = pg;
+
+const CANONICAL_SUPABASE_URL = 'postgresql://postgres:Smrikaam!123%40321!@db.xkvdyeruawdvkownbnam.supabase.co:5432/postgres';
 
 class PostgresService {
   constructor() {
@@ -21,7 +21,8 @@ class PostgresService {
       process.env.POSTGRES_URL ||
       process.env.POSTGRES_PRISMA_URL ||
       process.env.POSTGRES_URL_NON_POOLING ||
-      process.env.SUPABASE_DATABASE_URL;
+      process.env.SUPABASE_DATABASE_URL ||
+      CANONICAL_SUPABASE_URL;
 
     if (connectionString) {
       console.log('DATABASE_URL: configured');
