@@ -327,9 +327,26 @@ class PostgresService {
     }
   }
 
+  ensurePool() {
+    if (!this.pool) {
+      this.init();
+    }
+    return this.pool;
+  }
+
   async query(text, params) {
-    if (!this.pool) throw new Error('PostgreSQL Pool not initialized');
-    return this.pool.query(text, params);
+    const pool = this.ensurePool();
+    if (!pool) throw new Error('PostgreSQL Pool not initialized');
+    try {
+      const res = await pool.query(text, params);
+      this.isConnected = true;
+      return res;
+    } catch (err) {
+      if (err.code === 'ECONNREFUSED' || err.code === '57P01') {
+        this.isConnected = false;
+      }
+      throw err;
+    }
   }
 
   getStatus() {

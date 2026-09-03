@@ -1441,6 +1441,14 @@
   ],
   "activityLogs": [
     {
+      "id": "log_1788433373369_ixct",
+      "date": "3 SEP",
+      "title": "New Book a Call Request: Test Company Ltd",
+      "description": "Live Test Client (client.test@company.com) requested session for Artificial Intelligence & Machine Learning",
+      "type": "engagement",
+      "timestamp": "2026-09-03T11:02:53.369Z"
+    },
+    {
       "id": "log_1788432241434_4z6e",
       "date": "3 SEP",
       "title": "Admin Login Successful",

@@ -28,20 +28,39 @@ export default function AdminBookCallPage() {
   const [savingDetail, setSavingDetail] = useState(false);
   const [modalFeedback, setModalFeedback] = useState({ type: '', msg: '' });
 
-  const fetchRequests = async () => {
-    setLoading(true);
+  const [lastRefreshed, setLastRefreshed] = useState(null);
+
+  const fetchRequests = async (isBackground = false) => {
+    if (!isBackground) setLoading(true);
     try {
       const res = await api.get('/book-a-call');
       setRequests(res.data || []);
+      setLastRefreshed(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     } catch (err) {
       console.error('Failed to fetch book a call requests', err);
     } finally {
-      setLoading(false);
+      if (!isBackground) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchRequests();
+    fetchRequests(false);
+
+    // 1. Auto-poll every 15 seconds to pick up new submissions in real-time
+    const interval = setInterval(() => {
+      fetchRequests(true);
+    }, 15000);
+
+    // 2. Auto-sync immediately whenever the admin switches back to this tab
+    const handleFocus = () => {
+      fetchRequests(true);
+    };
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const openDetailModal = (req) => {
@@ -227,12 +246,21 @@ export default function AdminBookCallPage() {
           </h1>
         </div>
 
-        <button
-          onClick={fetchRequests}
-          className="admin-btn text-xs py-2 px-4 self-start md:self-center flex items-center gap-2 cursor-pointer"
-        >
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} /> Refresh Submissions
-        </button>
+        <div className="flex items-center gap-3 self-start md:self-center">
+          {lastRefreshed && (
+            <span className="text-[11px] font-mono text-[#4fd1c5] hidden sm:inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Synced {lastRefreshed}
+            </span>
+          )}
+          <button
+            onClick={() => fetchRequests(false)}
+            disabled={loading}
+            className="admin-btn text-xs py-2 px-4 flex items-center gap-2 cursor-pointer"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} /> Refresh Submissions
+          </button>
+        </div>
       </div>
 
       {/* KPI Cards Header Bar */}

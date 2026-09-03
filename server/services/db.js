@@ -88,6 +88,10 @@ class Database {
     }
   }
 
+  usePostgres() {
+    return Boolean(postgres.pool || postgres.isConnected || process.env.DATABASE_URL || process.env.DIRECT_URL || process.env.POSTGRES_URL);
+  }
+
   getCollection(name) {
     if (fs.existsSync(DB_FILE)) {
       try {
@@ -117,7 +121,7 @@ class Database {
       return null;
     }
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const res = await postgres.query('SELECT * FROM admin_users WHERE LOWER(email) = LOWER($1) LIMIT 1', [targetEmail]);
         if (res.rows.length > 0) {
@@ -157,7 +161,7 @@ class Database {
 
   async getUserById(id) {
     if (!id) return null;
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const res = await postgres.query('SELECT * FROM admin_users WHERE id = $1 LIMIT 1', [id]);
         if (res.rows.length > 0) {
@@ -202,7 +206,7 @@ class Database {
     if (logs.length > 100) logs.pop();
     this.saveLocalSnapshot();
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         await postgres.query(
           'INSERT INTO activity_logs (id, date, title, description, type, timestamp) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO NOTHING',
@@ -217,7 +221,7 @@ class Database {
   }
 
   async getActivityLogs(limit = 30) {
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const res = await postgres.query('SELECT * FROM activity_logs ORDER BY timestamp DESC LIMIT $1', [limit]);
         return res.rows.map((r) => ({
@@ -237,7 +241,7 @@ class Database {
 
   async getAll(collectionName, { status, search, category, type, limit, sort = 'newest' } = {}) {
     const table = tableMap[collectionName] || collectionName;
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         let sql = `SELECT * FROM ${table} WHERE 1=1`;
         const params = [];
@@ -327,7 +331,7 @@ class Database {
 
   async getById(collectionName, id) {
     const table = tableMap[collectionName] || collectionName;
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const res = await postgres.query(`SELECT * FROM ${table} WHERE id = $1 LIMIT 1`, [id]);
         if (res.rows.length > 0) {
@@ -344,7 +348,7 @@ class Database {
 
   async getBySlug(collectionName, slug) {
     const table = tableMap[collectionName] || collectionName;
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const res = await postgres.query(`SELECT * FROM ${table} WHERE slug = $1 LIMIT 1`, [slug]);
         if (res.rows.length > 0) {
@@ -372,7 +376,7 @@ class Database {
       published_at: data.status === 'published' ? (data.published_at || now) : null
     };
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         await this.insertRow(table, newItem);
         const title = newItem.title || newItem.name || 'New Item';
@@ -413,7 +417,7 @@ class Database {
     };
 
     const table = tableMap[collectionName] || collectionName;
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         await this.updateRow(table, id, updatedItem);
         const title = updatedItem.title || updatedItem.name || 'Item';
@@ -446,7 +450,7 @@ class Database {
     const publishedAt = status === 'published' && !existing.published_at ? now : existing.published_at;
 
     const table = tableMap[collectionName] || collectionName;
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         await postgres.query(
           `UPDATE ${table} SET status = $1, updated_at = $2, published_at = $3 WHERE id = $4`,
@@ -475,7 +479,7 @@ class Database {
     const title = existing.title || existing.name || 'Item';
     const table = tableMap[collectionName] || collectionName;
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         if (permanent || existing.status === 'trash') {
           await postgres.query(`DELETE FROM ${table} WHERE id = $1`, [id]);
@@ -512,7 +516,7 @@ class Database {
     const table = tableMap[collectionName] || collectionName;
     const now = new Date().toISOString();
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         await postgres.query(`UPDATE ${table} SET status = 'draft', updated_at = $1 WHERE id = $2`, [now, id]);
         const title = existing.title || existing.name || 'Item';
@@ -535,7 +539,7 @@ class Database {
     const now = new Date().toISOString();
 
     let count = 0;
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         let statusVal = null;
         if (action === 'publish') statusVal = 'published';
@@ -575,7 +579,7 @@ class Database {
   }
 
   async getSettings() {
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const res = await postgres.query("SELECT value FROM settings WHERE key = 'site_settings' LIMIT 1");
         if (res.rows.length > 0) {
@@ -593,7 +597,7 @@ class Database {
     this.data.settings = updated;
     this.saveLocalSnapshot();
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         await postgres.query(
           `INSERT INTO settings (key, value, updated_at) VALUES ('site_settings', $1, NOW())
@@ -610,7 +614,7 @@ class Database {
   }
 
   async getStats() {
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const collections = ['posts', 'services', 'accelerators', 'industries', 'case_studies', 'reports', 'media'];
         const counts = {};
@@ -985,7 +989,7 @@ class Database {
     engagements.unshift(record);
     this.saveLocalSnapshot();
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         await postgres.query(
           `INSERT INTO engagements (id, full_name, company_name, email, phone, job_title, requirement_type, message, preferred_date, preferred_time, source, status, priority, assigned_to, admin_notes, is_read, created_at, updated_at)
@@ -1006,7 +1010,7 @@ class Database {
   }
 
   async getEngagements() {
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const res = await postgres.query('SELECT * FROM engagements ORDER BY created_at DESC');
         return res.rows;
@@ -1036,7 +1040,7 @@ class Database {
       this.saveLocalSnapshot();
     }
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         const fields = [];
         const values = [];
@@ -1080,7 +1084,7 @@ class Database {
       this.saveLocalSnapshot();
     }
 
-    if (postgres.isConnected) {
+    if (this.usePostgres()) {
       try {
         await postgres.query('DELETE FROM engagements WHERE id = $1', [id]);
       } catch (err) {
