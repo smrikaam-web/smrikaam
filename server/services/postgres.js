@@ -4,7 +4,7 @@ import { initialSeedData } from '../data/seedData.js';
 
 const { Pool } = pg;
 
-const CANONICAL_SUPABASE_URL = 'postgresql://postgres:Smrikaam!123%40321!@db.xkvdyeruawdvkownbnam.supabase.co:5432/postgres';
+const CANONICAL_SUPABASE_POOLER_URL = 'postgresql://postgres.xkvdyeruawdvkownbnam:Smrikaam!123%40321!@aws-0-ap-south-1.pooler.supabase.com:5432/postgres';
 
 class PostgresService {
   constructor() {
@@ -22,7 +22,7 @@ class PostgresService {
       process.env.POSTGRES_PRISMA_URL ||
       process.env.POSTGRES_URL_NON_POOLING ||
       process.env.SUPABASE_DATABASE_URL ||
-      CANONICAL_SUPABASE_URL;
+      CANONICAL_SUPABASE_POOLER_URL;
 
     if (connectionString) {
       console.log('DATABASE_URL: configured');
@@ -30,15 +30,13 @@ class PostgresService {
       console.warn('DATABASE_URL is not configured.');
     }
 
-    if (!connectionString && isProd) {
-      console.warn('DATABASE_URL is not configured in this environment. Falling back to local data store.');
-      this.connectionError = 'DATABASE_URL missing in production';
-      this.isConnected = false;
-      return;
-    }
+    let finalConnString = connectionString || CANONICAL_SUPABASE_POOLER_URL;
 
-    const finalConnString = connectionString ||
-      `postgresql://${process.env.PGUSER || 'postgres'}:${process.env.PGPASSWORD || 'postgres'}@${process.env.PGHOST || 'localhost'}:${process.env.PGPORT || 5432}/${process.env.PGDATABASE || 'smrikaam_db'}`;
+    // Direct Supabase hostname db.<ref>.supabase.co is IPv6-only.
+    // In IPv4-only serverless cloud environments like Vercel (AWS Lambda), route through the official IPv4 Supabase pooler.
+    if (finalConnString.includes('db.xkvdyeruawdvkownbnam.supabase.co')) {
+      finalConnString = CANONICAL_SUPABASE_POOLER_URL;
+    }
 
     // Determine SSL requirement for Supabase / production
     const isSupabase = finalConnString.includes('supabase') || finalConnString.includes('sslmode=require');
