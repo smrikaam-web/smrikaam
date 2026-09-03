@@ -4,7 +4,7 @@ import { initialSeedData } from '../data/seedData.js';
 
 const { Pool } = pg;
 
-const CANONICAL_SUPABASE_POOLER_URL = 'postgresql://postgres.xkvdyeruawdvkownbnam:Smrikaam!123%40321!@aws-0-ap-south-1.pooler.supabase.com:5432/postgres';
+const CANONICAL_SUPABASE_POOLER_URL = 'postgresql://postgres.xkvdyeruawdvkownbnam:Smrikaam!123%40321!@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
 
 class PostgresService {
   constructor() {
