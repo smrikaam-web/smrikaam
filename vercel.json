@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/api",
@@ -14,7 +15,15 @@
       "destination": "/api/index.js"
     },
     {
-      "source": "/((?!api|uploads|assets|favicon|logo|manifest|robots|sitemap).*)" ,
+      "source": "/services/integration-services/sap.html",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/services/integration-services/api.html",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/((?!api|uploads|assets|favicon|apple-touch-icon|android-chrome|logo|manifest|robots|sitemap).*)",
       "destination": "/index.html"
     }
   ]

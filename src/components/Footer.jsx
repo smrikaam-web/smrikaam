@@ -14,15 +14,15 @@ export default function Footer() {
 
   const defaultServices = [
     { name: 'Artificial Intelligence & Machine Learning', path: '/services/ai-ml' },
-    { name: 'Industrial IoT (IIoT)', path: '/services/iiot-edge' },
+    { name: 'Industrial IoT (IIoT)', path: '/services/industrial-iot-iiot' },
     { name: 'Data Engineering & Modernization', path: '/services/data-engineering' },
-    { name: 'Generative AI & Agentic AI', path: '/services/generative-ai' },
+    { name: 'Generative AI & Agentic AI', path: '/services/generative-agentic-ai' },
     { name: 'DevOps & Cloud Infrastructure', path: '/services/devops-cloud' },
     { name: 'Data Governance & Quality', path: '/services/data-governance' },
-    { name: 'Integration Services', path: '/services/integration' },
-    { name: 'ServiceNow Solutions', path: '/services/servicenow' },
-    { name: 'Advisory Services', path: '/services/advisory' },
-    { name: 'AI Workflow Automation', path: '/services/ai-workflow' },
+    { name: 'Integration Services', path: '/services/integration-services' },
+    { name: 'ServiceNow Solutions', path: '/services/servicenow-solutions' },
+    { name: 'Advisory Services', path: '/services/advisory-services' },
+    { name: 'AI Workflow Automation', path: '/services/ai-workflow-automation' },
     { name: 'Staffing Services', path: '/staffing' }
   ];
 

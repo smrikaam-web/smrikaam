@@ -4,12 +4,14 @@ import react from '@vitejs/plugin-react';
 function apiServerPlugin() {
   return {
     name: 'api-server-middleware',
+
     async configureServer(server) {
-      const expressApp = (await import('./server/index.js')).default;
+      const { default: expressApp } = await import('./server/index.js');
       server.middlewares.use(expressApp);
     },
+
     async configurePreviewServer(server) {
-      const expressApp = (await import('./server/index.js')).default;
+      const { default: expressApp } = await import('./server/index.js');
       server.middlewares.use(expressApp);
     }
   };

@@ -34,6 +34,7 @@ import About from './pages/About';
 import Locations from './pages/Locations';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
+import GonePage from './pages/GonePage';
 
 // Admin CMS Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -336,6 +337,10 @@ export default function App() {
             <Route path="/locations" element={<PublicLayout><Locations /></PublicLayout>} />
             <Route path="/careers" element={<PublicLayout><Careers /></PublicLayout>} />
             <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+
+            {/* REMOVED SERVICE PAGES (410 GONE) */}
+            <Route path="/services/integration-services/sap.html" element={<PublicLayout><GonePage /></PublicLayout>} />
+            <Route path="/services/integration-services/api.html" element={<PublicLayout><GonePage /></PublicLayout>} />
 
             {/* ADMIN CMS ROUTES */}
             <Route path="/admin/login" element={<AdminLogin />} />
