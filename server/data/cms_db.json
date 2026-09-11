@@ -1441,6 +1441,14 @@
   ],
   "activityLogs": [
     {
+      "id": "log_1789126480695_chks",
+      "date": "11 SEP",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-09-11T11:34:40.695Z"
+    },
+    {
       "id": "log_1788433373369_ixct",
       "date": "3 SEP",
       "title": "New Book a Call Request: Test Company Ltd",

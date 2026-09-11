@@ -8,6 +8,7 @@ import {
 import { useCMS } from '../../context/CMSContext';
 import BlueprintWrapper from '../../components/BlueprintWrapper';
 import RichEditor from '../../components/admin/RichEditor';
+import { cleanSlug } from '../../utils/slug';
 
 const PREDEFINED_CATEGORIES = [
   'Industrial IoT (IIoT)',
@@ -123,8 +124,8 @@ export default function AdminBlogManager() {
 
     setFormData({
       title: post.title || '',
-      slug: post.slug || '',
-      category: post.category || 'Industrial IoT (IIoT)',
+      slug: cleanSlug(post.slug) || '',
+      category: post.category || post.category_id || 'Industrial IoT (IIoT)',
       excerpt: post.excerpt || '',
       content: post.content || '',
       cover_image_url: post.cover_image_url || '',
@@ -148,8 +149,8 @@ export default function AdminBlogManager() {
   const handleTitleChange = (val) => {
     setFormData((prev) => {
       const next = { ...prev, title: val };
-      const autoSlug = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-      if (!prev.slug || prev.slug === prev.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')) {
+      const autoSlug = cleanSlug(val);
+      if (!prev.slug || prev.slug === cleanSlug(prev.title)) {
         next.slug = autoSlug;
       }
       return next;
@@ -206,7 +207,7 @@ export default function AdminBlogManager() {
         // Populate formData in draft mode (NEVER AUTO-PUBLISH)
         setFormData({
           title: d.title || '',
-          slug: d.slug || '',
+          slug: cleanSlug(d.slug || d.title || ''),
           category: d.category || '',
           excerpt: d.excerpt || '',
           content: d.content || '',
@@ -305,8 +306,8 @@ export default function AdminBlogManager() {
 
     try {
       const finalStatus = targetStatus || formData.status || 'draft';
-      const autoSlug = cleanTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-      const finalSlug = formData.slug ? formData.slug.trim() : autoSlug;
+      const autoSlug = cleanSlug(cleanTitle);
+      const finalSlug = cleanSlug(formData.slug) || autoSlug;
 
       const payload = {
         ...formData,
@@ -482,7 +483,7 @@ export default function AdminBlogManager() {
                                 {post.title}
                               </div>
                               <div className="text-[11px] text-[var(--admin-text-secondary)] truncate mt-0.5">
-                                {post.excerpt || post.slug}
+                                {post.excerpt || cleanSlug(post.slug)}
                               </div>
                             </div>
                           </div>
@@ -530,7 +531,7 @@ export default function AdminBlogManager() {
 
                             {post.slug && (
                               <a
-                                href={`/blog/${post.slug}`}
+                                href={`/blog/${cleanSlug(post.slug)}`}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="admin-btn text-xs p-1.5 text-[var(--admin-text-secondary)] hover:text-white"
@@ -902,10 +903,14 @@ export default function AdminBlogManager() {
                   <input
                     type="text"
                     value={formData.slug}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, slug: e.target.value }))}
-                    placeholder="auto-generated-slug"
+                    onChange={(e) => setFormData((prev) => ({ ...prev, slug: cleanSlug(e.target.value) }))}
+                    onBlur={(e) => setFormData((prev) => ({ ...prev, slug: cleanSlug(e.target.value) }))}
+                    placeholder="e.g. content-writing-services-in-coimbatore"
                     className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none"
                   />
+                  <span className="block text-[9px] font-mono text-[var(--admin-text-secondary)] mt-0.5">
+                    Live URL: /blog/{cleanSlug(formData.slug) || 'article-slug'}
+                  </span>
                 </div>
 
                 {/* Meta Title */}

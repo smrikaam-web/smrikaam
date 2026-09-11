@@ -14,7 +14,8 @@ import BookCallModal from './components/BookCallModal';
 import PageTransition from './components/anim/PageTransition';
 
 // CMS Context
-import { CMSProvider } from './context/CMSContext';
+import { CMSProvider, useCMS } from './context/CMSContext';
+import { cleanSlug } from './utils/slug';
 
 // Public Pages
 import Home from './pages/Home';
@@ -312,6 +313,45 @@ function PublicLayout({ children }) {
   );
 }
 
+// Wildcard redirect for malformed/nested blog URLs (e.g. /blog/https:/smrikaam.com/slug/)
+function BlogWildcardRedirect() {
+  const location = useLocation();
+  const rawPath = location.pathname.replace(/^\/blog\/?/i, '');
+  const slug = cleanSlug(rawPath);
+  if (slug) {
+    return <Navigate to={`/blog/${slug}`} replace />;
+  }
+  return <Navigate to="/blog" replace />;
+}
+
+// Fallback handler that safely checks if an unknown URL matches a known CMS slug before defaulting to home
+function SmartCatchAllHandler() {
+  const location = useLocation();
+  const { posts, services, accelerators, industries, caseStudies } = useCMS() || {};
+  const pathname = location.pathname;
+  const candidateSlug = cleanSlug(pathname);
+
+  if (candidateSlug) {
+    if (Array.isArray(posts) && posts.some((p) => cleanSlug(p.slug) === candidateSlug)) {
+      return <Navigate to={`/blog/${candidateSlug}`} replace />;
+    }
+    if (Array.isArray(services) && services.some((s) => cleanSlug(s.slug) === candidateSlug)) {
+      return <Navigate to={`/services/${candidateSlug}`} replace />;
+    }
+    if (Array.isArray(accelerators) && accelerators.some((a) => cleanSlug(a.slug) === candidateSlug)) {
+      return <Navigate to={`/products/${candidateSlug}`} replace />;
+    }
+    if (Array.isArray(industries) && industries.some((i) => cleanSlug(i.slug) === candidateSlug)) {
+      return <Navigate to={`/industries/${candidateSlug}`} replace />;
+    }
+    if (Array.isArray(caseStudies) && caseStudies.some((c) => cleanSlug(c.slug) === candidateSlug)) {
+      return <Navigate to={`/case-studies/${candidateSlug}`} replace />;
+    }
+  }
+
+  return <Navigate to="/" replace />;
+}
+
 export default function App() {
   return (
     <CMSProvider>
@@ -332,6 +372,7 @@ export default function App() {
             <Route path="/case-studies/:slug" element={<PublicLayout><CaseStudyDetail /></PublicLayout>} />
             <Route path="/blog" element={<PublicLayout><Blog /></PublicLayout>} />
             <Route path="/blog/:slug" element={<PublicLayout><BlogDetail /></PublicLayout>} />
+            <Route path="/blog/*" element={<BlogWildcardRedirect />} />
             <Route path="/staffing" element={<PublicLayout><Staffing /></PublicLayout>} />
             <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
             <Route path="/locations" element={<PublicLayout><Locations /></PublicLayout>} />
@@ -434,8 +475,8 @@ export default function App() {
               <Route path="inbox" element={<InboxPage />} />
             </Route>
 
-            {/* Fallback route */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* Fallback route with intelligent CMS slug resolution */}
+            <Route path="*" element={<SmartCatchAllHandler />} />
           </Routes>
         </PageTransition>
       </BrowserRouter>

@@ -7,9 +7,11 @@ import ReadingProgressBar from '../components/anim/ReadingProgressBar';
 import TextReveal from '../components/anim/TextReveal';
 import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
+import { cleanSlug } from '../utils/slug';
 
 export default function BlogDetail() {
-  const { slug } = useParams();
+  const { slug: rawSlug } = useParams();
+  const slug = cleanSlug(rawSlug);
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,7 +49,8 @@ export default function BlogDetail() {
   useEffect(() => {
     async function loadPost() {
       try {
-        const res = await api.get(`/posts/${slug}`);
+        const querySlug = cleanSlug(slug || rawSlug);
+        const res = await api.get(`/posts/${encodeURIComponent(querySlug)}`);
         if (res.data && (res.data.status === 'published' || !res.data.status)) {
           setPost(res.data);
           setError(null);
@@ -56,14 +59,21 @@ export default function BlogDetail() {
           setError('The requested article is currently unavailable, in draft, or archived.');
         }
       } catch (err) {
-        setPost(null);
-        setError('The requested article is currently unavailable, in draft, or archived.');
+        const querySlug = cleanSlug(slug || rawSlug);
+        const fallback = defaultPostsMap[querySlug] || defaultPostsMap[rawSlug];
+        if (fallback) {
+          setPost(fallback);
+          setError(null);
+        } else {
+          setPost(null);
+          setError('The requested article is currently unavailable, in draft, or archived.');
+        }
       } finally {
         setLoading(false);
       }
     }
     loadPost();
-  }, [slug]);
+  }, [slug, rawSlug]);
 
   if (loading) {
     return <div className="font-mono text-sm text-text-muted pt-32 pb-24 text-center">LOADING_ARTICLE...</div>;

@@ -7,6 +7,7 @@ import {
 import { useCMS } from '../../context/CMSContext';
 import BlueprintWrapper from '../BlueprintWrapper';
 import RichEditor from './RichEditor';
+import { cleanSlug } from '../../utils/slug';
 
 export default function AdminContentManager({ resource, title, fields, defaultStatusFilter = 'all' }) {
   const { fetchAdmin, createItem, updateItem, updateStatus, deleteItem, restoreItem, bulkAction, importDocx, uploadPdf } = useCMS();
@@ -89,12 +90,11 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
         payload.status = targetStatus;
       }
 
-      // Auto-generate slug if empty
+      // Auto-generate or sanitize slug
       if (!payload.slug && (payload.title || payload.name)) {
-        payload.slug = (payload.title || payload.name)
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-+|-+$/g, '');
+        payload.slug = cleanSlug(payload.title || payload.name);
+      } else if (payload.slug) {
+        payload.slug = cleanSlug(payload.slug);
       }
 
       if (editingItem) {
@@ -386,7 +386,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                           )}
                         </td>
                         <td className="font-mono text-xs text-[#9aa3b5]">
-                          /{resource === 'posts' ? 'blog' : resource}/{item.slug}
+                          /{resource === 'posts' ? 'blog' : resource}/{cleanSlug(item.slug)}
                         </td>
                         <td>{renderStatusBadge(item.status)}</td>
                         <td className="font-mono text-xs text-[#9aa3b5]">

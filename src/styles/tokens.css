@@ -94,7 +94,9 @@
 
   --admin-bg: #090d16;
   --admin-surface: #10172a;
-  --admin-border: rgba(255, 255, 255, 0.12);
+  --admin-surface-hover: #182030;
+  --admin-border: rgba(255, 255, 255, 0.14);
+  --admin-border-strong: rgba(255, 255, 255, 0.28);
   --admin-text-primary: #f8fafc;
   --admin-text-secondary: #94a3b8;
   --admin-accent: #ffffff;

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
 import JSZip from 'jszip';
+import { cleanSlug } from '../utils/slug.js';
 
 /**
  * Server-safe polyfills for PDF.js when running in headless / serverless environments (Vercel Lambda)
@@ -469,10 +470,7 @@ export async function parseDocument(file, uploadsDir) {
   docTitle = docTitle.replace(/[\r\n\t]+/g, ' ').replace(/\s{2,}/g, ' ').trim();
 
   // Automatic Slug
-  const slug = docTitle
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+  const slug = cleanSlug(docTitle);
 
   // Detect Category
   const fullTextContent = contentBlocks.join(' ').toLowerCase();

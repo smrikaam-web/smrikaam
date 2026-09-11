@@ -131,8 +131,8 @@ export default function AdminLogin() {
       <div className="relative z-10 w-full max-w-md">
         <BlueprintWrapper dark className="bg-[#141924]/95 backdrop-blur-xl p-8 md:p-10 border border-[rgba(255,255,255,0.2)] shadow-2xl">
           <div className="text-center mb-8 flex flex-col items-center">
-            <Logo variant="stacked" dark height={46} className="mb-4" />
-            <div className="font-mono text-[11px] text-[#4fd1c5] uppercase tracking-widest mt-2 border border-[#4fd1c5]/30 px-3 py-1 bg-[#1c2333]">
+            <Logo variant="stacked" dark forceDark isLightBackground={false} height={50} className="mb-4" />
+            <div className="font-mono text-[11px] text-[#4fd1c5] uppercase tracking-widest mt-2 border border-[#4fd1c5]/40 px-3.5 py-1.5 bg-[#141d2c] font-semibold">
               ADMIN CONTROL ROOM — SECURE LOGIN
             </div>
           </div>
@@ -146,18 +146,19 @@ export default function AdminLogin() {
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="field">
-              <label htmlFor="email" className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5 text-left">
+              <label htmlFor="email" className="block text-xs font-mono uppercase text-[#cbd5e1] mb-1.5 text-left font-semibold tracking-wider">
                 Admin Email / Username
               </label>
               <div className="relative flex items-center">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9aa3b5] pointer-events-none" strokeWidth={1.5} />
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4fd1c5] pointer-events-none z-10" strokeWidth={1.5} />
                 <input
                   type="email"
                   id="email"
                   required
+                  autoComplete="username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input w-full pl-10 pr-4 py-2.5 bg-[#1c2333] border border-[rgba(255,255,255,0.2)] text-[#f4f4f4] placeholder-[#64748b] focus:border-[#4fd1c5] focus:outline-none transition-colors"
+                  className="admin-login-input"
                   placeholder="bitxhift@gmail.com"
                 />
               </div>
@@ -165,7 +166,7 @@ export default function AdminLogin() {
 
             <div className="field">
               <div className="flex items-center justify-between mb-1.5">
-                <label htmlFor="password" className="block text-xs font-mono uppercase text-[#9aa3b5]">
+                <label htmlFor="password" className="block text-xs font-mono uppercase text-[#cbd5e1] font-semibold tracking-wider">
                   Password
                 </label>
                 <button
@@ -175,20 +176,21 @@ export default function AdminLogin() {
                     setForgotSent(false);
                     setForgotEmail(email);
                   }}
-                  className="font-mono text-[11px] text-[#4fd1c5] hover:underline"
+                  className="font-mono text-[11px] text-[#4fd1c5] hover:underline focus:outline-none"
                 >
                   Forgot Password?
                 </button>
               </div>
               <div className="relative flex items-center">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9aa3b5] pointer-events-none" strokeWidth={1.5} />
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4fd1c5] pointer-events-none z-10" strokeWidth={1.5} />
                 <input
                   type="password"
                   id="password"
                   required
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input w-full pl-10 pr-4 py-2.5 bg-[#1c2333] border border-[rgba(255,255,255,0.2)] text-[#f4f4f4] placeholder-[#64748b] focus:border-[#4fd1c5] focus:outline-none transition-colors"
+                  className="admin-login-input"
                   placeholder="••••••••••••"
                 />
               </div>
@@ -197,7 +199,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary w-full flex items-center justify-center gap-2 text-sm py-3 font-bold tracking-wider uppercase mt-6"
+              className="admin-login-submit-btn mt-6"
             >
               {loading ? (
                 <span>AUTHENTICATING...</span>
@@ -210,7 +212,7 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-[rgba(255,255,255,0.12)] text-center font-mono text-[10px] text-[#9aa3b5]">
+          <div className="mt-6 pt-4 border-t border-[rgba(255,255,255,0.12)] text-center font-mono text-[10px] text-[#94a3b8]">
             CENTRAL AUTHENTICATION — BCRYPT COST 10 &amp; PERSISTENT API
           </div>
         </BlueprintWrapper>
@@ -251,7 +253,7 @@ export default function AdminLogin() {
                 </p>
 
                 <div>
-                  <label className="block text-[11px] uppercase text-[#9aa3b5] mb-1">
+                  <label className="block text-[11px] uppercase text-[#cbd5e1] mb-1 font-semibold">
                     Admin Email
                   </label>
                   <input
@@ -259,7 +261,7 @@ export default function AdminLogin() {
                     required
                     value={forgotEmail}
                     onChange={(e) => setForgotEmail(e.target.value)}
-                    className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-white text-xs"
+                    className="admin-login-input !pl-3"
                     placeholder="admin@smrikaam.com"
                   />
                 </div>

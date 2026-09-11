@@ -16,7 +16,9 @@ import React, { useState, useEffect } from 'react';
 export default function Logo({
   className = '',
   height = 44,
-  isLightBackground
+  isLightBackground,
+  dark,
+  forceDark
 }) {
   const [isDark, setIsDark] = useState(() =>
     typeof document !== 'undefined'
@@ -37,7 +39,10 @@ export default function Logo({
     return () => observer.disconnect();
   }, []);
 
-  const useLight = isLightBackground !== undefined ? isLightBackground : !isDark;
+  // If dark/forceDark is explicitly true or isLightBackground is explicitly false, use dark surface logo
+  const useLight = (dark || forceDark || isLightBackground === false)
+    ? false
+    : (isLightBackground === true ? true : !isDark);
 
   return (
     <div className={`inline-flex items-center shrink-0 select-none ${className}`}>

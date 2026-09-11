@@ -3042,6 +3042,96 @@ html, body, .app-root-overflow {
   scroll-margin-top: 96px;
 }
 
+/* ============================================================
+   ADMIN CONTROL ROOM & AUTOFILL VISIBILITY FIXES
+   ============================================================ */
+
+/* Chrome / Safari / Edge / Firefox autofill dark theme override */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #161e2e inset !important;
+  -webkit-text-fill-color: #f8fafc !important;
+  caret-color: #4fd1c5 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+.admin-theme input:-webkit-autofill,
+.admin-theme input:-webkit-autofill:hover, 
+.admin-theme input:-webkit-autofill:focus, 
+.admin-theme input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #161e2e inset !important;
+  -webkit-text-fill-color: #f8fafc !important;
+  caret-color: #4fd1c5 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Dedicated Admin Login Input styling with guaranteed padding & contrast */
+.admin-login-input {
+  display: block !important;
+  width: 100% !important;
+  height: 46px !important;
+  padding: 0.7rem 1rem 0.7rem 3rem !important; /* 48px left clearance for the icon */
+  background-color: #161e2e !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  border-radius: 0 !important;
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.03em !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+
+.admin-login-input::placeholder {
+  color: #64748b !important;
+  opacity: 1 !important;
+}
+
+.admin-login-input:hover {
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  background-color: #1a2438 !important;
+}
+
+.admin-login-input:focus {
+  border-color: #4fd1c5 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 1px #4fd1c5, inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  background-color: #1c283e !important;
+}
+
+.admin-login-submit-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  padding: 0.85rem 1.5rem !important;
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+  color: #041316 !important;
+  border: 1px solid #2dd4bf !important;
+  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.35) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-login-submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%) !important;
+  box-shadow: 0 6px 20px rgba(20, 184, 166, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+.admin-login-submit-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
 
 
 

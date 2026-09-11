@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { initialSeedData } from '../data/seedData.js';
 import { postgres } from './postgres.js';
+import { cleanSlug } from '../utils/slug.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -350,9 +351,19 @@ class Database {
 
   async getBySlug(collectionName, slug) {
     const table = tableMap[collectionName] || collectionName;
+    const cleanedSlug = cleanSlug(slug);
     if (this.usePostgres()) {
       try {
-        const res = await postgres.query(`SELECT * FROM ${table} WHERE slug = $1 LIMIT 1`, [slug]);
+        let res = await postgres.query(`SELECT * FROM ${table} WHERE slug = $1 LIMIT 1`, [cleanedSlug]);
+        if (res.rows.length === 0 && slug && slug !== cleanedSlug) {
+          res = await postgres.query(`SELECT * FROM ${table} WHERE slug = $1 LIMIT 1`, [slug]);
+        }
+        if (res.rows.length === 0 && cleanedSlug) {
+          res = await postgres.query(
+            `SELECT * FROM ${table} WHERE slug LIKE $1 OR slug LIKE $2 LIMIT 1`,
+            [`%/${cleanedSlug}`, `%/${cleanedSlug}/`]
+          );
+        }
         if (res.rows.length > 0) {
           return this.formatRowToItem(table, res.rows[0]);
         }
@@ -362,16 +373,18 @@ class Database {
       }
     }
     const items = this.getCollection(collectionName);
-    return items.find((item) => item.slug === slug) || null;
+    return items.find((item) => cleanSlug(item.slug) === cleanedSlug || item.slug === slug || item.slug === cleanedSlug) || null;
   }
 
   async create(collectionName, data, user = null) {
     const table = tableMap[collectionName] || collectionName;
     const id = data.id || `${collectionName.slice(0, 3)}_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`;
     const now = new Date().toISOString();
+    const sanitizedSlug = cleanSlug(data.slug || data.title || data.name || '');
 
     const newItem = {
       ...data,
+      slug: sanitizedSlug || data.slug,
       id,
       created_at: now,
       updated_at: now,
@@ -409,10 +422,12 @@ class Database {
     const now = new Date().toISOString();
     const wasPublished = existing.status === 'published';
     const isNowPublished = data.status === 'published';
+    const sanitizedSlug = data.slug !== undefined ? cleanSlug(data.slug) : undefined;
 
     const updatedItem = {
       ...existing,
       ...data,
+      slug: sanitizedSlug !== undefined ? (sanitizedSlug || existing.slug) : existing.slug,
       id: existing.id,
       updated_at: now,
       published_at: isNowPublished && !existing.published_at ? now : (data.published_at || existing.published_at)

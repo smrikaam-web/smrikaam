@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CheckCircle, Clock, Trash2, RotateCcw, Edit2, Search } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import BlueprintWrapper from '../../components/BlueprintWrapper';
+import { cleanSlug } from '../../utils/slug';
 
 export default function PublishingLifecyclePage({ viewType = 'published' }) {
   const { fetchAdmin, updateStatus, deleteItem, restoreItem } = useCMS();
@@ -171,7 +172,7 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
                       </div>
                       {item.slug && (
                         <div className="font-mono text-[10px] text-gray-400">
-                          /{item._collection}/{item.slug}
+                          /{item._collection === 'posts' ? 'blog' : item._collection}/{cleanSlug(item.slug)}
                         </div>
                       )}
                     </td>
