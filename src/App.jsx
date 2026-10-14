@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 // Layout & Components
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import BottomControlBar from './components/BottomControlBar';
-import FixedScene3D from './components/FixedScene3D';
 import IntroLoader from './components/IntroLoader';
 import VerticalScrollRail from './components/VerticalScrollRail';
 import BookCallModal from './components/BookCallModal';
+
+// Ambient 3D Scene (Deferred to keep Three.js off mobile and critical desktop path)
+import DeferredFixedScene3D from './components/DeferredFixedScene3D';
 
 // Animation System Imports
 import PageTransition from './components/anim/PageTransition';
@@ -17,38 +19,42 @@ import PageTransition from './components/anim/PageTransition';
 import { CMSProvider, useCMS } from './context/CMSContext';
 import { cleanSlug } from './utils/slug';
 
-// Public Pages
+// Public Landing Page (Static import for instant hero FCP/LCP)
 import Home from './pages/Home';
-import Services from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail';
-import Products from './pages/Products';
-import ProductDetail from './pages/ProductDetail';
-import Accelerators from './pages/Accelerators';
-import Industries from './pages/Industries';
-import IndustryDetail from './pages/IndustryDetail';
-import CaseStudies from './pages/CaseStudies';
-import CaseStudyDetail from './pages/CaseStudyDetail';
-import Blog from './pages/Blog';
-import BlogDetail from './pages/BlogDetail';
-import Staffing from './pages/Staffing';
-import About from './pages/About';
-import Locations from './pages/Locations';
-import Careers from './pages/Careers';
-import Contact from './pages/Contact';
-import GonePage from './pages/GonePage';
 
-// Admin CMS Pages
-import AdminLogin from './pages/admin/AdminLogin';
-import AdminLayout, { ADMIN_ROUTE_BASE } from './pages/admin/AdminLayout';
-import DashboardPage from './pages/admin/DashboardPage';
-import ReportsManagerPage from './pages/admin/ReportsManagerPage';
-import MediaLibraryView from './components/admin/MediaLibraryView';
-import PublishingLifecyclePage from './pages/admin/PublishingLifecyclePage';
-import SettingsPage from './pages/admin/SettingsPage';
-import InboxPage from './pages/admin/InboxPage';
-import AdminBookCallPage from './pages/admin/AdminBookCallPage';
-import AdminBlogManager from './pages/admin/AdminBlogManager';
-import AdminContentManager from './components/admin/AdminContentManager';
+// Lazy-Loaded Public Secondary & Detail Pages
+const Services = lazy(() => import('./pages/Services'));
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
+const Products = lazy(() => import('./pages/Products'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail'));
+const Accelerators = lazy(() => import('./pages/Accelerators'));
+const Industries = lazy(() => import('./pages/Industries'));
+const IndustryDetail = lazy(() => import('./pages/IndustryDetail'));
+const CaseStudies = lazy(() => import('./pages/CaseStudies'));
+const CaseStudyDetail = lazy(() => import('./pages/CaseStudyDetail'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogDetail = lazy(() => import('./pages/BlogDetail'));
+const Staffing = lazy(() => import('./pages/Staffing'));
+const About = lazy(() => import('./pages/About'));
+const Locations = lazy(() => import('./pages/Locations'));
+const Careers = lazy(() => import('./pages/Careers'));
+const Contact = lazy(() => import('./pages/Contact'));
+const GonePage = lazy(() => import('./pages/GonePage'));
+
+// Admin CMS Pages (Lazy-loaded so public visitors never download admin code)
+import { ADMIN_ROUTE_BASE } from './constants/admin';
+export { ADMIN_ROUTE_BASE };
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
+const DashboardPage = lazy(() => import('./pages/admin/DashboardPage'));
+const ReportsManagerPage = lazy(() => import('./pages/admin/ReportsManagerPage'));
+const MediaLibraryView = lazy(() => import('./components/admin/MediaLibraryView'));
+const PublishingLifecyclePage = lazy(() => import('./pages/admin/PublishingLifecyclePage'));
+const SettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
+const InboxPage = lazy(() => import('./pages/admin/InboxPage'));
+const AdminBookCallPage = lazy(() => import('./pages/admin/AdminBookCallPage'));
+const AdminBlogManager = lazy(() => import('./pages/admin/AdminBlogManager'));
+const AdminContentManager = lazy(() => import('./components/admin/AdminContentManager'));
 import RequireAuth from './components/RequireAuth';
 
 // Field configs for Central CMS
@@ -204,12 +210,18 @@ function PublicLayout({ children }) {
     let title = 'SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics';
     try {
       const seg = path.split('/').filter(Boolean);
+      const formatSlug = (slug) => {
+        if (!slug) return '';
+        return slug
+          .replace(/[-_]/g, ' ')
+          .replace(/\b\w/g, (c) => c.toUpperCase());
+      };
       if (seg.length === 0) title = 'SMRIKAAM | Enterprise Technology & Engineering';
-      else if (seg[0] === 'services') title = seg[1] ? 'Service | SMRIKAAM Technologies' : 'Services | SMRIKAAM Technologies';
-      else if (seg[0] === 'products' || seg[0] === 'accelerators') title = seg[1] ? 'Product | SMRIKAAM Technologies' : 'Products & Accelerators | SMRIKAAM Technologies';
-      else if (seg[0] === 'industries') title = seg[1] ? 'Industry | SMRIKAAM Technologies' : 'Industries | SMRIKAAM Technologies';
-      else if (seg[0] === 'case-studies') title = seg[1] ? 'Case Study | SMRIKAAM Technologies' : 'Case Studies | SMRIKAAM Technologies';
-      else if (seg[0] === 'blog') title = seg[1] ? 'Blog | SMRIKAAM Technologies' : 'Blog | SMRIKAAM Technologies';
+      else if (seg[0] === 'services') title = seg[1] ? `${formatSlug(seg[1])} — Services | SMRIKAAM Technologies` : 'Services | SMRIKAAM Technologies';
+      else if (seg[0] === 'products' || seg[0] === 'accelerators') title = seg[1] ? `${formatSlug(seg[1])} — Products & Accelerators | SMRIKAAM Technologies` : 'Products & Accelerators | SMRIKAAM Technologies';
+      else if (seg[0] === 'industries') title = seg[1] ? `${formatSlug(seg[1])} — Industries | SMRIKAAM Technologies` : 'Industries | SMRIKAAM Technologies';
+      else if (seg[0] === 'case-studies') title = seg[1] ? `${formatSlug(seg[1])} — Case Studies | SMRIKAAM Technologies` : 'Case Studies | SMRIKAAM Technologies';
+      else if (seg[0] === 'blog') title = seg[1] ? `${formatSlug(seg[1])} — Blog | SMRIKAAM Technologies` : 'Blog | SMRIKAAM Technologies';
       else if (seg[0] === 'about') title = 'About | SMRIKAAM Technologies';
       else if (seg[0] === 'contact') title = 'Contact | SMRIKAAM Technologies';
       else if (seg[0] === 'locations') title = 'Locations | SMRIKAAM Technologies';
@@ -303,7 +315,7 @@ function PublicLayout({ children }) {
       {/* Ambient Cursor Spotlight Layer */}
       <div className="cursor-spotlight-layer hidden md:block" aria-hidden="true" />
       <IntroLoader />
-      <FixedScene3D />
+      <DeferredFixedScene3D />
       <NavBar />
       <VerticalScrollRail />
       <main className="relative z-10 xl:pl-12">{children}</main>
@@ -352,12 +364,24 @@ function SmartCatchAllHandler() {
   return <Navigate to="/" replace />;
 }
 
+function RouteLoadingFallback() {
+  return (
+    <div className="min-h-[40vh] flex items-center justify-center py-24" aria-label="Loading page">
+      <div className="font-mono text-xs uppercase tracking-widest text-[var(--color-text-muted)] flex items-center gap-2">
+        <span className="w-1.5 h-1.5 bg-[var(--color-accent)] animate-pulse" />
+        <span>LOADING...</span>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <CMSProvider>
       <BrowserRouter>
         <PageTransition>
-          <Routes>
+          <Suspense fallback={<RouteLoadingFallback />}>
+            <Routes>
             {/* PUBLIC ROUTES */}
             <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
             <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
@@ -401,7 +425,7 @@ export default function App() {
               <Route path="dashboard" element={<DashboardPage />} />
               <Route
                 path="blogs"
-                element={<AdminContentManager resource="posts" title="Blog Articles" fields={BLOG_FIELDS} />}
+                element={<AdminBlogManager />}
               />
               <Route
                 path="posts"
@@ -478,7 +502,8 @@ export default function App() {
             {/* Fallback route with intelligent CMS slug resolution */}
             <Route path="*" element={<SmartCatchAllHandler />} />
           </Routes>
-        </PageTransition>
+        </Suspense>
+      </PageTransition>
       </BrowserRouter>
       <BookCallModal />
     </CMSProvider>

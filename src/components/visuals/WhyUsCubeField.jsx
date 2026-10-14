@@ -118,7 +118,7 @@ export default function WhyUsCubeField({ className = '' }) {
           ctx.lineTo(proj[j].px, proj[j].py);
           ctx.strokeStyle = isDark
             ? 'rgba(255, 255, 255, 0.45)'
-            : 'rgba(15, 23, 42, 0.40)';
+            : 'rgba(0, 0, 0, 0.40)';
           ctx.lineWidth = 1.0;
           ctx.stroke();
         });
@@ -144,4 +144,3 @@ export default function WhyUsCubeField({ className = '' }) {
     </div>
   );
 }
-

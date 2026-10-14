@@ -78,9 +78,9 @@ function ArchitecturalGridBlocks({ isDark = false, onContextLost }) {
   }, [onContextLost]);
 
   // Dynamic Theme Colors
-  const meshColor = isDark ? '#0f172a' : '#cbd5e1';
+  const meshColor = isDark ? '#111111' : '#E5E5E5';
   const meshOpacity = isDark ? 0.45 : 0.25;
-  const edgeColor = isDark ? '#ffffff' : '#1e293b';
+  const edgeColor = isDark ? '#ffffff' : '#000000';
   const edgeOpacity = isDark ? 0.65 : 0.50;
 
   return (
@@ -192,4 +192,3 @@ export default function FixedScene3D() {
     </div>
   );
 }
-

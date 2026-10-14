@@ -50,15 +50,23 @@ export default function Logo({
         <img
           src="/assets/smrikaam-logo-light.png"
           alt="SMRIKAAM Technologies — Progress Through Innovation"
-          style={{ height: `${height}px` }}
-          className="smrikaam-brand-logo w-auto object-contain object-left transition-transform duration-200 ease-out hover:scale-[1.02] shrink-0"
+          width={Math.round(height * (745 / 170))}
+          height={height}
+          fetchPriority="high"
+          decoding="async"
+          style={{ height: `${height}px`, width: 'auto' }}
+          className="smrikaam-brand-logo object-contain object-left transition-transform duration-200 ease-out hover:scale-[1.02] shrink-0"
         />
       ) : (
         <img
           src="/assets/smrikaam-logo-dark.png"
           alt="SMRIKAAM Technologies — Progress Through Innovation"
-          style={{ height: `${height}px` }}
-          className="smrikaam-brand-logo w-auto object-contain object-left transition-transform duration-200 ease-out hover:scale-[1.02] shrink-0"
+          width={Math.round(height * (745 / 170))}
+          height={height}
+          fetchPriority="high"
+          decoding="async"
+          style={{ height: `${height}px`, width: 'auto' }}
+          className="smrikaam-brand-logo object-contain object-left transition-transform duration-200 ease-out hover:scale-[1.02] shrink-0"
         />
       )}
     </div>

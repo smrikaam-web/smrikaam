@@ -111,43 +111,43 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-[rgba(255,255,255,0.15)] pb-6">
-        <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
+      <div className="border-b border-neutral-800 pb-6">
+        <div className="font-mono text-xs text-white uppercase tracking-widest mb-1">
           PUBLISHING LIFECYCLE — {viewType.toUpperCase()}
         </div>
-        <h1 className="font-heading text-3xl font-bold uppercase text-[#f4f4f4]">
+        <h1 className="font-heading text-3xl font-bold uppercase text-white">
           {getTitle()}
         </h1>
-        <p className="font-mono text-xs text-gray-400 mt-1">
+        <p className="font-mono text-xs text-neutral-400 mt-1">
           {getSubtitle()}
         </p>
       </div>
 
       {/* Search Filter */}
-      <div className="bg-[#141924] border border-[rgba(255,255,255,0.15)] p-4 flex items-center justify-between">
+      <div className="bg-[#111111] border border-neutral-800 p-4 flex items-center justify-between">
         <div className="relative w-full max-w-md">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search within this list..."
-            className="input w-full pl-9 py-1.5 text-xs bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+            className="input w-full pl-9 py-1.5 text-xs bg-black border-neutral-700 text-white"
           />
         </div>
 
-        <div className="font-mono text-xs text-gray-400">
-          Showing <span className="text-[#4fd1c5] font-bold">{filteredItems.length}</span> records
+        <div className="font-mono text-xs text-neutral-400">
+          Showing <span className="text-white font-bold">{filteredItems.length}</span> records
         </div>
       </div>
 
       {/* Table */}
       {loading ? (
-        <div className="text-center py-16 font-mono text-xs text-gray-400">
+        <div className="text-center py-16 font-mono text-xs text-neutral-400">
           LOADING_{viewType.toUpperCase()}_ITEMS...
         </div>
       ) : filteredItems.length === 0 ? (
-        <div className="text-center py-16 font-mono text-xs text-gray-400 bg-[#141924] border border-[rgba(255,255,255,0.15)] p-8">
+        <div className="text-center py-16 font-mono text-xs text-neutral-400 bg-[#111111] border border-neutral-800 p-8">
           NO ITEMS FOUND IN {viewType.toUpperCase()}.
         </div>
       ) : (
@@ -167,17 +167,17 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
                 {filteredItems.map((item) => (
                   <tr key={`${item._collection}_${item.id}`}>
                     <td>
-                      <div className="font-semibold text-[#f4f4f4]">
+                      <div className="font-semibold text-white">
                         {item.title || item.name || 'Untitled'}
                       </div>
                       {item.slug && (
-                        <div className="font-mono text-[10px] text-gray-400">
+                        <div className="font-mono text-[10px] text-neutral-400">
                           /{item._collection === 'posts' ? 'blog' : item._collection}/{cleanSlug(item.slug)}
                         </div>
                       )}
                     </td>
                     <td>
-                      <span className="bg-[#1c2333] text-[#4fd1c5] px-2 py-0.5 text-xs font-mono">
+                      <span className="bg-neutral-800 text-neutral-200 border border-neutral-700 px-2 py-0.5 text-xs font-mono">
                         {item._typeLabel}
                       </span>
                     </td>
@@ -191,12 +191,12 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
                           <Clock className="w-3 h-3" /> Draft
                         </span>
                       ) : (
-                        <span className="bg-rose-950/80 text-rose-300 border border-rose-500/50 px-2 py-0.5 text-[11px] font-mono flex items-center gap-1 w-fit">
+                        <span className="bg-transparent text-neutral-400 border border-neutral-700 px-2 py-0.5 text-[11px] font-mono flex items-center gap-1 w-fit">
                           <Trash2 className="w-3 h-3" /> In Trash
                         </span>
                       )}
                     </td>
-                    <td className="font-mono text-xs text-gray-400">
+                    <td className="font-mono text-xs text-neutral-400">
                       {new Date(item.updated_at || item.created_at).toLocaleDateString()}
                     </td>
                     <td className="text-right">
@@ -206,14 +206,14 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
                             <button
                               type="button"
                               onClick={() => handleRestore(item._collection, item.id)}
-                              className="admin-btn text-xs py-1 text-emerald-400 hover:text-emerald-200 border-emerald-500/40"
+                              className="admin-btn text-xs py-1 text-white hover:text-neutral-200 border-neutral-600"
                             >
                               <RotateCcw className="w-3.5 h-3.5 inline mr-1" /> Restore
                             </button>
                             <button
                               type="button"
                               onClick={() => handlePermanentDelete(item._collection, item.id)}
-                              className="admin-btn text-xs py-1 text-rose-400 hover:text-rose-200 border-rose-500/40"
+                              className="admin-btn text-xs py-1 text-neutral-400 hover:text-white border-neutral-600"
                             >
                               <Trash2 className="w-3.5 h-3.5 inline mr-1" /> Delete Permanently
                             </button>
@@ -230,7 +230,7 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
                           <button
                             type="button"
                             onClick={() => handleUnpublish(item._collection, item.id)}
-                            className="admin-btn text-xs py-1 text-amber-300 hover:text-amber-200 border-amber-500/40"
+                            className="admin-btn text-xs py-1 text-neutral-300 hover:text-white border-neutral-600"
                           >
                             Unpublish to Draft
                           </button>

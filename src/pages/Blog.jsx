@@ -61,7 +61,13 @@ export default function Blog() {
                 <BlueprintWrapper className="card group hover:border-accent h-full p-3.5 sm:p-6">
                   {post.cover_image_url && (
                     <Link to={`/blog/${postSlug}`} className="block overflow-hidden border-b border-border mb-3 sm:mb-6 -mx-3.5 -mt-3.5 sm:-mx-6 sm:-mt-6 h-32 sm:h-56 relative bg-black/5 dark:bg-white/5">
-                      <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover duotone" />
+                      <img
+                        src={post.cover_image_url}
+                        alt={post.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover duotone"
+                      />
                       {(post.category || post.category_id) && (
                         <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-white/90 dark:bg-bg/90 border border-border px-1.5 sm:px-3 py-0.5 sm:py-1 font-mono text-[9px] sm:text-[13px] text-accent font-medium backdrop-blur-sm">
                           {post.category || post.category_id}

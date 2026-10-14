@@ -1,30 +1,30 @@
 :root {
-  /* Core Base Colors (White Theme) */
-  --bg: #F8F8F6;
+  /* Core Base Colors (White Theme) - STRICT BLACK AND WHITE ONLY */
+  --bg: #FFFFFF;
   --surface: #FFFFFF;
-  --surface-elevated: #F0F0EE;
-  --surface-subtle: #F1F1EE;
-  --text: #111111;
-  --text-secondary: #222222;
-  --text-muted: #4b5563;
-  --border: rgba(20, 20, 20, 0.16);
-  --border-strong: rgba(20, 20, 20, 0.28);
-  --accent: #111111;
-  --accent-hover: #000000;
+  --surface-elevated: #F5F5F5;
+  --surface-subtle: #F5F5F5;
+  --text: #000000;
+  --text-secondary: #333333;
+  --text-muted: #666666;
+  --border: #E5E5E5;
+  --border-strong: #000000;
+  --accent: #000000;
+  --accent-hover: #333333;
   --accent-contrast: #FFFFFF;
 
   /* Ribbon Header Specific Tokens (White Theme -> Black Ribbon Surface) */
   --ribbon-bg: #000000;
   --ribbon-surface: #111111;
-  --ribbon-surface-subtle: #1a1a1a;
+  --ribbon-surface-subtle: #111111;
   --ribbon-text: #FFFFFF;
-  --ribbon-text-secondary: #F0F0F0;
-  --ribbon-text-muted: #C0C0C0;
-  --ribbon-border: rgba(255, 255, 255, 0.25);
+  --ribbon-text-secondary: #E5E5E5;
+  --ribbon-text-muted: #666666;
+  --ribbon-border: rgba(255, 255, 255, 0.20);
   --ribbon-active: #FFFFFF;
   --ribbon-icon: #FFFFFF;
   --ribbon-icon-bg: #111111;
-  --ribbon-icon-border: rgba(255, 255, 255, 0.25);
+  --ribbon-icon-border: rgba(255, 255, 255, 0.20);
   --ribbon-button-bg: #FFFFFF;
   --ribbon-button-text: #000000;
   --ribbon-button-border: #FFFFFF;
@@ -33,52 +33,53 @@
   --ribbon-dropdown-bg: #000000;
   --ribbon-dropdown-surface: #111111;
   --ribbon-dropdown-text: #FFFFFF;
-  --ribbon-dropdown-text-secondary: #F0F0F0;
-  --ribbon-dropdown-text-muted: #E0E0E0;
+  --ribbon-dropdown-text-secondary: #E5E5E5;
+  --ribbon-dropdown-text-muted: #666666;
   --ribbon-dropdown-border: rgba(255, 255, 255, 0.20);
-  --ribbon-dropdown-hover: #1A1A1A;
-  --ribbon-dropdown-active: #222222;
+  --ribbon-dropdown-hover: #111111;
+  --ribbon-dropdown-active: #000000;
 
   /* Explicit --color-* aliases */
-  --color-bg: #F8F8F6;
+  --color-bg: #FFFFFF;
   --color-surface: #FFFFFF;
-  --color-surface-elevated: #F0F0EE;
-  --color-surface-subtle: #F1F1EE;
-  --color-text: #111111;
-  --color-text-secondary: #222222;
-  --color-text-muted: #4b5563;
-  --color-border: rgba(20, 20, 20, 0.16);
-  --color-border-strong: rgba(20, 20, 20, 0.28);
-  --color-accent: #111111;
-  --color-accent-hover: #000000;
+  --color-surface-elevated: #F5F5F5;
+  --color-surface-subtle: #F5F5F5;
+  --color-text: #000000;
+  --color-text-secondary: #333333;
+  --color-text-muted: #666666;
+  --color-border: #E5E5E5;
+  --color-border-strong: #000000;
+  --color-accent: #000000;
+  --color-accent-hover: #333333;
   --color-accent-contrast: #FFFFFF;
-  --color-accent-100: #F1F1EE;
-  --color-accent-300: rgba(20, 20, 20, 0.16);
-  --color-accent-600: #111111;
-  --color-accent-800: #111111;
+  --color-accent-100: #F5F5F5;
+  --color-accent-300: #E5E5E5;
+  --color-accent-600: #000000;
+  --color-accent-800: #000000;
   --color-accent-900: #000000;
-  --color-neutral-100: #F8F8F6;
-  --color-neutral-200: #F0F0EE;
+  --color-neutral-100: #FFFFFF;
+  --color-neutral-200: #F5F5F5;
   --color-neutral-400: #666666;
   --color-neutral-700: #333333;
-  --color-neutral-900: #111111;
+  --color-neutral-900: #000000;
 
   /* Button Tokens */
-  --button-bg: #111111;
+  --button-bg: #000000;
   --button-text: #FFFFFF;
-  --button-border: #111111;
-  --button-hover-bg: #000000;
-  --button-hover-text: #FFFFFF;
+  --button-border: #000000;
+  --button-hover-bg: #FFFFFF;
+  --button-hover-text: #000000;
+  --button-hover-border: #000000;
   --button-secondary-bg: transparent;
-  --button-secondary-text: #111111;
-  --button-secondary-border: rgba(20, 20, 20, 0.28);
+  --button-secondary-text: #000000;
+  --button-secondary-border: #000000;
 
   /* 3D & Grid */
-  --grid: rgba(20, 20, 20, 0.07);
-  --cube-edge: rgba(20, 25, 30, 0.45);
+  --grid: rgba(0, 0, 0, 0.08);
+  --cube-edge: rgba(0, 0, 0, 0.45);
   --cube-surface: rgba(255, 255, 255, 0.20);
   --cube-surface-core: rgba(255, 255, 255, 0.45);
-  --glow: rgba(120, 150, 180, 0.20);
+  --glow: rgba(0, 0, 0, 0.04);
 
   /* Typography, Radii & Spacing */
   --font-heading: 'Barlow Condensed', 'Inter', system-ui, -apple-system, sans-serif;
@@ -89,105 +90,99 @@
   --space-md: 1rem;
   --space-lg: 1.5rem;
   --space-xl: 2.25rem;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow-sm: none;
+  --shadow-md: none;
 
-  --admin-bg: #090d16;
-  --admin-surface: #10172a;
-  --admin-surface-hover: #182030;
-  --admin-border: rgba(255, 255, 255, 0.14);
-  --admin-border-strong: rgba(255, 255, 255, 0.28);
-  --admin-text-primary: #f8fafc;
-  --admin-text-secondary: #94a3b8;
-  --admin-accent: #ffffff;
+  --admin-bg: #000000;
+  --admin-surface: #111111;
+  --admin-surface-hover: #1a1a1a;
+  --admin-border: rgba(255, 255, 255, 0.16);
+  --admin-border-strong: rgba(255, 255, 255, 0.32);
+  --admin-text-primary: #FFFFFF;
+  --admin-text-secondary: #E5E5E5;
+  --admin-accent: #FFFFFF;
 }
 
 html.dark {
-  /* Core Base Colors (Black Theme) */
-  --bg: #030303;
-  --surface: #0D0D0D;
-  --surface-elevated: #151515;
-  --surface-subtle: #151515;
+  /* Core Base Colors (Black Theme) - STRICT BLACK AND WHITE ONLY */
+  --bg: #000000;
+  --surface: #111111;
+  --surface-elevated: #1a1a1a;
+  --surface-subtle: #161616;
   --text: #FFFFFF;
-  --text-secondary: #D0D0D0;
-  --text-muted: #969696;
+  --text-secondary: #E5E5E5;
+  --text-muted: #666666;
   --border: rgba(255, 255, 255, 0.16);
-  --border-strong: rgba(255, 255, 255, 0.28);
+  --border-strong: rgba(255, 255, 255, 0.32);
   --accent: #FFFFFF;
   --accent-hover: #E5E5E5;
   --accent-contrast: #000000;
 
   /* Ribbon Header Specific Tokens (Black Theme -> Dark Ribbon Surface + White Text) */
-  --ribbon-bg: #0D0D0D;
-  --ribbon-surface: #151515;
-  --ribbon-surface-subtle: #1A1A1A;
+  --ribbon-bg: #000000;
+  --ribbon-surface: #111111;
+  --ribbon-surface-subtle: #1a1a1a;
   --ribbon-text: #FFFFFF;
-  --ribbon-text-secondary: #D0D0D0;
-  --ribbon-text-muted: #969696;
+  --ribbon-text-secondary: #E5E5E5;
+  --ribbon-text-muted: #666666;
   --ribbon-border: rgba(255, 255, 255, 0.20);
   --ribbon-active: #FFFFFF;
   --ribbon-icon: #FFFFFF;
-  --ribbon-icon-bg: #151515;
+  --ribbon-icon-bg: #111111;
   --ribbon-icon-border: rgba(255, 255, 255, 0.20);
   --ribbon-button-bg: #FFFFFF;
   --ribbon-button-text: #000000;
   --ribbon-button-border: #FFFFFF;
 
   /* Ribbon Dropdown Specific Tokens (Black Theme -> Dark Dropdown + White Text) */
-  --ribbon-dropdown-bg: #151515;
-  --ribbon-dropdown-surface: #1A1A1A;
+  --ribbon-dropdown-bg: #111111;
+  --ribbon-dropdown-surface: #1a1a1a;
   --ribbon-dropdown-text: #FFFFFF;
-  --ribbon-dropdown-text-secondary: #D0D0D0;
-  --ribbon-dropdown-text-muted: #969696;
+  --ribbon-dropdown-text-secondary: #E5E5E5;
+  --ribbon-dropdown-text-muted: #666666;
   --ribbon-dropdown-border: rgba(255, 255, 255, 0.20);
-  --ribbon-dropdown-hover: #222222;
-  --ribbon-dropdown-active: #2A2A2A;
+  --ribbon-dropdown-hover: #1a1a1a;
+  --ribbon-dropdown-active: #000000;
 
   /* Explicit --color-* aliases */
-  --color-bg: #030303;
-  --color-surface: #0D0D0D;
-  --color-surface-elevated: #151515;
-  --color-surface-subtle: #151515;
+  --color-bg: #000000;
+  --color-surface: #111111;
+  --color-surface-elevated: #1a1a1a;
+  --color-surface-subtle: #161616;
   --color-text: #FFFFFF;
-  --color-text-secondary: #D0D0D0;
-  --color-text-muted: #969696;
+  --color-text-secondary: #E5E5E5;
+  --color-text-muted: #666666;
   --color-border: rgba(255, 255, 255, 0.16);
-  --color-border-strong: rgba(255, 255, 255, 0.28);
+  --color-border-strong: rgba(255, 255, 255, 0.32);
   --color-accent: #FFFFFF;
   --color-accent-hover: #E5E5E5;
   --color-accent-contrast: #000000;
-  --color-accent-100: #151515;
-  --color-accent-300: rgba(255, 255, 255, 0.16);
+  --color-accent-100: rgba(255, 255, 255, 0.08);
+  --color-accent-300: #666666;
   --color-accent-600: #FFFFFF;
-  --color-accent-800: #FFFFFF;
-  --color-accent-900: #E5E5E5;
-  --color-neutral-100: #030303;
-  --color-neutral-200: #151515;
-  --color-neutral-400: #969696;
-  --color-neutral-700: #D0D0D0;
+  --color-accent-800: #E5E5E5;
+  --color-accent-900: #FFFFFF;
+  --color-neutral-100: #000000;
+  --color-neutral-200: #111111;
+  --color-neutral-400: #666666;
+  --color-neutral-700: #E5E5E5;
   --color-neutral-900: #FFFFFF;
 
   /* Button Tokens */
   --button-bg: #FFFFFF;
   --button-text: #000000;
   --button-border: #FFFFFF;
-  --button-hover-bg: #E5E5E5;
-  --button-hover-text: #000000;
+  --button-hover-bg: #000000;
+  --button-hover-text: #FFFFFF;
+  --button-hover-border: #FFFFFF;
   --button-secondary-bg: transparent;
   --button-secondary-text: #FFFFFF;
-  --button-secondary-border: rgba(255, 255, 255, 0.28);
+  --button-secondary-border: #FFFFFF;
 
   /* 3D & Grid */
   --grid: rgba(255, 255, 255, 0.07);
   --cube-edge: rgba(255, 255, 255, 0.55);
   --cube-surface: rgba(0, 0, 0, 0.35);
   --cube-surface-core: rgba(255, 255, 255, 0.15);
-  --glow: rgba(255, 255, 255, 0.25);
+  --glow: rgba(255, 255, 255, 0.04);
 }
-
-
-
-
-
-
-

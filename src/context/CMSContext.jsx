@@ -46,6 +46,27 @@ export function CMSProvider({ children }) {
     let isMounted = true;
     async function loadAllPublished() {
       try {
+        // Attempt fast unified single-roundtrip request
+        try {
+          const unifiedRes = await api.get('/public-collections');
+          if (isMounted && unifiedRes.data && typeof unifiedRes.data === 'object') {
+            const data = unifiedRes.data;
+            if (Array.isArray(data.services)) setServices(data.services);
+            if (Array.isArray(data.accelerators)) setAccelerators(data.accelerators);
+            if (Array.isArray(data.industries)) setIndustries(data.industries);
+            if (Array.isArray(data.caseStudies)) setCaseStudies(data.caseStudies);
+            if (Array.isArray(data.posts)) setPosts(data.posts);
+            if (Array.isArray(data.reports)) setReports(data.reports);
+            if (Array.isArray(data.staffing)) setStaffing(data.staffing);
+            if (Array.isArray(data.locations)) setLocations(data.locations);
+            if (data.settings) setSettings(data.settings);
+            setIsLoaded(true);
+            return;
+          }
+        } catch (unifiedErr) {
+          // Graceful fallback to individual endpoints
+        }
+
         const [srvRes, accRes, indRes, csRes, postRes, repRes, staffRes, locRes, setRes] = await Promise.allSettled([
           api.get('/services'),
           api.get('/accelerators'),
@@ -235,4 +256,3 @@ export function useCMS() {
   }
   return context;
 }
-

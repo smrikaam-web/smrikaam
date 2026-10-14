@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Lock, Mail, ShieldAlert, LogIn, Key, X, CheckCircle } from 'lucide-react';
 import api from '../../api';
-import { ADMIN_ROUTE_BASE } from './AdminLayout';
+import { ADMIN_ROUTE_BASE } from '../../constants/admin';
 import BlueprintWrapper from '../../components/BlueprintWrapper';
 import Logo from '../../components/Logo';
 
@@ -44,7 +44,7 @@ export default function AdminLogin() {
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#0b0e14';
+      ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < particles.length; i++) {
@@ -57,7 +57,7 @@ export default function AdminLogin() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(79, 209, 197, ${1 - (dist / 140) * 0.6})`;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - dist / 140) * 0.35})`;
             ctx.lineWidth = 0.6;
             ctx.stroke();
           }
@@ -73,7 +73,7 @@ export default function AdminLogin() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#4fd1c5';
+        ctx.fillStyle = '#ffffff';
         ctx.fill();
       });
 
@@ -123,34 +123,34 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="admin-theme relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-[#0b0e14] p-4 text-[#f4f4f4]">
+    <div className="admin-theme relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-black p-4 text-[#FFFFFF]">
       {/* Background canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none" />
 
       {/* Centered Glassmorphic Login Card */}
       <div className="relative z-10 w-full max-w-md">
-        <BlueprintWrapper dark className="bg-[#141924]/95 backdrop-blur-xl p-8 md:p-10 border border-[rgba(255,255,255,0.2)] shadow-2xl">
+        <BlueprintWrapper dark className="bg-[#111111]/95 backdrop-blur-xl p-8 md:p-10 border border-neutral-700 shadow-2xl">
           <div className="text-center mb-8 flex flex-col items-center">
             <Logo variant="stacked" dark forceDark isLightBackground={false} height={50} className="mb-4" />
-            <div className="font-mono text-[11px] text-[#4fd1c5] uppercase tracking-widest mt-2 border border-[#4fd1c5]/40 px-3.5 py-1.5 bg-[#141d2c] font-semibold">
+            <div className="font-mono text-[11px] text-white uppercase tracking-widest mt-2 border border-neutral-700 px-3.5 py-1.5 bg-neutral-900 font-semibold">
               ADMIN CONTROL ROOM — SECURE LOGIN
             </div>
           </div>
 
           {error && (
-            <div className="mb-6 p-3 bg-rose-950/80 border border-rose-500 text-rose-200 font-mono text-xs flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 shrink-0" />
+            <div className="mb-6 p-3 bg-neutral-900 border border-neutral-500 text-white font-mono text-xs flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 shrink-0 text-white" />
               <span>{error}</span>
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="field">
-              <label htmlFor="email" className="block text-xs font-mono uppercase text-[#cbd5e1] mb-1.5 text-left font-semibold tracking-wider">
+              <label htmlFor="email" className="block text-xs font-mono uppercase text-neutral-300 mb-1.5 text-left font-semibold tracking-wider">
                 Admin Email / Username
               </label>
               <div className="relative flex items-center">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4fd1c5] pointer-events-none z-10" strokeWidth={1.5} />
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none z-10" strokeWidth={1.5} />
                 <input
                   type="email"
                   id="email"
@@ -166,7 +166,7 @@ export default function AdminLogin() {
 
             <div className="field">
               <div className="flex items-center justify-between mb-1.5">
-                <label htmlFor="password" className="block text-xs font-mono uppercase text-[#cbd5e1] font-semibold tracking-wider">
+                <label htmlFor="password" className="block text-xs font-mono uppercase text-neutral-300 font-semibold tracking-wider">
                   Password
                 </label>
                 <button
@@ -176,13 +176,13 @@ export default function AdminLogin() {
                     setForgotSent(false);
                     setForgotEmail(email);
                   }}
-                  className="font-mono text-[11px] text-[#4fd1c5] hover:underline focus:outline-none"
+                  className="font-mono text-[11px] text-white hover:underline focus:outline-none"
                 >
                   Forgot Password?
                 </button>
               </div>
               <div className="relative flex items-center">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4fd1c5] pointer-events-none z-10" strokeWidth={1.5} />
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none z-10" strokeWidth={1.5} />
                 <input
                   type="password"
                   id="password"
@@ -212,7 +212,7 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-[rgba(255,255,255,0.12)] text-center font-mono text-[10px] text-[#94a3b8]">
+          <div className="mt-6 pt-4 border-t border-neutral-800 text-center font-mono text-[10px] text-neutral-400">
             CENTRAL AUTHENTICATION — BCRYPT COST 10 &amp; PERSISTENT API
           </div>
         </BlueprintWrapper>
@@ -222,8 +222,8 @@ export default function AdminLogin() {
       {forgotModal && (
         <div className="dialog-backdrop">
           <BlueprintWrapper dark className="dialog admin-dialog max-w-md">
-            <div className="dialog-title flex items-center justify-between border-b border-[rgba(255,255,255,0.15)] pb-3">
-              <span className="font-heading text-lg text-[#f4f4f4] uppercase">
+            <div className="dialog-title flex items-center justify-between border-b border-neutral-700 pb-3">
+              <span className="font-heading text-lg text-white uppercase">
                 ADMIN PASSWORD RECOVERY
               </span>
               <button onClick={() => setForgotModal(false)} className="text-gray-400 hover:text-white">
@@ -233,9 +233,9 @@ export default function AdminLogin() {
 
             {forgotSent ? (
               <div className="my-6 text-center space-y-3 font-mono">
-                <CheckCircle className="w-12 h-12 text-[#4fd1c5] mx-auto" />
-                <div className="text-sm text-emerald-300 font-bold">RECOVERY DISPATCHED</div>
-                <p className="text-xs text-gray-300">
+                <CheckCircle className="w-12 h-12 text-white mx-auto" />
+                <div className="text-sm text-white font-bold">RECOVERY DISPATCHED</div>
+                <p className="text-xs text-neutral-300">
                   A password reset authorization token has been logged to the system activity stream.
                 </p>
                 <button
@@ -248,12 +248,12 @@ export default function AdminLogin() {
               </div>
             ) : (
               <form onSubmit={handleForgotPassword} className="my-4 space-y-4 font-mono">
-                <p className="text-xs text-gray-300">
+                <p className="text-xs text-neutral-300">
                   Enter your registered Admin email address to request a secure password reset token:
                 </p>
 
                 <div>
-                  <label className="block text-[11px] uppercase text-[#cbd5e1] mb-1 font-semibold">
+                  <label className="block text-[11px] uppercase text-neutral-300 mb-1 font-semibold">
                     Admin Email
                   </label>
                   <input

@@ -26,10 +26,10 @@ export default function GonePage() {
   return (
     <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto text-center relative z-10">
       <BlueprintWrapper className="service-detail-surface p-12 md:p-16">
-        <div className="inline-flex items-center justify-center p-3 rounded-full bg-red-500/10 text-red-500 mb-6">
+        <div className="inline-flex items-center justify-center p-3 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white border border-neutral-300 dark:border-neutral-700 mb-6">
           <AlertCircle className="w-8 h-8" />
         </div>
-        <div className="font-mono text-xs text-red-400 uppercase tracking-widest mb-2">410 GONE</div>
+        <div className="font-mono text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-2">410 GONE</div>
         <h1 className="font-heading text-3xl md:text-5xl font-bold text-text mb-4 uppercase">
           PAGE PERMANENTLY REMOVED
         </h1>

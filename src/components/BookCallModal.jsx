@@ -150,9 +150,9 @@ export default function BookCallModal() {
 
           {/* Success Alert */}
           {successMsg ? (
-            <div className="py-8 px-4 text-center border border-emerald-500/40 bg-emerald-500/10 rounded-sm space-y-4">
-              <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
-              <h3 className="font-heading text-lg font-bold uppercase text-emerald-300">
+            <div className="py-8 px-4 text-center border border-black dark:border-white bg-black/[0.03] dark:bg-white/[0.05] rounded-none space-y-4">
+              <CheckCircle2 className="w-12 h-12 text-black dark:text-white mx-auto" />
+              <h3 className="font-heading text-lg font-bold uppercase text-black dark:text-white">
                 SESSION SCHEDULED
               </h3>
               <p className="text-sm text-[var(--color-text)] max-w-md mx-auto leading-relaxed">
@@ -169,8 +169,8 @@ export default function BookCallModal() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-0">
               {errorMsg && (
-                <div className="mb-5 p-3 border-l-4 border-rose-500 bg-rose-500/10 text-xs text-rose-300 flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+                <div className="mb-5 p-3 border-l-4 border-neutral-600 dark:border-neutral-400 bg-black/[0.03] dark:bg-white/[0.05] text-xs text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 text-neutral-600 dark:text-neutral-400" />
                   <span>{errorMsg}</span>
                 </div>
               )}

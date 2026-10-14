@@ -4,50 +4,64 @@ import { initialSeedData } from '../data/seedData.js';
 
 const { Pool } = pg;
 
-const CANONICAL_SUPABASE_POOLER_URL = 'postgresql://postgres.xkvdyeruawdvkownbnam:Smrikaam!123%40321!@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
-
 class PostgresService {
   constructor() {
     this.pool = null;
     this.isConnected = false;
     this.connectionError = null;
+    this.migrationsRan = false;
+    this.hasConfig = false;
+    this.configSource = null;
     this.init();
   }
 
   init() {
     const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
-    const connectionString = process.env.DATABASE_URL ||
-      process.env.DIRECT_URL ||
-      process.env.POSTGRES_URL ||
-      process.env.POSTGRES_PRISMA_URL ||
-      process.env.POSTGRES_URL_NON_POOLING ||
-      process.env.SUPABASE_DATABASE_URL ||
-      CANONICAL_SUPABASE_POOLER_URL;
 
-    if (connectionString) {
-      console.log('DATABASE_URL: configured');
-    } else {
-      console.warn('DATABASE_URL is not configured.');
+    // Check environment variables in priority order
+    let connectionString = null;
+    let sourceKey = null;
+
+    const candidateKeys = [
+      'DATABASE_URL',
+      'DIRECT_URL',
+      'POSTGRES_URL',
+      'POSTGRES_PRISMA_URL',
+      'POSTGRES_URL_NON_POOLING',
+      'SUPABASE_DATABASE_URL'
+    ];
+
+    for (const key of candidateKeys) {
+      if (process.env[key] && process.env[key].trim()) {
+        connectionString = process.env[key].trim();
+        sourceKey = key;
+        break;
+      }
     }
 
-    let finalConnString = connectionString || CANONICAL_SUPABASE_POOLER_URL;
-
-    // Direct Supabase hostname db.<ref>.supabase.co is IPv6-only.
-    // In IPv4-only serverless cloud environments like Vercel (AWS Lambda), route through the official IPv4 Supabase pooler.
-    if (finalConnString.includes('db.xkvdyeruawdvkownbnam.supabase.co')) {
-      finalConnString = CANONICAL_SUPABASE_POOLER_URL;
+    if (!connectionString) {
+      this.hasConfig = false;
+      this.configSource = null;
+      this.isConnected = false;
+      this.pool = null;
+      console.log('PostgreSQL: No database connection string provided in environment (DATABASE_URL is not set). PostgreSQL integration is disabled; using verified local storage.');
+      return;
     }
+
+    this.hasConfig = true;
+    this.configSource = sourceKey;
+    console.log(`DATABASE_URL: configured (from process.env.${sourceKey})`);
 
     // Determine SSL requirement for Supabase / production
-    const isSupabase = finalConnString.includes('supabase') || finalConnString.includes('sslmode=require');
-    const sslConfig = (isProd || isSupabase || !finalConnString.includes('localhost'))
+    const isSupabase = connectionString.includes('supabase') || connectionString.includes('sslmode=require');
+    const sslConfig = (isProd || isSupabase || !connectionString.includes('localhost'))
       ? { rejectUnauthorized: false }
       : false;
 
     try {
       if (!this.pool) {
         this.pool = new Pool({
-          connectionString: finalConnString,
+          connectionString,
           ssl: sslConfig,
           connectionTimeoutMillis: 5000,
           idleTimeoutMillis: 30000,
@@ -70,7 +84,7 @@ class PostgresService {
   }
 
   async testConnection() {
-    if (!this.pool) return false;
+    if (!this.pool || !this.hasConfig) return false;
     try {
       const client = await this.pool.connect();
       const res = await client.query('SELECT NOW()');
@@ -78,7 +92,7 @@ class PostgresService {
       this.isConnected = true;
       this.connectionError = null;
       console.log('✓ PostgreSQL Database Connected Successfully at:', res.rows[0].now);
-      
+
       // Auto run migrations and seeds
       await this.runMigrations();
       return true;
@@ -90,7 +104,8 @@ class PostgresService {
   }
 
   async runMigrations() {
-    if (!this.isConnected) return;
+    if (!this.isConnected || this.migrationsRan) return;
+    this.migrationsRan = true;
     try {
       await this.query(`
         CREATE TABLE IF NOT EXISTS admin_users (
@@ -327,7 +342,7 @@ class PostgresService {
   }
 
   ensurePool() {
-    if (!this.pool) {
+    if (!this.pool && this.hasConfig) {
       this.init();
     }
     return this.pool;
@@ -335,7 +350,7 @@ class PostgresService {
 
   async query(text, params) {
     const pool = this.ensurePool();
-    if (!pool) throw new Error('PostgreSQL Pool not initialized');
+    if (!pool) throw new Error('PostgreSQL Pool not initialized (no connection configuration provided in environment)');
     try {
       const res = await pool.query(text, params);
       this.isConnected = true;
@@ -350,16 +365,21 @@ class PostgresService {
 
   getStatus() {
     let hostName = process.env.PGHOST || 'localhost';
-    if (process.env.DATABASE_URL) {
+    const connStr = process.env.DATABASE_URL || process.env.DIRECT_URL || process.env.POSTGRES_URL;
+    if (connStr) {
       try {
-        const url = new URL(process.env.DATABASE_URL.replace(/^postgres:/, 'http:').replace(/^postgresql:/, 'http:'));
+        const url = new URL(connStr.replace(/^postgres:/, 'http:').replace(/^postgresql:/, 'http:'));
         hostName = url.hostname || 'remote-supabase';
       } catch {
         hostName = 'configured-database-url';
       }
+    } else {
+      hostName = 'not-configured';
     }
     return {
       engine: 'PostgreSQL',
+      configured: this.hasConfig,
+      configSource: this.configSource,
       connected: this.isConnected,
       host: hostName,
       port: process.env.PGPORT || 5432,

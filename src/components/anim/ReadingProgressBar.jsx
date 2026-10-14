@@ -25,7 +25,7 @@ export default function ReadingProgressBar() {
   return (
     <div className="fixed top-0 left-0 right-0 h-[3px] z-[100] bg-transparent pointer-events-none">
       <div
-        className="h-full bg-accent transition-all duration-75 ease-out shadow-[0_0_8px_rgba(0,98,204,0.6)]"
+        className="h-full bg-black dark:bg-white transition-all duration-75 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>

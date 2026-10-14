@@ -291,6 +291,83 @@ createResourceRoutes('reports', 'reports');
 createResourceRoutes('staffing', 'staffing');
 createResourceRoutes('locations', 'locations');
 
+// Settings endpoints (eliminates 404 on /settings)
+router.get('/settings', async (req, res) => {
+  try {
+    const defaultSettings = {
+      siteName: 'SMRIKAAM Technologies',
+      contactEmail: 'contact@smrikaam.com',
+      contactPhone: '+91 91506 84601',
+      address: 'No. 19, Nataraj Nagar, Koundampalayam, Coimbatore, Tamil Nadu 641030, India'
+    };
+    if (db.usePostgres && db.usePostgres()) {
+      try {
+        const result = await postgres.query("SELECT value FROM settings WHERE key = 'site_config' LIMIT 1");
+        if (result.rows.length > 0 && result.rows[0].value) {
+          return res.json({ ...defaultSettings, ...result.rows[0].value });
+        }
+      } catch (e) {}
+    }
+    res.json(defaultSettings);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch settings' });
+  }
+});
+
+router.put('/settings', requireAdminAuth, async (req, res) => {
+  try {
+    const settings = req.body || {};
+    if (db.usePostgres && db.usePostgres()) {
+      try {
+        await postgres.query(
+          "INSERT INTO settings (key, value, updated_at) VALUES ('site_config', $1, NOW()) ON CONFLICT (key) DO UPDATE SET value = $1, updated_at = NOW()",
+          [JSON.stringify(settings)]
+        );
+      } catch (e) {}
+    }
+    res.json({ success: true, settings });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update settings' });
+  }
+});
+
+// Unified high-performance endpoint to fetch all published collections in one single HTTP round-trip
+router.get('/public-collections', async (req, res) => {
+  try {
+    const [services, accelerators, industries, caseStudies, posts, reports, staffing, locations] = await Promise.all([
+      db.getAll('services', { status: 'published', sort: 'newest' }).catch(() => []),
+      db.getAll('accelerators', { status: 'published', sort: 'newest' }).catch(() => []),
+      db.getAll('industries', { status: 'published', sort: 'newest' }).catch(() => []),
+      db.getAll('caseStudies', { status: 'published', sort: 'newest' }).catch(() => []),
+      db.getAll('posts', { status: 'published', sort: 'newest' }).catch(() => []),
+      db.getAll('reports', { status: 'published', sort: 'newest' }).catch(() => []),
+      db.getAll('staffing', { status: 'published', sort: 'newest' }).catch(() => []),
+      db.getAll('locations', { status: 'published', sort: 'newest' }).catch(() => [])
+    ]);
+
+    const defaultSettings = {
+      siteName: 'SMRIKAAM Technologies',
+      contactEmail: 'contact@smrikaam.com',
+      contactPhone: '+91 91506 84601',
+      address: 'No. 19, Nataraj Nagar, Koundampalayam, Coimbatore, Tamil Nadu 641030, India'
+    };
+
+    res.json({
+      services: services || [],
+      accelerators: accelerators || [],
+      industries: industries || [],
+      caseStudies: caseStudies || [],
+      posts: posts || [],
+      reports: reports || [],
+      staffing: staffing || [],
+      locations: locations || [],
+      settings: defaultSettings
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch public collections' });
+  }
+});
+
 // ============================================================
 // 3. MEDIA UPLOAD & LIBRARY
 // ============================================================

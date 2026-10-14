@@ -24,10 +24,10 @@
         "Python"
       ],
       "author": "SMRIKAAM Core Engineering",
-      "status": "published",
+      "status": "draft",
       "id": "pos_1787826861055_2vur",
       "created_at": "2026-08-27T10:34:21.055Z",
-      "updated_at": "2026-08-28T06:33:29.423Z",
+      "updated_at": "2026-10-14T12:08:10.731Z",
       "published_at": "2026-08-27T10:34:21.055Z"
     },
     {
@@ -593,9 +593,10 @@
       "caseStudy": "Intelligent Document & Workflow Automation",
       "caseStudySlug": "case-studies",
       "cover_image_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1200&auto=format&fit=crop",
-      "status": "draft",
+      "status": "published",
       "display_order": 10,
-      "updated_at": "2026-09-03T09:22:42.494Z"
+      "updated_at": "2026-10-14T09:42:29.267Z",
+      "published_at": "2026-10-14T09:42:29.267Z"
     }
   ],
   "accelerators": [
@@ -1440,6 +1441,54 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log_1791971009678_l4ey",
+      "date": "14 OCT",
+      "title": "Created post: \"dsfkdnjdbhvdfvc\"",
+      "description": "Status: published by BitXhift SuperAdmin",
+      "type": "posts_create",
+      "timestamp": "2026-10-14T09:43:29.678Z"
+    },
+    {
+      "id": "log_1791971007562_vjcg",
+      "date": "14 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-10-14T09:43:27.562Z"
+    },
+    {
+      "id": "log_1791970045030_di8l",
+      "date": "14 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-10-14T09:27:25.030Z"
+    },
+    {
+      "id": "log_1791970020831_2tsx",
+      "date": "14 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-10-14T09:27:00.831Z"
+    },
+    {
+      "id": "log_1791968787655_d2m8",
+      "date": "14 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-10-14T09:06:27.655Z"
+    },
+    {
+      "id": "log_1791968354952_i3mg",
+      "date": "14 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-10-14T08:59:14.952Z"
+    },
     {
       "id": "log_1789126480695_chks",
       "date": "11 SEP",

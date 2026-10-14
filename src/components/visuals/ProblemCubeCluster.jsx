@@ -123,7 +123,7 @@ export default function ProblemCubeCluster({
         ctx.lineTo(proj[j].px, proj[j].py);
         ctx.strokeStyle = isDark
           ? 'rgba(255, 255, 255, 0.75)'
-          : 'rgba(15, 23, 42, 0.65)';
+          : 'rgba(0, 0, 0, 0.65)';
         ctx.lineWidth = 1.2;
         ctx.stroke();
       });
@@ -135,7 +135,7 @@ export default function ProblemCubeCluster({
         ctx.lineTo(projInner[j].px, projInner[j].py);
         ctx.strokeStyle = isDark
           ? 'rgba(255, 255, 255, 0.30)'
-          : 'rgba(15, 23, 42, 0.25)';
+          : 'rgba(0, 0, 0, 0.25)';
         ctx.lineWidth = 0.8;
         ctx.stroke();
       });
@@ -146,7 +146,7 @@ export default function ProblemCubeCluster({
         ctx.arc(p.px, p.py, 2.0, 0, Math.PI * 2);
         ctx.fillStyle = isDark
           ? 'rgba(255, 255, 255, 0.95)'
-          : 'rgba(15, 23, 42, 0.90)';
+          : 'rgba(0, 0, 0, 0.90)';
         ctx.fill();
       });
 
@@ -170,4 +170,3 @@ export default function ProblemCubeCluster({
     </div>
   );
 }
-

@@ -45,7 +45,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
       // Images: ![alt](url)
       .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<div class="my-4"><img src="$2" alt="$1" class="max-w-full rounded border border-[rgba(255,255,255,0.15)] shadow-md" /><p class="text-xs text-gray-400 font-mono mt-1">$1</p></div>')
       // Links: [text](url)
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-[#4fd1c5] underline hover:text-[#38b2ac]">$1</a>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-white underline hover:text-neutral-300">$1</a>')
       // Headings
       .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold font-mono text-[#f4f4f4] mt-5 mb-2">$1</h3>')
       .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold font-mono text-[#f4f4f4] mt-6 mb-3 border-b border-[rgba(255,255,255,0.12)] pb-1">$1</h2>')
@@ -53,14 +53,14 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
       // Horizontal rules
       .replace(/^---$/gim, '<hr class="my-6 border-[rgba(255,255,255,0.15)]" />')
       // Blockquotes
-      .replace(/^\> (.*$)/gim, '<blockquote class="border-l-4 border-[#4fd1c5] pl-4 py-1 my-3 bg-[#1c2333]/50 text-gray-300 italic font-mono text-sm">$1</blockquote>')
+      .replace(/^\> (.*$)/gim, '<blockquote class="border-l-4 border-white pl-4 py-1 my-3 bg-neutral-900/50 text-neutral-300 italic font-mono text-sm">$1</blockquote>')
       // Bold & Italic
       .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[#f4f4f4]">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
       // Code blocks
-      .replace(/```([^`]+)```/g, '<pre class="bg-[#0b0e14] p-3 my-3 border border-[rgba(255,255,255,0.15)] font-mono text-xs text-[#4fd1c5] overflow-x-auto"><code>$1</code></pre>')
-      .replace(/`([^`]+)`/g, '<code class="bg-[#1c2333] text-[#4fd1c5] px-1.5 py-0.5 font-mono text-xs">$1</code>')
+      .replace(/```([^`]+)```/g, '<pre class="bg-black p-3 my-3 border border-neutral-700 font-mono text-xs text-white overflow-x-auto"><code>$1</code></pre>')
+      .replace(/`([^`]+)`/g, '<code class="bg-neutral-800 text-white px-1.5 py-0.5 font-mono text-xs">$1</code>')
       // Lists
       .replace(/^\- (.*$)/gim, '<li class="ml-4 list-disc text-gray-300 text-sm">$1</li>')
       // Paragraphs
@@ -187,7 +187,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           onClick={() => setPreviewMode(!previewMode)}
           className={`flex items-center gap-1.5 px-3 py-1 text-xs font-mono uppercase tracking-wider transition-colors border cursor-pointer ${
             previewMode
-              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 font-bold'
+              ? 'bg-white/10 text-white border-white/40 font-bold'
               : 'bg-[var(--admin-surface-hover)] text-[var(--admin-text-secondary)] hover:text-white border-[var(--admin-border)]'
           }`}
         >

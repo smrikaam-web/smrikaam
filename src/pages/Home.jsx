@@ -13,12 +13,12 @@ import {
 } from 'lucide-react';
 
 import HeroCubeCluster from '../components/visuals/HeroCubeCluster';
-import WhoWeAreCubeCluster from '../components/visuals/WhoWeAreCubeCluster';
-import Smrikaam3DCoreSection from '../components/visuals/Smrikaam3DCoreSection';
 import TechStackRibbon from '../components/TechStackRibbon';
 import AnimatedMetric from '../components/AnimatedMetric';
 import { useCMS } from '../context/CMSContext';
 import PageCTA from '../components/PageCTA';
+
+const Smrikaam3DCoreSection = React.lazy(() => import('../components/visuals/Smrikaam3DCoreSection'));
 
 export default function Home() {
   const { services: rawServices, caseStudies: rawCaseStudies } = useCMS() || {};
@@ -87,7 +87,7 @@ export default function Home() {
 
   return (
     <div className="relative z-10 w-full overflow-x-hidden bg-transparent text-[var(--color-text)] transition-colors duration-200">
-      
+
       {/* ============================================================ */}
       {/* SCROLL 0 — HERO */}
       {/* ============================================================ */}
@@ -207,9 +207,20 @@ export default function Home() {
         id="overview"
         data-scroll-label="WHO WE ARE & WHAT WE BUILD"
         aria-label="Who We Are and What We Build"
-        className="relative border-b border-[var(--color-border)]"
+        className="relative border-b border-[var(--color-border)] min-h-[360px]"
       >
-        <Smrikaam3DCoreSection />
+        <React.Suspense
+          fallback={
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 flex items-center justify-center min-h-[360px]">
+              <div className="flex items-center gap-2 font-mono text-xs text-[var(--color-text-muted)] uppercase tracking-widest">
+                <span className="w-2 h-2 bg-[var(--color-accent)] animate-pulse" />
+                <span>Loading Architecture Core...</span>
+              </div>
+            </div>
+          }
+        >
+          <Smrikaam3DCoreSection />
+        </React.Suspense>
       </section>
 
       {/* ============================================================ */}
@@ -222,7 +233,7 @@ export default function Home() {
         className="relative py-8 sm:py-10 md:py-14 px-4 sm:px-6 md:px-12 lg:px-16 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur-sm overflow-hidden"
       >
         <div className="max-w-7xl mx-auto w-full relative z-10 space-y-6">
-          
+
           {/* ======================================================== */}
           {/* 1. HEADER: BUSINESS PROBLEMS WE SOLVE */}
           {/* ======================================================== */}
@@ -234,14 +245,22 @@ export default function Home() {
           </div>
 
           {/* ======================================================== */}
+          {/* ======================================================== */}
           {/* 2. SERVICES (LTR RELAY) */}
           {/* ======================================================== */}
-          <div className="border border-[var(--color-border)] home-card-surface p-4 md:p-5 overflow-hidden">
-            <div className="flex items-center mb-3 px-1">
-              <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold uppercase text-[var(--color-accent)] tracking-tight flex items-center gap-2.5">
+          <div className="py-2 overflow-hidden">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-bold uppercase text-[var(--color-accent)] tracking-tight flex items-center gap-2.5">
                 <span className="w-1.5 h-1.5 bg-[var(--color-accent)] shrink-0" />
                 <span>SERVICES</span>
               </h3>
+              <Link
+                to="/services"
+                className="font-mono text-[11px] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] uppercase tracking-wider flex items-center gap-1 transition-colors"
+              >
+                <span>EXPLORE ALL</span>
+                <span>→</span>
+              </Link>
             </div>
 
             {/* Viewport with Continuous LTR Movement */}
@@ -251,7 +270,7 @@ export default function Home() {
                   <Link
                     key={`srv-${idx}`}
                     to={srv.path}
-                    className="px-4 py-2.5 border border-[var(--color-border)] bg-[var(--color-bg)]/90 hover:border-[var(--color-accent)] transition-all shrink-0 flex items-center gap-3.5 group select-none cursor-pointer w-[260px] sm:w-[300px]"
+                    className="px-4 py-2.5 border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] transition-all shrink-0 flex items-center gap-3.5 group select-none cursor-pointer w-[260px] sm:w-[300px]"
                   >
                     <span className="font-mono text-[11px] text-[var(--color-accent)] font-bold shrink-0">
                       {srv.num}
@@ -278,21 +297,26 @@ export default function Home() {
           {/* ======================================================== */}
           {/* 3. BUSINESS PROBLEMS CARDS */}
           {/* ======================================================== */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 my-2">
             {problems.map((prob) => (
               <div
                 key={prob.title}
-                className="p-3 sm:p-4 border border-[var(--color-border)] home-card-surface hover:border-[var(--color-border-strong)] transition-all duration-300 flex flex-col justify-between"
+                className="p-4 sm:p-5 border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] transition-all duration-200 flex flex-col justify-between"
               >
-                <h3 className="font-heading text-sm sm:text-base font-bold uppercase tracking-tight text-[var(--color-text)] mb-3">
-                  {prob.title}
-                </h3>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-1.5 h-1.5 bg-[var(--color-accent)] shrink-0" />
+                  <h3 className="font-heading text-sm sm:text-base font-bold uppercase tracking-tight text-[var(--color-text)]">
+                    {prob.title}
+                  </h3>
+                </div>
                 <div className="space-y-2 border-t border-[var(--color-border)] pt-3 text-xs sm:text-[13px] font-mono">
-                  <div className="text-[var(--color-text-secondary)] font-normal leading-relaxed">
-                    {prob.point1}
+                  <div className="text-[var(--color-text-secondary)] font-normal leading-relaxed flex items-start gap-1.5">
+                    <span className="text-[var(--color-accent)]">›</span>
+                    <span>{prob.point1}</span>
                   </div>
-                  <div className="text-[var(--color-text-secondary)] font-normal leading-relaxed">
-                    {prob.point2}
+                  <div className="text-[var(--color-text-secondary)] font-normal leading-relaxed flex items-start gap-1.5">
+                    <span className="text-[var(--color-accent)]">›</span>
+                    <span>{prob.point2}</span>
                   </div>
                 </div>
               </div>
@@ -302,12 +326,19 @@ export default function Home() {
           {/* ======================================================== */}
           {/* 4. CASE STUDIES (RTL RELAY) */}
           {/* ======================================================== */}
-          <div className="border border-[var(--color-border)] home-card-surface p-4 md:p-5 overflow-hidden">
-            <div className="flex items-center mb-3 px-1">
-              <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold uppercase text-[var(--color-accent)] tracking-tight flex items-center gap-2.5">
+          <div className="py-2 overflow-hidden">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-bold uppercase text-[var(--color-accent)] tracking-tight flex items-center gap-2.5">
                 <span className="w-1.5 h-1.5 bg-[var(--color-accent)] shrink-0" />
                 <span>CASE STUDIES</span>
               </h3>
+              <Link
+                to="/case-studies"
+                className="font-mono text-[11px] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] uppercase tracking-wider flex items-center gap-1 transition-colors"
+              >
+                <span>VIEW ALL</span>
+                <span>→</span>
+              </Link>
             </div>
 
             {/* Viewport with Continuous RTL Movement */}
@@ -317,14 +348,18 @@ export default function Home() {
                   <Link
                     key={`cs-${idx}`}
                     to={cs.path}
-                    className="p-3.5 border border-[var(--color-border)] bg-[var(--color-bg)]/90 hover:border-[var(--color-accent)] transition-all shrink-0 flex gap-3.5 group select-none cursor-pointer w-[300px] sm:w-[380px]"
+                    className="p-3.5 border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] transition-all shrink-0 flex gap-3.5 group select-none cursor-pointer w-[300px] sm:w-[380px]"
                   >
                     {/* Image / Thumbnail */}
                     <div className="w-16 sm:w-20 aspect-square border border-[var(--color-border)] overflow-hidden shrink-0 bg-black/5 dark:bg-white/5 relative">
                       {cs.image ? (
                         <img
                           src={cs.image}
-                          alt=""
+                          alt={cs.title || ''}
+                          loading="lazy"
+                          decoding="async"
+                          width="80"
+                          height="80"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';

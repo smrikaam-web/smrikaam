@@ -127,7 +127,7 @@ export default function WhoWeAreCubeCluster({ className = '' }) {
           ctx.lineTo(proj[j].px, proj[j].py);
           ctx.strokeStyle = isDark
             ? cube.isCore ? 'rgba(255, 255, 255, 0.90)' : 'rgba(255, 255, 255, 0.50)'
-            : cube.isCore ? 'rgba(15, 23, 42, 0.85)' : 'rgba(15, 23, 42, 0.48)';
+            : cube.isCore ? 'rgba(0, 0, 0, 0.85)' : 'rgba(0, 0, 0, 0.48)';
           ctx.lineWidth = cube.isCore ? 1.4 : 1.0;
           ctx.stroke();
         });
@@ -156,4 +156,3 @@ export default function WhoWeAreCubeCluster({ className = '' }) {
     </div>
   );
 }
-

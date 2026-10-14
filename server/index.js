@@ -54,12 +54,12 @@ app.get([
   <meta name="robots" content="noindex, nofollow">
   <title>410 Gone - Page Removed | SMRIKAAM Technologies</title>
   <style>
-    body { font-family: system-ui, sans-serif; background: #0a0c10; color: #f3f4f6; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
-    .container { max-width: 600px; padding: 2rem; border: 1px solid #1f2937; border-radius: 8px; background: #111827; }
-    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #ef4444; }
-    p { color: #9ca3af; font-size: 1rem; margin-bottom: 1.5rem; }
-    a { display: inline-block; background: #2563eb; color: #ffffff; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; }
-    a:hover { background: #1d4ed8; }
+    body { font-family: system-ui, sans-serif; background: #000000; color: #FFFFFF; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
+    .container { max-width: 600px; padding: 2rem; border: 1px solid #333333; border-radius: 0px; background: #111111; }
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #FFFFFF; }
+    p { color: #E5E5E5; font-size: 1rem; margin-bottom: 1.5rem; }
+    a { display: inline-block; background: #FFFFFF; color: #000000; padding: 0.75rem 1.5rem; border-radius: 0px; text-decoration: none; font-weight: 600; border: 1px solid #FFFFFF; }
+    a:hover { background: #000000; color: #FFFFFF; border: 1px solid #FFFFFF; }
   </style>
 </head>
 <body>
@@ -96,7 +96,9 @@ if (fs.existsSync(distIndexPath)) {
 // Start listening if executed directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   (async () => {
-    await postgres.testConnection();
+    if (postgres.hasConfig) {
+      await postgres.testConnection();
+    }
     app.listen(PORT, () => {
       console.log(`SMRIKAAM Central CMS API Server running on port ${PORT}`);
       console.log(`Persistent File Storage at: ${UPLOADS_DIR}`);

@@ -217,7 +217,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
       );
     } else if (status === 'trash') {
       return (
-        <span className="bg-rose-950/80 text-rose-300 border border-rose-500/50 px-2 py-0.5 text-[11px] font-mono flex items-center gap-1 w-fit">
+        <span className="bg-transparent text-neutral-400 border border-neutral-700 px-2 py-0.5 text-[11px] font-mono flex items-center gap-1 w-fit">
           <Trash2 className="w-3 h-3" /> In Trash
         </span>
       );
@@ -232,12 +232,12 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
   return (
     <div className="admin-theme space-y-6">
       {/* Header Bar */}
-      <div className="border-b border-[rgba(255,255,255,0.15)] pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="border-b border-neutral-800 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
+          <div className="font-mono text-xs text-white uppercase tracking-widest mb-1">
             CONTENT MANAGEMENT — {resource.toUpperCase()}
           </div>
-          <h1 className="font-heading text-3xl font-bold uppercase text-[#f4f4f4]">
+          <h1 className="font-heading text-3xl font-bold uppercase text-white">
             MANAGE {title}
           </h1>
         </div>
@@ -250,7 +250,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
       </div>
 
       {/* Filter, Search & Bulk Actions Bar */}
-      <div className="bg-[#141924] border border-[rgba(255,255,255,0.15)] p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-[#111111] border border-neutral-800 p-4 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Status Filter Tabs */}
         <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto">
           {['all', 'published', 'draft', 'archived', 'trash'].map((st) => (
@@ -259,8 +259,8 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
               onClick={() => setStatusFilter(st)}
               className={`px-3 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors ${
                 statusFilter === st
-                  ? 'bg-[#4fd1c5] text-[#0b0e14] font-bold'
-                  : 'bg-[#1c2333] text-gray-300 hover:text-white'
+                  ? 'bg-white text-black font-bold'
+                  : 'bg-black text-neutral-300 hover:text-white'
               }`}
             >
               {st === 'all' ? 'All Records' : st.toUpperCase()}
@@ -270,29 +270,29 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
 
         {/* Search */}
         <div className="relative w-full md:w-72">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={`Search ${title.toLowerCase()}...`}
-            className="input w-full pl-9 py-1.5 text-xs bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+            className="input w-full pl-9 py-1.5 text-xs bg-black border-neutral-700 text-white"
           />
         </div>
       </div>
 
       {/* Bulk Actions Banner */}
       {selectedIds.length > 0 && (
-        <div className="bg-[#1c2333] border border-[#4fd1c5]/40 p-3 flex items-center justify-between font-mono text-xs text-[#f4f4f4]">
+        <div className="bg-neutral-900 border border-neutral-700 p-3 flex items-center justify-between font-mono text-xs text-white">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-[#4fd1c5]">{selectedIds.length}</span> items selected
+            <span className="font-bold text-white">{selectedIds.length}</span> items selected
           </div>
           <div className="flex items-center gap-2">
             {statusFilter !== 'published' && (
               <button
                 type="button"
                 onClick={() => handleBulk('publish')}
-                className="px-2.5 py-1 bg-emerald-900/60 hover:bg-emerald-800 text-emerald-200 border border-emerald-500/50"
+                className="px-2.5 py-1 bg-white hover:bg-neutral-200 text-black border border-white font-bold"
               >
                 Bulk Publish
               </button>
@@ -301,7 +301,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
               <button
                 type="button"
                 onClick={() => handleBulk('unpublish')}
-                className="px-2.5 py-1 bg-amber-900/60 hover:bg-amber-800 text-amber-200 border border-amber-500/50"
+                className="px-2.5 py-1 bg-transparent hover:bg-neutral-800 text-neutral-300 border border-neutral-600"
               >
                 Bulk Unpublish
               </button>
@@ -310,7 +310,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
               <button
                 type="button"
                 onClick={() => handleBulk('restore')}
-                className="px-2.5 py-1 bg-blue-900/60 hover:bg-blue-800 text-blue-200 border border-blue-500/50"
+                className="px-2.5 py-1 bg-neutral-800 hover:bg-neutral-700 text-white border border-neutral-600"
               >
                 Bulk Restore
               </button>
@@ -318,7 +318,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
               <button
                 type="button"
                 onClick={() => handleBulk('trash')}
-                className="px-2.5 py-1 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-500/50"
+                className="px-2.5 py-1 bg-neutral-900 hover:bg-neutral-800 text-neutral-400 border border-neutral-700 hover:text-white"
               >
                 Move to Trash
               </button>
@@ -329,7 +329,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
 
       {/* Content Table */}
       {loading ? (
-        <div className="font-mono text-sm text-[#9aa3b5] py-16 text-center">
+        <div className="font-mono text-sm text-neutral-400 py-16 text-center">
           LOADING_{resource.toUpperCase()}...
         </div>
       ) : (
@@ -339,9 +339,9 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
               <thead>
                 <tr>
                   <th className="w-10">
-                    <button type="button" onClick={toggleSelectAll} className="text-gray-400 hover:text-white">
+                    <button type="button" onClick={toggleSelectAll} className="text-neutral-400 hover:text-white">
                       {selectedIds.length === items.length && items.length > 0 ? (
-                        <CheckSquare className="w-4 h-4 text-[#4fd1c5]" />
+                        <CheckSquare className="w-4 h-4 text-white" />
                       ) : (
                         <Square className="w-4 h-4" />
                       )}
@@ -357,7 +357,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
               <tbody>
                 {items.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="text-center font-mono text-xs text-[#9aa3b5] py-12">
+                    <td colSpan="6" className="text-center font-mono text-xs text-neutral-400 py-12">
                       NO RECORDS FOUND FOR CURRENT FILTER.
                     </td>
                   </tr>
@@ -365,31 +365,31 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                   items.map((item) => {
                     const isSelected = selectedIds.includes(item.id);
                     return (
-                      <tr key={item.id} className={isSelected ? 'bg-[#1c2333]/80' : ''}>
+                      <tr key={item.id} className={isSelected ? 'bg-neutral-900/80' : ''}>
                         <td>
-                          <button type="button" onClick={() => toggleSelect(item.id)} className="text-gray-400 hover:text-white">
+                          <button type="button" onClick={() => toggleSelect(item.id)} className="text-neutral-400 hover:text-white">
                             {isSelected ? (
-                              <CheckSquare className="w-4 h-4 text-[#4fd1c5]" />
+                              <CheckSquare className="w-4 h-4 text-white" />
                             ) : (
                               <Square className="w-4 h-4" />
                             )}
                           </button>
                         </td>
                         <td>
-                          <div className="font-semibold text-[#f4f4f4]">
+                          <div className="font-semibold text-white">
                             {item.title || item.name || 'Untitled'}
                           </div>
                           {item.category && (
-                            <span className="font-mono text-[10px] text-[#4fd1c5] bg-[#1c2333] px-1.5 py-0.5 mt-0.5 inline-block">
+                            <span className="font-mono text-[10px] text-white bg-black border border-neutral-700 px-1.5 py-0.5 mt-0.5 inline-block">
                               {item.category}
                             </span>
                           )}
                         </td>
-                        <td className="font-mono text-xs text-[#9aa3b5]">
+                        <td className="font-mono text-xs text-neutral-400">
                           /{resource === 'posts' ? 'blog' : resource}/{cleanSlug(item.slug)}
                         </td>
                         <td>{renderStatusBadge(item.status)}</td>
-                        <td className="font-mono text-xs text-[#9aa3b5]">
+                        <td className="font-mono text-xs text-neutral-400">
                           {new Date(item.updated_at || item.created_at).toLocaleDateString()}
                         </td>
                         <td className="text-right">
@@ -399,7 +399,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                                 <button
                                   type="button"
                                   onClick={() => handleRestore(item.id)}
-                                  className="admin-btn text-xs py-1 px-2 text-emerald-400 hover:text-emerald-200 border-emerald-500/40"
+                                  className="admin-btn text-xs py-1 px-2 text-white hover:text-neutral-200 border-neutral-600"
                                   title="Restore"
                                 >
                                   <RotateCcw className="w-3.5 h-3.5 inline mr-1" /> Restore
@@ -407,7 +407,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                                 <button
                                   type="button"
                                   onClick={() => handleDelete(item.id, true)}
-                                  className="admin-btn text-xs py-1 px-2 text-rose-400 hover:text-rose-200 border-rose-500/40"
+                                  className="admin-btn text-xs py-1 px-2 text-neutral-400 hover:text-white border-neutral-700"
                                   title="Permanently Delete"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
@@ -418,7 +418,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                                 <select
                                   value={item.status}
                                   onChange={(e) => handleStatusChange(item.id, e.target.value)}
-                                  className="bg-[#1c2333] text-xs font-mono text-[#f4f4f4] border border-[rgba(255,255,255,0.25)] px-2 py-1 focus:border-[#4fd1c5]"
+                                  className="bg-black text-xs font-mono text-white border border-neutral-700 px-2 py-1 focus:border-white"
                                 >
                                   <option value="draft">Draft</option>
                                   <option value="published">Publish</option>
@@ -428,7 +428,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                                 <button
                                   type="button"
                                   onClick={() => openEditModal(item)}
-                                  className="admin-btn p-1.5 text-[#f4f4f4]"
+                                  className="admin-btn p-1.5 text-white"
                                   title="Edit"
                                 >
                                   <Edit2 className="w-3.5 h-3.5" />
@@ -437,7 +437,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                                 <button
                                   type="button"
                                   onClick={() => handleDelete(item.id, false)}
-                                  className="admin-btn p-1.5 text-rose-400 hover:text-rose-200 border-rose-500/40"
+                                  className="admin-btn p-1.5 text-neutral-400 hover:text-white border-neutral-700"
                                   title="Move to Trash"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
@@ -467,7 +467,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
 
               {/* Import DOCX / PDF helper */}
               <div className="flex items-center gap-2">
-                <label className="admin-btn text-xs py-1.5 px-3 cursor-pointer bg-[#1c2333] hover:bg-[#273248] text-[#4fd1c5] border-[#4fd1c5]/40 flex items-center gap-1.5">
+                <label className="admin-btn text-xs py-1.5 px-3 cursor-pointer bg-black hover:bg-neutral-900 text-white border-neutral-700 flex items-center gap-1.5">
                   <Upload className="w-3.5 h-3.5" />
                   <span>{importingDoc ? 'EXTRACTING...' : 'IMPORT DOCX / PDF'}</span>
                   <input
@@ -479,14 +479,14 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                   />
                 </label>
 
-                <button onClick={() => setModalOpen(false)} className="text-[#9aa3b5] hover:text-[#f4f4f4]">
+                <button onClick={() => setModalOpen(false)} className="text-neutral-400 hover:text-white">
                   <X className="w-5 h-5" />
                 </button>
               </div>
             </div>
 
             {errorMsg && (
-              <div className="my-4 p-3 bg-rose-950/90 border border-rose-500 text-rose-200 font-mono text-xs">
+              <div className="my-4 p-3 bg-black border border-white text-white font-mono text-xs">
                 {errorMsg}
               </div>
             )}
@@ -498,7 +498,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                 if (field.type === 'richtext' || field.name === 'content') {
                   return (
                     <div key={field.name} className="field">
-                      <label className="text-xs font-mono text-[#9aa3b5] uppercase mb-1 block">
+                      <label className="text-xs font-mono text-neutral-300 uppercase mb-1 block">
                         {field.label} {field.required ? '*' : ''}
                       </label>
                       <RichEditor
@@ -513,7 +513,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                 if (field.type === 'textarea') {
                   return (
                     <div key={field.name} className="field">
-                      <label className="text-xs font-mono text-[#9aa3b5] uppercase mb-1 block">
+                      <label className="text-xs font-mono text-neutral-300 uppercase mb-1 block">
                         {field.label} {field.required ? '*' : ''}
                       </label>
                       <textarea
@@ -521,7 +521,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                         required={field.required}
                         value={val || ''}
                         onChange={(e) => handleInputChange(field.name, e.target.value)}
-                        className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.25)] text-[#f4f4f4]"
+                        className="input w-full bg-black border-neutral-700 text-white"
                         placeholder={field.placeholder || ''}
                       />
                     </div>
@@ -532,14 +532,14 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                   const arrString = Array.isArray(val) ? val.join(', ') : (val || '');
                   return (
                     <div key={field.name} className="field">
-                      <label className="text-xs font-mono text-[#9aa3b5] uppercase mb-1 block">
+                      <label className="text-xs font-mono text-neutral-300 uppercase mb-1 block">
                         {field.label} (Comma-separated)
                       </label>
                       <input
                         type="text"
                         value={arrString}
                         onChange={(e) => handleArrayChange(field.name, e.target.value)}
-                        className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.25)] text-[#f4f4f4]"
+                        className="input w-full bg-black border-neutral-700 text-white"
                         placeholder={field.placeholder || 'e.g. Item 1, Item 2, Item 3'}
                       />
                     </div>
@@ -549,13 +549,13 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                 if (field.type === 'select') {
                   return (
                     <div key={field.name} className="field">
-                      <label className="text-xs font-mono text-[#9aa3b5] uppercase mb-1 block">
+                      <label className="text-xs font-mono text-neutral-300 uppercase mb-1 block">
                         {field.label}
                       </label>
                       <select
                         value={val || ''}
                         onChange={(e) => handleInputChange(field.name, e.target.value)}
-                        className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.25)] text-[#f4f4f4]"
+                        className="input w-full bg-black border-neutral-700 text-white"
                       >
                         {field.options.map((opt) => (
                           <option key={opt.value} value={opt.value}>
@@ -569,7 +569,7 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
 
                 return (
                   <div key={field.name} className="field">
-                    <label className="text-xs font-mono text-[#9aa3b5] uppercase mb-1 block">
+                    <label className="text-xs font-mono text-neutral-300 uppercase mb-1 block">
                       {field.label} {field.required ? '*' : ''}
                     </label>
                     <input
@@ -577,10 +577,10 @@ export default function AdminContentManager({ resource, title, fields, defaultSt
                       required={field.required}
                       value={val || ''}
                       onChange={(e) => handleInputChange(field.name, e.target.value)}
-                      className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.25)] text-[#f4f4f4]"
+                      className="input w-full bg-black border-neutral-700 text-white"
                       placeholder={field.placeholder || ''}
                     />
-                    {field.help && <span className="font-mono text-[10px] text-[#9aa3b5] block mt-0.5">{field.help}</span>}
+                    {field.help && <span className="font-mono text-[10px] text-neutral-400 block mt-0.5">{field.help}</span>}
                   </div>
                 );
               })}

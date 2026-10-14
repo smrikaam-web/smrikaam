@@ -20,7 +20,7 @@ import {
 
 /**
  * Smrikaam3DCoreSection
- * 
+ *
  * High-precision architectural engineering intelligence core visual system.
  * Single unified JSX structure with responsive Tailwind modifiers:
  * - Desktop (>= 1024px): 100% Original Spatial composition (Left/Center/Right 3-column + SVG Trace network).
@@ -153,7 +153,7 @@ export default function Smrikaam3DCoreSection() {
     const dark = document.documentElement.classList.contains('dark');
 
     const strokeMain = dark ? 'rgba(255, 255, 255, 0.75)' : 'rgba(20, 20, 20, 0.75)';
-    const strokeCore = dark ? 'rgba(255, 255, 255, 0.95)' : 'rgba(15, 23, 42, 0.95)';
+    const strokeCore = dark ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.95)';
     const strokeFaint = dark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(20, 20, 20, 0.14)';
     const strokeStrut = dark ? 'rgba(255, 255, 255, 0.28)' : 'rgba(20, 20, 20, 0.22)';
     const faceOuter = dark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.03)';
@@ -161,7 +161,7 @@ export default function Smrikaam3DCoreSection() {
     const glowAura = dark
       ? `rgba(255, 255, 255, ${0.06 + spinBoost * 0.08})`
       : `rgba(0, 0, 0, ${0.04 + spinBoost * 0.06})`;
-    const nodeColor = dark ? '#ffffff' : '#0f172a';
+    const nodeColor = dark ? '#ffffff' : '#000000';
 
     const scaleFactor = Math.min(width, height) / 380;
     const sOuter = 72 * scaleFactor;

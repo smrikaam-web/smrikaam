@@ -1,5 +1,7 @@
 User-agent: *
 Disallow: /api/
+Disallow: /admin/
+Disallow: /smrikaam-admin/
 Disallow: /smk-console-x9k2m7/
 
 Sitemap: https://smrikaam.com/sitemap.xml

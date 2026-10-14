@@ -121,7 +121,7 @@ export default function WhatWeBuild3DNetwork({ className = '' }) {
         ctx.lineTo(projOuter[j].px, projOuter[j].py);
         ctx.strokeStyle = isDark
           ? 'rgba(255, 255, 255, 0.65)'
-          : 'rgba(15, 23, 42, 0.60)';
+          : 'rgba(0, 0, 0, 0.60)';
         ctx.lineWidth = 1.3;
         ctx.stroke();
       });
@@ -133,7 +133,7 @@ export default function WhatWeBuild3DNetwork({ className = '' }) {
         ctx.lineTo(projInner[j].px, projInner[j].py);
         ctx.strokeStyle = isDark
           ? 'rgba(255, 255, 255, 0.95)'
-          : 'rgba(15, 23, 42, 0.90)';
+          : 'rgba(0, 0, 0, 0.90)';
         ctx.lineWidth = 1.6;
         ctx.stroke();
       });
@@ -144,7 +144,7 @@ export default function WhatWeBuild3DNetwork({ className = '' }) {
         ctx.arc(p.px, p.py, 2.5, 0, Math.PI * 2);
         ctx.fillStyle = isDark
           ? 'rgba(255, 255, 255, 0.95)'
-          : 'rgba(15, 23, 42, 0.95)';
+          : 'rgba(0, 0, 0, 0.95)';
         ctx.fill();
       });
 
@@ -171,4 +171,3 @@ export default function WhatWeBuild3DNetwork({ className = '' }) {
     </div>
   );
 }
-

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import api from '../api';
-import { ADMIN_ROUTE_BASE } from '../pages/admin/AdminLayout';
+import { ADMIN_ROUTE_BASE } from '../constants/admin';
 
 export default function RequireAuth({ children }) {
   const [auth, setAuth] = useState(null);
@@ -28,7 +28,7 @@ export default function RequireAuth({ children }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0b0e14] text-[#4fd1c5] font-mono text-sm flex items-center justify-center">
+      <div className="min-h-screen bg-black text-white font-mono text-sm flex items-center justify-center">
         VERIFYING_SECURE_ADMIN_SESSION...
       </div>
     );

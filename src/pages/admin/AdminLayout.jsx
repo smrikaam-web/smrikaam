@@ -8,7 +8,8 @@ import {
 import api from '../../api';
 import Logo from '../../components/Logo';
 
-export const ADMIN_ROUTE_BASE = '/smrikaam-admin';
+import { ADMIN_ROUTE_BASE } from '../../constants/admin';
+export { ADMIN_ROUTE_BASE };
 
 export default function AdminLayout() {
   const [user, setUser] = useState(null);
@@ -126,7 +127,7 @@ export default function AdminLayout() {
           <div className="pb-5 mb-5 border-b border-[var(--admin-border)] flex items-center justify-between">
             <div>
               <Logo height={36} dark />
-              <div className="font-mono text-[10px] text-emerald-400 uppercase tracking-[0.2em] font-semibold mt-2">
+              <div className="font-mono text-[10px] text-white uppercase tracking-[0.2em] font-semibold mt-2">
                 SMRIKAAM CMS v2.0 • CENTRAL
               </div>
             </div>
@@ -156,7 +157,7 @@ export default function AdminLayout() {
                         onClick={() => setMobileNavOpen(false)}
                         className={`flex items-center justify-between px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors ${
                           active
-                            ? 'bg-[var(--admin-surface-hover)] text-emerald-400 border-l-4 border-emerald-400 font-bold'
+                            ? 'bg-[var(--admin-surface-hover)] text-white border-l-4 border-white font-bold'
                             : 'text-[var(--admin-text-secondary)] hover:text-[var(--admin-text-primary)] hover:bg-[var(--admin-surface-hover)]'
                         }`}
                       >
@@ -165,7 +166,7 @@ export default function AdminLayout() {
                           <span>{item.label}</span>
                         </div>
                         {item.badge > 0 && (
-                          <span className="px-1.5 py-0.5 text-[10px] font-bold bg-rose-500 text-white rounded-full font-sans">
+                          <span className="px-1.5 py-0.5 text-[10px] font-bold bg-white text-black rounded-full font-mono">
                             {item.badge}
                           </span>
                         )}
@@ -188,7 +189,7 @@ export default function AdminLayout() {
           )}
           <button
             onClick={handleLogout}
-            className="admin-btn w-full justify-center text-xs py-2 text-rose-400 hover:text-rose-300 hover:border-rose-500/50 cursor-pointer"
+            className="admin-btn w-full justify-center text-xs py-2 text-neutral-400 hover:text-white hover:border-white/50 cursor-pointer"
           >
             <LogOut className="w-4 h-4 inline mr-1.5" strokeWidth={1.5} /> Sign Out
           </button>

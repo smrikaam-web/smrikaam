@@ -174,16 +174,16 @@ export default function Contact() {
               </h2>
 
               {successMsg && (
-                <div className="mb-6 p-4 border-l-2 border-emerald-500 bg-black/[0.02] dark:bg-white/[0.03] text-text text-xs flex items-center gap-3 font-normal">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                  <span className="text-emerald-900 dark:text-emerald-300">{successMsg}</span>
+                <div className="mb-6 p-4 border-l-2 border-black dark:border-white bg-black/[0.02] dark:bg-white/[0.03] text-text text-xs flex items-center gap-3 font-normal">
+                  <CheckCircle2 className="w-5 h-5 text-black dark:text-white shrink-0" />
+                  <span className="text-black dark:text-white font-medium">{successMsg}</span>
                 </div>
               )}
 
               {errorMsg && (
-                <div className="mb-6 p-4 border-l-2 border-rose-500 bg-black/[0.02] dark:bg-white/[0.03] text-text text-xs flex items-center gap-3 font-normal">
-                  <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
-                  <span className="text-rose-900 dark:text-rose-300">{errorMsg}</span>
+                <div className="mb-6 p-4 border-l-2 border-neutral-600 dark:border-neutral-400 bg-black/[0.02] dark:bg-white/[0.03] text-text text-xs flex items-center gap-3 font-normal">
+                  <AlertTriangle className="w-5 h-5 text-neutral-600 dark:text-neutral-400 shrink-0" />
+                  <span className="text-neutral-900 dark:text-neutral-100 font-medium">{errorMsg}</span>
                 </div>
               )}
 

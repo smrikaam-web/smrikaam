@@ -92,7 +92,7 @@ class Database {
   }
 
   usePostgres() {
-    return Boolean(postgres.pool || postgres.isConnected || process.env.DATABASE_URL || process.env.DIRECT_URL || process.env.POSTGRES_URL);
+    return Boolean(postgres.hasConfig && (postgres.pool || postgres.isConnected));
   }
 
   getCollection(name) {
@@ -1114,4 +1114,3 @@ class Database {
 
 export const db = new Database();
 export { postgres };
-

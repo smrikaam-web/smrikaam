@@ -379,7 +379,7 @@ export default function AdminBlogManager() {
           {/* Header Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--admin-border)] pb-5">
             <div>
-              <div className="font-mono text-xs text-emerald-400 uppercase tracking-widest font-semibold mb-1">
+              <div className="font-mono text-xs text-white uppercase tracking-widest font-semibold mb-1">
                 ARTICLE MANAGEMENT
               </div>
               <h1 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-[var(--admin-text-primary)]">
@@ -390,7 +390,7 @@ export default function AdminBlogManager() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setImportModalOpen(true)}
-                className="admin-btn text-xs font-mono font-bold py-2.5 px-4 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer bg-[var(--admin-surface)] text-emerald-400 border border-emerald-500/40 hover:bg-[var(--admin-surface-hover)]"
+                className="admin-btn text-xs font-mono font-bold py-2.5 px-4 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer bg-[var(--admin-surface)] text-white border border-neutral-700 hover:bg-[var(--admin-surface-hover)]"
               >
                 <Upload className="w-4 h-4" /> IMPORT DOCX / PDF
               </button>
@@ -414,7 +414,7 @@ export default function AdminBlogManager() {
                   onClick={() => setStatusFilter(st)}
                   className={`px-3 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer ${
                     statusFilter === st
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold'
+                      ? 'bg-white/10 text-white border border-white/40 font-bold'
                       : 'text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)]'
                   }`}
                 >
@@ -431,7 +431,7 @@ export default function AdminBlogManager() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by title or category..."
-                className="w-full pl-9 pr-3 py-1.5 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none"
+                className="w-full pl-9 pr-3 py-1.5 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs text-[var(--admin-text-primary)] focus:border-white focus:outline-none"
               />
             </div>
           </div>
@@ -497,7 +497,7 @@ export default function AdminBlogManager() {
 
                         <td className="p-3.5 whitespace-nowrap">
                           {post.sourceType ? (
-                            <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] font-bold uppercase rounded-sm flex items-center gap-1 w-max">
+                            <span className="px-2 py-0.5 bg-white/10 text-white border border-neutral-700 text-[10px] font-bold uppercase rounded-sm flex items-center gap-1 w-max">
                               <FileCode className="w-3 h-3" /> {post.sourceType}
                             </span>
                           ) : (
@@ -509,10 +509,10 @@ export default function AdminBlogManager() {
                           <span
                             className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-sm ${
                               post.status === 'published'
-                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                                ? 'bg-white/10 text-white border border-white/40'
                                 : post.status === 'draft'
-                                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                                : 'bg-gray-500/20 text-gray-300 border border-gray-500/40'
+                                ? 'bg-transparent text-neutral-300 border border-neutral-600'
+                                : 'bg-transparent text-neutral-400 border border-neutral-700'
                             }`}
                           >
                             {post.status || 'draft'}
@@ -523,7 +523,7 @@ export default function AdminBlogManager() {
                           <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => handleOpenEdit(post)}
-                              className="admin-btn text-xs py-1 px-2.5 text-emerald-400 hover:text-white border-emerald-500/40 cursor-pointer"
+                              className="admin-btn text-xs py-1 px-2.5 text-white hover:text-neutral-200 border-neutral-600 cursor-pointer"
                               title="Edit Article"
                             >
                               <Edit2 className="w-3.5 h-3.5 inline mr-1" /> Edit
@@ -543,7 +543,7 @@ export default function AdminBlogManager() {
 
                             <button
                               onClick={() => handleDeletePost(post.id, false)}
-                              className="admin-btn text-xs p-1.5 text-rose-400 hover:text-rose-200 border-rose-500/40 cursor-pointer"
+                              className="admin-btn text-xs p-1.5 text-neutral-400 hover:text-white border-neutral-700 cursor-pointer"
                               title="Delete"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -582,8 +582,8 @@ export default function AdminBlogManager() {
               <span
                 className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-sm ${
                   formData.status === 'published'
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                    : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                    ? 'bg-white/10 text-white border border-white/40'
+                    : 'bg-transparent text-neutral-300 border border-neutral-600'
                 }`}
               >
                 {formData.status.toUpperCase()}
@@ -594,7 +594,7 @@ export default function AdminBlogManager() {
             <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => setImportModalOpen(true)}
-                className="admin-btn text-xs py-1.5 px-3 cursor-pointer bg-[var(--admin-surface)] hover:bg-[var(--admin-surface-hover)] text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5"
+                className="admin-btn text-xs py-1.5 px-3 cursor-pointer bg-[var(--admin-surface)] hover:bg-[var(--admin-surface-hover)] text-white border border-neutral-700 flex items-center gap-1.5"
               >
                 <Upload className="w-3.5 h-3.5" /> IMPORT DOCX / PDF
               </button>
@@ -629,15 +629,15 @@ export default function AdminBlogManager() {
 
           {/* Feedback Banners */}
           {errorMsg && (
-            <div className="p-3 bg-rose-950/90 border-l-4 border-rose-500 text-rose-200 font-mono text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+            <div className="p-3 bg-black border-l-4 border-neutral-500 text-white font-mono text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-white" />
               <span>{errorMsg}</span>
             </div>
           )}
 
           {successMsg && (
-            <div className="p-3 bg-emerald-950/90 border-l-4 border-emerald-500 text-emerald-200 font-mono text-xs flex items-center gap-2">
-              <Check className="w-4 h-4 shrink-0 text-emerald-400" />
+            <div className="p-3 bg-black border-l-4 border-white text-white font-mono text-xs flex items-center gap-2">
+              <Check className="w-4 h-4 shrink-0 text-white" />
               <span>{successMsg}</span>
             </div>
           )}
@@ -657,11 +657,11 @@ export default function AdminBlogManager() {
                   onChange={(e) => handleTitleChange(e.target.value)}
                   placeholder="Enter article title..."
                   className={`w-full bg-[var(--admin-bg)] border ${
-                    fieldErrors.title ? 'border-rose-500' : 'border-[var(--admin-border)]'
-                  } p-3.5 text-xl sm:text-2xl font-heading font-bold uppercase tracking-tight text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none transition-colors`}
+                    fieldErrors.title ? 'border-neutral-500' : 'border-[var(--admin-border)]'
+                  } p-3.5 text-xl sm:text-2xl font-heading font-bold uppercase tracking-tight text-[var(--admin-text-primary)] focus:border-white focus:outline-none transition-colors`}
                 />
                 {fieldErrors.title && (
-                  <span className="text-xs font-mono text-rose-400 block">{fieldErrors.title}</span>
+                  <span className="text-xs font-mono text-neutral-400 block">{fieldErrors.title}</span>
                 )}
               </div>
 
@@ -675,7 +675,7 @@ export default function AdminBlogManager() {
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData((prev) => ({ ...prev, category: e.target.value }))}
-                    className="w-full p-2.5 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none cursor-pointer"
+                    className="w-full p-2.5 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-white focus:outline-none cursor-pointer"
                   >
                     {PREDEFINED_CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -695,7 +695,7 @@ export default function AdminBlogManager() {
                     value={formData.excerpt}
                     onChange={(e) => setFormData((prev) => ({ ...prev, excerpt: e.target.value }))}
                     placeholder="Enter a concise executive summary or brief excerpt of the article..."
-                    className="w-full p-3 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-sans text-[var(--admin-text-primary)] leading-relaxed focus:border-emerald-400 focus:outline-none"
+                    className="w-full p-3 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-sans text-[var(--admin-text-primary)] leading-relaxed focus:border-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -706,13 +706,13 @@ export default function AdminBlogManager() {
                   <label className="block text-[11px] font-mono uppercase tracking-wider text-[var(--admin-text-secondary)] font-semibold">
                     ARTICLE CONTENT *
                   </label>
-                  <span className="text-[10px] font-mono text-emerald-400">
+                  <span className="text-[10px] font-mono text-white">
                     MARKDOWN POWERED
                   </span>
                 </div>
 
                 {fieldErrors.content && (
-                  <span className="text-xs font-mono text-rose-400 block mb-2">{fieldErrors.content}</span>
+                  <span className="text-xs font-mono text-neutral-400 block mb-2">{fieldErrors.content}</span>
                 )}
 
                 {/* Visual Start Indicator */}
@@ -733,7 +733,7 @@ export default function AdminBlogManager() {
             <div className="space-y-6">
               {/* 1. PUBLISHING CONTROL CARD */}
               <BlueprintWrapper dark className="p-5 space-y-4">
-                <h3 className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-[var(--admin-border)] pb-2.5">
+                <h3 className="font-mono text-xs font-bold text-white uppercase tracking-widest border-b border-[var(--admin-border)] pb-2.5">
                   PUBLISHING CONTROL
                 </h3>
 
@@ -744,7 +744,7 @@ export default function AdminBlogManager() {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData((prev) => ({ ...prev, status: e.target.value }))}
-                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none cursor-pointer"
+                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-white focus:outline-none cursor-pointer"
                   >
                     <option value="draft">Draft (Private / Admin)</option>
                     <option value="published">Published (Live on Website)</option>
@@ -776,7 +776,7 @@ export default function AdminBlogManager() {
 
               {/* 2. FEATURED IMAGE CARD */}
               <BlueprintWrapper dark className="p-5 space-y-3">
-                <h3 className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-[var(--admin-border)] pb-2.5">
+                <h3 className="font-mono text-xs font-bold text-white uppercase tracking-widest border-b border-[var(--admin-border)] pb-2.5">
                   FEATURED IMAGE
                 </h3>
 
@@ -815,7 +815,7 @@ export default function AdminBlogManager() {
                       setImgLoadError(false);
                     }}
                     placeholder="https://images.unsplash.com/..."
-                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none"
+                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-white focus:outline-none"
                   />
                 </div>
 
@@ -835,7 +835,7 @@ export default function AdminBlogManager() {
 
               {/* 3. METADATA CARD (Author & Interactive Tags) */}
               <BlueprintWrapper dark className="p-5 space-y-4">
-                <h3 className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-[var(--admin-border)] pb-2.5">
+                <h3 className="font-mono text-xs font-bold text-white uppercase tracking-widest border-b border-[var(--admin-border)] pb-2.5">
                   ARTICLE METADATA
                 </h3>
 
@@ -849,7 +849,7 @@ export default function AdminBlogManager() {
                     value={formData.author}
                     onChange={(e) => setFormData((prev) => ({ ...prev, author: e.target.value }))}
                     placeholder="SMRIKAAM Engineering Team"
-                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none"
+                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-white focus:outline-none"
                   />
                 </div>
 
@@ -864,13 +864,13 @@ export default function AdminBlogManager() {
                     {formData.tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-mono bg-[var(--admin-bg)] border border-[var(--admin-border)] text-emerald-400 rounded-sm"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-mono bg-[var(--admin-bg)] border border-[var(--admin-border)] text-white rounded-sm"
                       >
                         #{tag}
                         <button
                           type="button"
                           onClick={() => handleRemoveTag(idx)}
-                          className="hover:text-rose-400 cursor-pointer ml-0.5"
+                          className="hover:text-neutral-400 cursor-pointer ml-0.5"
                         >
                           <X className="w-3 h-3" />
                         </button>
@@ -884,14 +884,14 @@ export default function AdminBlogManager() {
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={handleAddTag}
                     placeholder="Type tag and press Enter..."
-                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none"
+                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-white focus:outline-none"
                   />
                 </div>
               </BlueprintWrapper>
 
               {/* 4. SEO SETTINGS CARD */}
               <BlueprintWrapper dark className="p-5 space-y-4">
-                <h3 className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-[var(--admin-border)] pb-2.5">
+                <h3 className="font-mono text-xs font-bold text-white uppercase tracking-widest border-b border-[var(--admin-border)] pb-2.5">
                   SEO & URL SLUG
                 </h3>
 
@@ -906,7 +906,7 @@ export default function AdminBlogManager() {
                     onChange={(e) => setFormData((prev) => ({ ...prev, slug: cleanSlug(e.target.value) }))}
                     onBlur={(e) => setFormData((prev) => ({ ...prev, slug: cleanSlug(e.target.value) }))}
                     placeholder="e.g. content-writing-services-in-coimbatore"
-                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none"
+                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-white focus:outline-none"
                   />
                   <span className="block text-[9px] font-mono text-[var(--admin-text-secondary)] mt-0.5">
                     Live URL: /blog/{cleanSlug(formData.slug) || 'article-slug'}
@@ -923,7 +923,7 @@ export default function AdminBlogManager() {
                     value={formData.meta_title}
                     onChange={(e) => setFormData((prev) => ({ ...prev, meta_title: e.target.value }))}
                     placeholder="SEO Title for search engines"
-                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none"
+                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-mono text-[var(--admin-text-primary)] focus:border-white focus:outline-none"
                   />
                 </div>
 
@@ -937,7 +937,7 @@ export default function AdminBlogManager() {
                     value={formData.meta_description}
                     onChange={(e) => setFormData((prev) => ({ ...prev, meta_description: e.target.value }))}
                     placeholder="Brief description snippet for Google search..."
-                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-sans text-[var(--admin-text-primary)] focus:border-emerald-400 focus:outline-none"
+                    className="w-full p-2 bg-[var(--admin-bg)] border border-[var(--admin-border)] text-xs font-sans text-[var(--admin-text-primary)] focus:border-white focus:outline-none"
                   />
                 </div>
               </BlueprintWrapper>
@@ -953,7 +953,7 @@ export default function AdminBlogManager() {
           <div className="flex items-center justify-between border-b border-[var(--admin-border)] pb-4">
             <button
               onClick={() => setView('editor')}
-              className="admin-btn text-xs py-1.5 px-4 flex items-center gap-1.5 cursor-pointer text-emerald-400 hover:text-emerald-300 border-emerald-500/40"
+              className="admin-btn text-xs py-1.5 px-4 flex items-center gap-1.5 cursor-pointer text-white hover:text-white/80 border-[var(--admin-border)]"
             >
               <ArrowLeft className="w-4 h-4" /> ← BACK TO EDITOR
             </button>
@@ -976,7 +976,7 @@ export default function AdminBlogManager() {
           <BlueprintWrapper dark className="p-6 sm:p-10 max-w-4xl mx-auto space-y-8">
             {/* Category & Date */}
             <div className="flex items-center gap-3 font-mono text-xs">
-              <span className="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 uppercase font-bold">
+              <span className="px-2.5 py-1 bg-white/10 text-white border border-white/40 uppercase font-bold">
                 {formData.category || 'GENERAL'}
               </span>
               <span className="text-[var(--admin-text-secondary)]">
@@ -991,7 +991,7 @@ export default function AdminBlogManager() {
 
             {/* Excerpt */}
             {formData.excerpt && (
-              <p className="text-base sm:text-lg text-[var(--admin-text-secondary)] leading-relaxed italic border-l-2 border-emerald-400 pl-4">
+              <p className="text-base sm:text-lg text-[var(--admin-text-secondary)] leading-relaxed italic border-l-2 border-white pl-4">
                 {formData.excerpt}
               </p>
             )}
@@ -1026,7 +1026,7 @@ export default function AdminBlogManager() {
             <BlueprintWrapper dark className="p-6 sm:p-8 space-y-6 border border-[var(--admin-border)] shadow-2xl">
               <div className="flex items-center justify-between border-b border-[var(--admin-border)] pb-4">
                 <div>
-                  <div className="font-mono text-[10px] text-emerald-400 uppercase tracking-widest font-semibold">
+                  <div className="font-mono text-[10px] text-white uppercase tracking-widest font-semibold">
                     INTELLIGENT IMPORTER
                   </div>
                   <h3 className="font-heading text-xl font-bold uppercase text-[var(--admin-text-primary)]">
@@ -1053,14 +1053,14 @@ export default function AdminBlogManager() {
                 }}
                 className={`p-8 border-2 border-dashed text-center transition-all cursor-pointer ${
                   dragOver
-                    ? 'border-emerald-400 bg-emerald-500/10'
-                    : 'border-[var(--admin-border)] hover:border-emerald-500/50 bg-[var(--admin-bg)]'
+                    ? 'border-white bg-white/10'
+                    : 'border-[var(--admin-border)] hover:border-white bg-[var(--admin-bg)]'
                 }`}
               >
                 {importingFile ? (
                   <div className="py-6 space-y-3">
-                    <Loader2 className="w-10 h-10 text-emerald-400 animate-spin mx-auto" />
-                    <div className="font-mono text-xs text-emerald-300 font-bold uppercase tracking-wider">
+                    <Loader2 className="w-10 h-10 text-white animate-spin mx-auto" />
+                    <div className="font-mono text-xs text-white font-bold uppercase tracking-wider">
                       {importStep === 1 && '1. READING DOCUMENT...'}
                       {importStep === 2 && '2. EXTRACTING CONTENT & IMAGES...'}
                       {importStep === 3 && '3. STRUCTURING DRAFT ARTICLE...'}
@@ -1072,7 +1072,7 @@ export default function AdminBlogManager() {
                   </div>
                 ) : (
                   <label className="block space-y-3 cursor-pointer">
-                    <Upload className="w-10 h-10 text-emerald-400 mx-auto opacity-80" />
+                    <Upload className="w-10 h-10 text-white mx-auto opacity-80" />
                     <div>
                       <p className="text-sm font-sans font-bold text-[var(--admin-text-primary)]">
                         Drag & Drop PDF or DOCX file here
@@ -1120,12 +1120,12 @@ export default function AdminBlogManager() {
       {auditModalOpen && importAuditData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-xl">
-            <BlueprintWrapper dark className="p-6 sm:p-8 space-y-6 border border-emerald-500/40 shadow-2xl">
+            <BlueprintWrapper dark className="p-6 sm:p-8 space-y-6 border border-white/40 shadow-2xl">
               <div className="flex items-center justify-between border-b border-[var(--admin-border)] pb-4">
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-emerald-400" />
+                  <CheckCircle className="w-5 h-5 text-white" />
                   <div>
-                    <div className="font-mono text-[10px] text-emerald-400 uppercase tracking-widest font-semibold">
+                    <div className="font-mono text-[10px] text-white uppercase tracking-widest font-semibold">
                       IMPORT COMPLETE
                     </div>
                     <h3 className="font-heading text-xl font-bold uppercase text-[var(--admin-text-primary)]">
@@ -1146,7 +1146,7 @@ export default function AdminBlogManager() {
                 <div>
                   <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">DOCUMENT SOURCE</span>
                   <span className="font-bold text-white flex items-center gap-1 mt-0.5">
-                    <FileCode className="w-3.5 h-3.5 text-blue-400" /> {importAuditData.sourceFileName}
+                    <FileCode className="w-3.5 h-3.5 text-white" /> {importAuditData.sourceFileName}
                   </span>
                 </div>
 
@@ -1157,7 +1157,7 @@ export default function AdminBlogManager() {
 
                 <div>
                   <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">TITLE DETECTED</span>
-                  <span className="font-bold text-emerald-300 truncate mt-0.5 block">{importAuditData.title}</span>
+                  <span className="font-bold text-white truncate mt-0.5 block">{importAuditData.title}</span>
                 </div>
 
                 <div>
@@ -1177,13 +1177,13 @@ export default function AdminBlogManager() {
 
                 <div className="col-span-2 border-t border-[var(--admin-border)] pt-2 mt-1 flex items-center justify-between">
                   <span className="text-[var(--admin-text-secondary)] text-[10px] uppercase">INITIAL PUBLISHING STATE</span>
-                  <span className="font-bold text-amber-300 uppercase">DRAFT (PENDING REVIEW)</span>
+                  <span className="font-bold text-white uppercase">DRAFT (PENDING REVIEW)</span>
                 </div>
               </div>
 
               {/* Safety Banner */}
-              <div className="p-3 bg-amber-950/60 border-l-4 border-amber-500 text-amber-200 text-xs font-mono flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 shrink-0 text-amber-400" />
+              <div className="p-3 bg-white/5 border-l-4 border-white text-white text-xs font-mono flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 shrink-0 text-white" />
                 <span>Article is saved in <strong>DRAFT MODE</strong>. Review and edit content before publishing.</span>
               </div>
 
@@ -1194,7 +1194,7 @@ export default function AdminBlogManager() {
                   onClick={() => setAuditModalOpen(false)}
                   className="admin-btn text-xs px-4 py-2 text-[var(--admin-text-secondary)] hover:text-white"
                 >
-                  CLOSE
+                  CANCEL
                 </button>
 
                 <button

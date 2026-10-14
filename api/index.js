@@ -5,7 +5,7 @@ import { postgres } from '../server/services/postgres.js';
 
 export default async function handler(req, res) {
   try {
-    if (!postgres.isConnected) {
+    if (postgres.hasConfig && !postgres.isConnected) {
       await postgres.testConnection();
     }
   } catch (err) {

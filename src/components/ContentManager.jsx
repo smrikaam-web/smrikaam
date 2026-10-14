@@ -140,12 +140,12 @@ export default function ContentManager({ resource, title, fields }) {
 
   return (
     <div className="admin-theme">
-      <div className="border-b border-[rgba(255,255,255,0.15)] pb-6 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="border-b border-neutral-800 pb-6 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
+          <div className="font-mono text-xs text-white uppercase tracking-widest mb-1">
             CONTENT MANAGER — {resource.toUpperCase()}
           </div>
-          <h1 className="font-heading text-3xl font-bold uppercase text-[#f4f4f4]">
+          <h1 className="font-heading text-3xl font-bold uppercase text-white">
             MANAGE {title}
           </h1>
         </div>
@@ -156,7 +156,7 @@ export default function ContentManager({ resource, title, fields }) {
       </div>
 
       {loading ? (
-        <div className="font-mono text-sm text-[#9aa3b5] py-12 text-center">LOADING_{resource.toUpperCase()}...</div>
+        <div className="font-mono text-sm text-neutral-400 py-12 text-center">LOADING_{resource.toUpperCase()}...</div>
       ) : (
         <BlueprintWrapper dark className="admin-surface">
           <div className="admin-table-wrapper">
@@ -173,19 +173,19 @@ export default function ContentManager({ resource, title, fields }) {
               <tbody>
                 {items.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="text-center font-mono text-xs text-[#9aa3b5] py-8">
+                    <td colSpan="5" className="text-center font-mono text-xs text-neutral-400 py-8">
                       NO ITEMS FOUND. CLICK "CREATE NEW" TO ADD ONE.
                     </td>
                   </tr>
                 ) : (
                   items.map((item) => (
                     <tr key={item.id}>
-                      <td className="font-semibold text-[#f4f4f4]">
+                      <td className="font-semibold text-white">
                         {item.title || item.name || item.city || 'Untitled'}
                       </td>
-                      <td className="font-mono text-xs text-[#4fd1c5]">{item.slug}</td>
+                      <td className="font-mono text-xs text-neutral-300">{item.slug}</td>
                       <td>{renderStatusBadge(item.status)}</td>
-                      <td className="font-mono text-xs text-[#9aa3b5]">
+                      <td className="font-mono text-xs text-neutral-400">
                         {new Date(item.created_at).toLocaleDateString()}
                       </td>
                       <td className="text-right">
@@ -193,7 +193,7 @@ export default function ContentManager({ resource, title, fields }) {
                           <select
                             value={item.status}
                             onChange={(e) => handleStatusChange(item.id, e.target.value)}
-                            className="bg-[#1c2333] text-xs font-mono text-[#f4f4f4] border border-[rgba(255,255,255,0.25)] px-2 py-1 focus:border-[#4fd1c5]"
+                            className="bg-black text-xs font-mono text-white border border-neutral-700 px-2 py-1 focus:border-white"
                           >
                             <option value="draft">Draft</option>
                             <option value="published">Publish</option>
@@ -202,7 +202,7 @@ export default function ContentManager({ resource, title, fields }) {
 
                           <button
                             onClick={() => openEditModal(item)}
-                            className="admin-btn p-1.5 text-[#f4f4f4]"
+                            className="admin-btn p-1.5 text-white"
                             title="Edit"
                           >
                             <Edit2 className="w-3.5 h-3.5" />
@@ -210,7 +210,7 @@ export default function ContentManager({ resource, title, fields }) {
 
                           <button
                             onClick={() => handleDelete(item.id)}
-                            className="admin-btn p-1.5 text-rose-400 hover:text-rose-200 border-rose-500/40"
+                            className="admin-btn p-1.5 text-neutral-400 hover:text-white border-neutral-700"
                             title="Delete"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -230,17 +230,17 @@ export default function ContentManager({ resource, title, fields }) {
       {modalOpen && (
         <div className="dialog-backdrop">
           <BlueprintWrapper dark className="dialog admin-dialog max-w-2xl">
-            <div className="dialog-title flex items-center justify-between border-b border-[rgba(255,255,255,0.15)] pb-4">
-              <span className="font-heading text-xl text-[#f4f4f4] uppercase">
+            <div className="dialog-title flex items-center justify-between border-b border-neutral-700 pb-4">
+              <span className="font-heading text-xl text-white uppercase">
                 {editingItem ? `EDIT ${title.slice(0, -1)}` : `CREATE NEW ${title.slice(0, -1)}`}
               </span>
-              <button onClick={() => setModalOpen(false)} className="text-[#9aa3b5] hover:text-[#f4f4f4]">
+              <button onClick={() => setModalOpen(false)} className="text-neutral-400 hover:text-white">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {errorMsg && (
-              <div className="my-4 p-3 bg-rose-950/90 border border-rose-500 text-rose-200 font-mono text-xs">
+              <div className="my-4 p-3 bg-black border border-white text-white font-mono text-xs">
                 {errorMsg}
               </div>
             )}
@@ -248,7 +248,7 @@ export default function ContentManager({ resource, title, fields }) {
             <form onSubmit={handleSave} className="dialog-body space-y-4 max-h-[60vh] overflow-y-auto pr-2 my-4">
               {fields.map((field) => (
                 <div key={field.name} className="field">
-                  <label className="text-xs font-mono text-[#9aa3b5] uppercase">
+                  <label className="text-xs font-mono text-neutral-300 uppercase">
                     {field.label} {field.required ? '*' : ''}
                   </label>
 
@@ -258,14 +258,14 @@ export default function ContentManager({ resource, title, fields }) {
                       rows={5}
                       value={formData[field.name] || ''}
                       onChange={(e) => handleInputChange(e, field)}
-                      className="input bg-[#1c2333] border-[rgba(255,255,255,0.25)] text-[#f4f4f4]"
+                      className="input bg-black border-neutral-700 text-white"
                       placeholder={field.placeholder || ''}
                     />
                   ) : field.type === 'select' ? (
                     <select
                       value={formData[field.name] || ''}
                       onChange={(e) => handleInputChange(e, field)}
-                      className="input bg-[#1c2333] border-[rgba(255,255,255,0.25)] text-[#f4f4f4]"
+                      className="input bg-black border-neutral-700 text-white"
                     >
                       {field.options.map((opt) => (
                         <option key={opt.value} value={opt.value}>
@@ -279,11 +279,11 @@ export default function ContentManager({ resource, title, fields }) {
                       required={field.required}
                       value={formData[field.name] || ''}
                       onChange={(e) => handleInputChange(e, field)}
-                      className="input bg-[#1c2333] border-[rgba(255,255,255,0.25)] text-[#f4f4f4]"
+                      className="input bg-black border-neutral-700 text-white"
                       placeholder={field.placeholder || ''}
                     />
                   )}
-                  {field.help && <span className="font-mono text-[10px] text-[#9aa3b5]">{field.help}</span>}
+                  {field.help && <span className="font-mono text-[10px] text-neutral-400">{field.help}</span>}
                 </div>
               ))}
             </form>

@@ -85,7 +85,7 @@ export default function CtaCoreCluster({ className = '' }) {
       ctx.lineWidth = 0.7;
       ctx.strokeStyle = isDark
         ? 'rgba(255, 255, 255, 0.10)'
-        : 'rgba(15, 23, 42, 0.10)';
+        : 'rgba(0, 0, 0, 0.10)';
 
       for (let gx = -gridSize; gx <= gridSize; gx += step) {
         const p1 = project(gx, gridY, -gridSize, rotX, rotY);
@@ -126,7 +126,7 @@ export default function CtaCoreCluster({ className = '' }) {
         ctx.arc(proj.px, proj.py, pt.size, 0, Math.PI * 2);
         ctx.fillStyle = isDark
           ? 'rgba(255, 255, 255, 0.50)'
-          : 'rgba(15, 23, 42, 0.45)';
+          : 'rgba(0, 0, 0, 0.45)';
         ctx.fill();
       });
 
@@ -196,17 +196,17 @@ export default function CtaCoreCluster({ className = '' }) {
           if (cube.isCore) {
             ctx.strokeStyle = isDark
               ? 'rgba(255, 255, 255, 0.95)'
-              : 'rgba(15, 23, 42, 0.90)';
+              : 'rgba(0, 0, 0, 0.90)';
             ctx.lineWidth = 1.6;
           } else if (cube.isMicro) {
             ctx.strokeStyle = isDark
               ? 'rgba(255, 255, 255, 0.45)'
-              : 'rgba(15, 23, 42, 0.40)';
+              : 'rgba(0, 0, 0, 0.40)';
             ctx.lineWidth = 0.9;
           } else {
             ctx.strokeStyle = isDark
               ? 'rgba(255, 255, 255, 0.65)'
-              : 'rgba(15, 23, 42, 0.60)';
+              : 'rgba(0, 0, 0, 0.60)';
             ctx.lineWidth = 1.2;
           }
           ctx.stroke();
@@ -220,7 +220,7 @@ export default function CtaCoreCluster({ className = '' }) {
               ctx.arc(p.px, p.py, cube.isCore ? 2.8 : 2.0, 0, Math.PI * 2);
               ctx.fillStyle = isDark
                 ? 'rgba(255, 255, 255, 0.95)'
-                : 'rgba(15, 23, 42, 0.95)';
+                : 'rgba(0, 0, 0, 0.95)';
               ctx.fill();
             }
           });
@@ -250,4 +250,3 @@ export default function CtaCoreCluster({ className = '' }) {
     </div>
   );
 }
-

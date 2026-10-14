@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: '/api',
+  timeout: 15000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
@@ -24,7 +25,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      if (window.location.pathname.startsWith('/smrikaam-admin') && !window.location.pathname.includes('/login')) {
+      if ((window.location.pathname.startsWith('/smrikaam-admin') || window.location.pathname.startsWith('/admin')) && !window.location.pathname.includes('/login')) {
         localStorage.removeItem('smrikaam_admin_token');
       }
     }
@@ -33,4 +34,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-

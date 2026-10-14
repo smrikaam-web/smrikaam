@@ -160,17 +160,17 @@ export default function HeroCubeCluster({ className = '' }) {
         if (cube.isCore) {
           ctx.strokeStyle = isDark
             ? 'rgba(255, 255, 255, 0.95)'
-            : 'rgba(15, 23, 42, 0.88)';
+            : 'rgba(0, 0, 0, 0.90)';
           ctx.lineWidth = 1.6;
         } else if (cube.isMicro) {
           ctx.strokeStyle = isDark
             ? 'rgba(255, 255, 255, 0.45)'
-            : 'rgba(15, 23, 42, 0.40)';
+            : 'rgba(0, 0, 0, 0.40)';
           ctx.lineWidth = 0.9;
         } else {
           ctx.strokeStyle = isDark
             ? 'rgba(255, 255, 255, 0.60)'
-            : 'rgba(15, 23, 42, 0.55)';
+            : 'rgba(0, 0, 0, 0.55)';
           ctx.lineWidth = 1.1;
         }
         ctx.stroke();
@@ -181,10 +181,10 @@ export default function HeroCubeCluster({ className = '' }) {
         projVertices.forEach((p, vIdx) => {
           if (vIdx % 2 === 0) {
             ctx.beginPath();
-            ctx.arc(p.px, p.py, cube.isCore ? 2.8 : 2.0, 0, Math.PI * 2);
+            ctx.arc(p.px, p.py, cube.isCore ? 3.0 : 2.0, 0, Math.PI * 2);
             ctx.fillStyle = isDark
               ? 'rgba(255, 255, 255, 0.95)'
-              : 'rgba(15, 23, 42, 0.90)';
+              : 'rgba(0, 0, 0, 0.90)';
             ctx.fill();
           }
         });
@@ -200,7 +200,7 @@ export default function HeroCubeCluster({ className = '' }) {
       ctx.lineWidth = 0.7;
       ctx.strokeStyle = isDark
         ? 'rgba(255, 255, 255, 0.10)'
-        : 'rgba(15, 23, 42, 0.10)';
+        : 'rgba(0, 0, 0, 0.10)';
 
       for (let gx = -gridSize; gx <= gridSize; gx += step) {
         const p1 = project(gx, gridY, -gridSize, rotX, rotY, 0);
@@ -265,4 +265,3 @@ export default function HeroCubeCluster({ className = '' }) {
     </div>
   );
 }
-

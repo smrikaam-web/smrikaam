@@ -93,12 +93,12 @@ export default function ReportEditor({ report, onSave, onCancel }) {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.15)] pb-4">
+      <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
         <div>
-          <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
+          <div className="font-mono text-xs text-white uppercase tracking-widest mb-1">
             FLASH REPORT EDITOR — HOMEPAGE WORKBENCH
           </div>
-          <h2 className="font-heading text-2xl font-bold uppercase text-[#f4f4f4]">
+          <h2 className="font-heading text-2xl font-bold uppercase text-white">
             {report ? 'EDIT FLASH REPORT' : 'CREATE NEW FLASH REPORT'}
           </h2>
         </div>
@@ -114,7 +114,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
           <button
             type="button"
             onClick={onCancel}
-            className="admin-btn text-xs text-gray-400 hover:text-white"
+            className="admin-btn text-xs text-neutral-400 hover:text-white"
           >
             Cancel
           </button>
@@ -122,7 +122,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
       </div>
 
       {errorMsg && (
-        <div className="p-3 bg-rose-950/90 border border-rose-500 text-rose-200 font-mono text-xs">
+        <div className="p-3 bg-black border border-white text-white font-mono text-xs">
           {errorMsg}
         </div>
       )}
@@ -131,13 +131,13 @@ export default function ReportEditor({ report, onSave, onCancel }) {
         {/* Row 1: Report Type + Category + Date */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
               Report Type *
             </label>
             <select
               value={formData.reportType}
               onChange={(e) => setFormData({ ...formData, reportType: e.target.value })}
-              className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+              className="input w-full bg-black border-neutral-700 text-white"
             >
               <option value="Weekly">Weekly Report</option>
               <option value="Monthly">Monthly Report</option>
@@ -145,13 +145,13 @@ export default function ReportEditor({ report, onSave, onCancel }) {
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
               Category *
             </label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+              className="input w-full bg-black border-neutral-700 text-white"
             >
               <option value="Services">Services</option>
               <option value="Accelerators">Accelerators</option>
@@ -161,21 +161,21 @@ export default function ReportEditor({ report, onSave, onCancel }) {
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
               Publish Date *
             </label>
             <input
               type="date"
               value={formData.date}
               onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+              className="input w-full bg-black border-neutral-700 text-white"
             />
           </div>
         </div>
 
         {/* Title */}
         <div>
-          <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
             Report Title *
           </label>
           <input
@@ -184,13 +184,13 @@ export default function ReportEditor({ report, onSave, onCancel }) {
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             placeholder="e.g. Edge Telemetry & OPC-UA Ingestion Benchmark"
-            className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+            className="input w-full bg-black border-neutral-700 text-white"
           />
         </div>
 
         {/* Problem Statement (One-line) */}
         <div>
-          <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
             Problem Statement (One concise sentence) *
           </label>
           <input
@@ -199,13 +199,13 @@ export default function ReportEditor({ report, onSave, onCancel }) {
             value={formData.problemStatement}
             onChange={(e) => setFormData({ ...formData, problemStatement: e.target.value })}
             placeholder="e.g. Legacy machines lack real-time operational visibility."
-            className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+            className="input w-full bg-black border-neutral-700 text-white"
           />
         </div>
 
         {/* Solution Statement (One-line) */}
         <div>
-          <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
             Solution Statement (One concise sentence) *
           </label>
           <input
@@ -214,26 +214,26 @@ export default function ReportEditor({ report, onSave, onCancel }) {
             value={formData.solutionStatement}
             onChange={(e) => setFormData({ ...formData, solutionStatement: e.target.value })}
             placeholder="e.g. Connected telemetry provides live machine intelligence."
-            className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+            className="input w-full bg-black border-neutral-700 text-white"
           />
         </div>
 
         {/* Tech Stack Tags */}
         <div>
-          <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
             Technology Stack Tags
           </label>
-          <div className="flex flex-wrap items-center gap-2 mb-2 p-2 bg-[#1c2333] border border-[rgba(255,255,255,0.2)]">
+          <div className="flex flex-wrap items-center gap-2 mb-2 p-2 bg-black border border-neutral-700">
             {formData.techStack.map((tech) => (
               <span
                 key={tech}
-                className="bg-[#273248] text-[#4fd1c5] px-2.5 py-1 text-xs font-mono flex items-center gap-1.5"
+                className="bg-neutral-800 text-white border border-neutral-700 px-2.5 py-1 text-xs font-mono flex items-center gap-1.5"
               >
                 {tech}
                 <button
                   type="button"
                   onClick={() => removeTechTag(tech)}
-                  className="hover:text-rose-400"
+                  className="hover:text-neutral-400"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -251,7 +251,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
               <button
                 type="button"
                 onClick={addTechTag}
-                className="text-xs text-[#4fd1c5] hover:text-white"
+                className="text-xs text-white hover:text-neutral-300"
               >
                 <Plus className="w-3.5 h-3.5" />
               </button>
@@ -262,7 +262,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
         {/* Image Upload & URL */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
               Report Image URL
             </label>
             <input
@@ -270,12 +270,12 @@ export default function ReportEditor({ report, onSave, onCancel }) {
               value={formData.cover_image_url}
               onChange={(e) => setFormData({ ...formData, cover_image_url: e.target.value })}
               placeholder="https://..."
-              className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+              className="input w-full bg-black border-neutral-700 text-white"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
               Upload Image from Device
             </label>
             <label className="admin-btn w-full justify-center text-xs py-2.5 cursor-pointer">
@@ -294,7 +294,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
 
         {/* Related Content */}
         <div>
-          <label className="block text-xs font-mono uppercase text-[#9aa3b5] mb-1.5">
+          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
             Related Page / Section Reference
           </label>
           <input
@@ -302,12 +302,12 @@ export default function ReportEditor({ report, onSave, onCancel }) {
             value={formData.relatedContent}
             onChange={(e) => setFormData({ ...formData, relatedContent: e.target.value })}
             placeholder="e.g. Industrial IoT (IIoT)"
-            className="input w-full bg-[#1c2333] border-[rgba(255,255,255,0.2)] text-[#f4f4f4]"
+            className="input w-full bg-black border-neutral-700 text-white"
           />
         </div>
 
         {/* Actions Bar */}
-        <div className="flex items-center justify-between pt-6 border-t border-[rgba(255,255,255,0.15)]">
+        <div className="flex items-center justify-between pt-6 border-t border-neutral-800">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -328,7 +328,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
           <button
             type="button"
             onClick={onCancel}
-            className="admin-btn text-xs text-gray-400 hover:text-white"
+            className="admin-btn text-xs text-neutral-400 hover:text-white"
           >
             Cancel
           </button>
@@ -339,18 +339,18 @@ export default function ReportEditor({ report, onSave, onCancel }) {
       {previewModal && (
         <div className="dialog-backdrop">
           <BlueprintWrapper dark className="dialog admin-dialog max-w-xl">
-            <div className="dialog-title flex items-center justify-between border-b border-[rgba(255,255,255,0.15)] pb-3">
-              <span className="font-heading text-lg text-[#f4f4f4] uppercase">
+            <div className="dialog-title flex items-center justify-between border-b border-neutral-700 pb-3">
+              <span className="font-heading text-lg text-white uppercase">
                 HOMEPAGE FLASH REPORT CARD PREVIEW
               </span>
-              <button onClick={() => setPreviewModal(false)} className="text-gray-400 hover:text-white">
+              <button onClick={() => setPreviewModal(false)} className="text-neutral-400 hover:text-white">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-4 bg-[#0b0e14] my-4 border border-[rgba(255,255,255,0.15)]">
+            <div className="p-4 bg-black my-4 border border-neutral-800">
               {formData.cover_image_url && (
-                <div className="h-44 w-full overflow-hidden border-b border-[rgba(255,255,255,0.15)] mb-4">
+                <div className="h-44 w-full overflow-hidden border-b border-neutral-800 mb-4">
                   <img
                     src={formData.cover_image_url}
                     alt={formData.title}
@@ -360,37 +360,37 @@ export default function ReportEditor({ report, onSave, onCancel }) {
               )}
 
               <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-[10px] text-[#4fd1c5] uppercase tracking-widest font-bold">
+                <span className="font-mono text-[10px] text-white uppercase tracking-widest font-bold">
                   {formData.reportType.toUpperCase()} REPORT • {formData.category.toUpperCase()}
                 </span>
-                <span className="font-mono text-[10px] text-gray-400">
+                <span className="font-mono text-[10px] text-neutral-400">
                   {formData.date}
                 </span>
               </div>
 
-              <h3 className="font-mono text-base font-bold uppercase text-[#f4f4f4] mb-3">
+              <h3 className="font-mono text-base font-bold uppercase text-white mb-3">
                 {formData.title || 'Untitled Report'}
               </h3>
 
-              <div className="space-y-1.5 border-t border-[rgba(255,255,255,0.12)] pt-2.5 text-xs font-mono">
-                <div className="text-gray-300">
-                  <strong className="text-[#9aa3b5]">PROBLEM:</strong> {formData.problemStatement || '—'}
+              <div className="space-y-1.5 border-t border-neutral-800 pt-2.5 text-xs font-mono">
+                <div className="text-neutral-300">
+                  <strong className="text-neutral-400">PROBLEM:</strong> {formData.problemStatement || '—'}
                 </div>
-                <div className="text-[#f4f4f4]">
-                  <strong className="text-[#4fd1c5]">SOLUTION:</strong> {formData.solutionStatement || '—'}
+                <div className="text-white">
+                  <strong className="text-white">SOLUTION:</strong> {formData.solutionStatement || '—'}
                 </div>
               </div>
 
-              <div className="mt-3 pt-2.5 border-t border-[rgba(255,255,255,0.12)] flex flex-wrap gap-1.5">
+              <div className="mt-3 pt-2.5 border-t border-neutral-800 flex flex-wrap gap-1.5">
                 {formData.techStack.map((tech) => (
-                  <span key={tech} className="bg-[#1c2333] border border-[rgba(255,255,255,0.15)] px-2 py-0.5 text-[10px] font-mono text-[#4fd1c5]">
+                  <span key={tech} className="bg-black border border-neutral-700 px-2 py-0.5 text-[10px] font-mono text-white">
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="dialog-actions border-t border-[rgba(255,255,255,0.15)] pt-3 flex justify-end">
+            <div className="dialog-actions border-t border-neutral-800 pt-3 flex justify-end">
               <button
                 type="button"
                 onClick={() => setPreviewModal(false)}

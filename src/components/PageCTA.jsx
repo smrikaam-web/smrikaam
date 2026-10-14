@@ -19,7 +19,7 @@ export default function PageCTA({
 
   if (isBookCall) {
     return (
-      <div className={`mt-16 sm:mt-24 border border-border p-6 sm:p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md ${className}`}>
+      <div className={`mt-16 sm:mt-24 border border-border p-6 sm:p-10 md:p-14 text-center bg-[var(--color-surface)] ${className}`}>
         {eyebrow && (
           <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3">
             {eyebrow}
@@ -44,7 +44,7 @@ export default function PageCTA({
   }
 
   return (
-    <div className={`mt-16 sm:mt-24 border border-border p-6 sm:p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md ${className}`}>
+    <div className={`mt-16 sm:mt-24 border border-border p-6 sm:p-10 md:p-14 text-center bg-[var(--color-surface)] ${className}`}>
       {eyebrow && (
         <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3">
           {eyebrow}

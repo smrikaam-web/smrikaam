@@ -119,7 +119,7 @@ export default function SideCubeVisual({
         ctx.closePath();
         ctx.fillStyle = isDark
           ? 'rgba(255, 255, 255, 0.03)'
-          : 'rgba(15, 23, 42, 0.02)';
+          : 'rgba(0, 0, 0, 0.02)';
         ctx.fill();
       });
 
@@ -130,7 +130,7 @@ export default function SideCubeVisual({
         ctx.lineTo(outerProj[j].px, outerProj[j].py);
         ctx.strokeStyle = isDark
           ? 'rgba(255, 255, 255, 0.45)'
-          : 'rgba(15, 23, 42, 0.35)';
+          : 'rgba(0, 0, 0, 0.35)';
         ctx.lineWidth = 1.0;
         ctx.stroke();
       });
@@ -141,7 +141,7 @@ export default function SideCubeVisual({
         ctx.arc(p.px, p.py, 1.8, 0, Math.PI * 2);
         ctx.fillStyle = isDark
           ? 'rgba(255, 255, 255, 0.85)'
-          : 'rgba(15, 23, 42, 0.75)';
+          : 'rgba(0, 0, 0, 0.75)';
         ctx.fill();
       });
 
@@ -153,7 +153,7 @@ export default function SideCubeVisual({
           ctx.lineTo(innerProj[j].px, innerProj[j].py);
           ctx.strokeStyle = isDark
             ? 'rgba(255, 255, 255, 0.65)'
-            : 'rgba(15, 23, 42, 0.50)';
+            : 'rgba(0, 0, 0, 0.50)';
           ctx.lineWidth = 1.2;
           ctx.stroke();
         });
@@ -163,7 +163,7 @@ export default function SideCubeVisual({
           ctx.arc(p.px, p.py, 1.4, 0, Math.PI * 2);
           ctx.fillStyle = isDark
             ? 'rgba(255, 255, 255, 0.95)'
-            : 'rgba(15, 23, 42, 0.85)';
+            : 'rgba(0, 0, 0, 0.85)';
           ctx.fill();
         });
       }
