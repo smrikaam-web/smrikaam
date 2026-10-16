@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import JSZip from 'jszip';
 import { db } from '../services/db.js';
 import { authenticateUser, requireAdminAuth, verifyToken } from '../services/auth.js';
+import { identifyNetwork, anonymizeIp, extractGeoFromHeaders, parseUserAgent, parseReferrer, isValidVisitorId } from '../services/visitorIntelligence.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -779,6 +780,18 @@ function validateBookCallPayload(body) {
   return null;
 }
 
+function validateContactPayload(body) {
+  const name = body.name || body.full_name;
+  const email = body.email;
+  if (!name || typeof name !== 'string' || !name.trim()) {
+    return 'Full name is required.';
+  }
+  if (!email || typeof email !== 'string' || !email.trim() || !email.includes('@')) {
+    return 'A valid email address is required.';
+  }
+  return null;
+}
+
 // 6.1 BOOK A CALL — PUBLIC SUBMISSION
 router.post('/book-a-call', async (req, res) => {
   try {
@@ -799,7 +812,9 @@ router.post('/book-a-call', async (req, res) => {
       preferred_time: req.body.preferredTime || req.body.preferred_time || '',
       source: req.body.source || 'Book a Call Form',
       status: 'NEW',
-      priority: req.body.priority || 'MEDIUM'
+      priority: req.body.priority || 'MEDIUM',
+      visitor_id: req.body.visitor_id || req.body.visitorId || '',
+      consent_linking: req.body.consent_linking !== false && req.body.consentLinking !== false
     };
 
     const record = await db.createEngagement(payload);
@@ -823,14 +838,14 @@ router.post('/book-a-call', async (req, res) => {
 // 6.2 CONTACT & ENGAGEMENTS — PUBLIC SUBMISSION
 router.post('/contact', async (req, res) => {
   try {
-    const errorMsg = validateBookCallPayload(req.body);
+    const errorMsg = validateContactPayload(req.body);
     if (errorMsg) {
       return res.status(400).json({ error: errorMsg });
     }
 
     const payload = {
       full_name: (req.body.full_name || req.body.name).trim(),
-      company_name: (req.body.company_name || req.body.company).trim(),
+      company_name: (req.body.company_name || req.body.company || 'Direct Inquirer').trim(),
       email: req.body.email.trim().toLowerCase(),
       phone: req.body.phone ? String(req.body.phone).trim() : '',
       job_title: req.body.job_title || req.body.jobTitle || '',
@@ -840,7 +855,9 @@ router.post('/contact', async (req, res) => {
       preferred_time: req.body.preferred_time || req.body.preferredTime || '',
       source: req.body.source || 'Contact Form',
       status: 'NEW',
-      priority: req.body.priority || 'MEDIUM'
+      priority: req.body.priority || 'MEDIUM',
+      visitor_id: req.body.visitor_id || req.body.visitorId || '',
+      consent_linking: req.body.consent_linking !== false && req.body.consentLinking !== false
     };
 
     const record = await db.createEngagement(payload);
@@ -880,7 +897,8 @@ router.post('/engagements', async (req, res) => {
       preferred_time: req.body.preferred_time || req.body.preferredTime || '',
       source: req.body.source || 'Public Website',
       status: 'NEW',
-      priority: req.body.priority || 'MEDIUM'
+      priority: req.body.priority || 'MEDIUM',
+      visitor_id: req.body.visitor_id || req.body.visitorId || ''
     };
 
     const record = await db.createEngagement(payload);
@@ -989,3 +1007,215 @@ router.delete('/engagements/:id', requireAdminAuth, async (req, res) => {
     res.status(500).json({ error: 'Failed to delete engagement record.' });
   }
 });
+
+// ============================================================
+// 7. VISITOR INTELLIGENCE & TELEMETRY ROUTES
+// ============================================================
+
+// 7.1 PUBLIC INGESTION ENDPOINT (LIGHTWEIGHT & CONSENT-AWARE)
+router.post('/visitors/track', async (req, res) => {
+  try {
+    const visitorId = req.body.visitorId || req.body.visitor_id;
+    const sessionId = req.body.sessionId || req.body.session_id;
+    const { path, title, referrer, duration, optOut } = req.body;
+    const consentStatus = req.body.consentStatus || req.body.consent_status || 'Consented';
+
+    // Check browser privacy signals (GPC / DNT) and explicit opt-out
+    if (
+      optOut ||
+      req.headers['x-smk-opt-out'] === 'true' ||
+      req.headers['dnt'] === '1' ||
+      req.headers['sec-gpc'] === '1'
+    ) {
+      return res.status(200).json({ ok: true, optOut: true });
+    }
+
+    // Input validation: ensure visitorId is valid alphanumeric / safe token
+    if (!visitorId || !isValidVisitorId(visitorId)) {
+      return res.status(400).json({ error: 'Valid visitorId is required.' });
+    }
+
+    const rawIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip || req.connection?.remoteAddress || '127.0.0.1';
+    const anonymizedIp = anonymizeIp(rawIp);
+    const userAgent = req.headers['user-agent'] || '';
+    const { deviceCategory, browserCategory, summary: userAgentCategory } = parseUserAgent(userAgent);
+    const referralSource = parseReferrer(referrer || req.headers['referer']);
+    const geo = extractGeoFromHeaders(req);
+
+    // Identify network via reverse DNS (non-blocking / cached)
+    const network = await identifyNetwork(rawIp);
+
+    // Save hit to DB
+    const result = await db.recordVisitorHit({
+      visitorId,
+      sessionId: sessionId && isValidVisitorId(sessionId) ? sessionId : undefined,
+      path: typeof path === 'string' && path.startsWith('/') ? path.slice(0, 255) : '/',
+      title: typeof title === 'string' ? title.slice(0, 255) : path || '/',
+      referrer: referralSource,
+      referralSource,
+      deviceCategory,
+      browserCategory,
+      userAgentCategory,
+      consentStatus: consentStatus || undefined,
+      anonymizedIp,
+      networkOrg: network.networkOrg,
+      networkDomain: network.networkDomain,
+      networkType: network.networkType,
+      networkConfidence: network.networkConfidence,
+      country: geo.country,
+      region: geo.region,
+      city: geo.city,
+      duration: Math.min(Math.max(parseInt(duration, 10) || 0, 0), 86400)
+    });
+
+    res.status(200).json({ success: true, ok: true, recorded: Boolean(result) });
+  } catch (err) {
+    console.error('Visitor track error:', err.message);
+    res.status(200).json({ success: false, ok: false }); // Silent fail so public UX is uninterrupted
+  }
+});
+
+// 7.2 ADMIN ENDPOINTS (AUTH REQUIRED)
+router.get('/visitors/admin', requireAdminAuth, async (req, res) => {
+  try {
+    const { search, status, networkType, limit, offset } = req.query;
+    const data = await db.getVisitors({
+      search,
+      status,
+      networkType,
+      limit: limit ? Math.min(parseInt(limit, 10), 500) : 50,
+      offset: offset ? parseInt(offset, 10) : 0
+    });
+    const stats = await db.getVisitorStats();
+
+    // Audit log access
+    await db.logActivity(
+      'Viewed Visitor Intelligence Dashboard',
+      `Admin ${req.user?.email || 'admin'} inspected visitor intelligence telemetry list.`,
+      'visitor_admin_access'
+    );
+
+    res.json({ ...data, stats });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch visitor intelligence records.' });
+  }
+});
+
+router.get('/visitors/admin/:visitorId', requireAdminAuth, async (req, res) => {
+  try {
+    const { visitorId } = req.params;
+    if (!isValidVisitorId(visitorId)) {
+      return res.status(400).json({ error: 'Invalid visitorId parameter.' });
+    }
+
+    const visitor = await db.getVisitorById(visitorId);
+    if (!visitor) {
+      return res.status(404).json({ error: 'Visitor record not found.' });
+    }
+
+    // Audit log access
+    await db.logActivity(
+      `Viewed Visitor Journey ${visitorId}`,
+      `Admin ${req.user?.email || 'admin'} viewed touchpoint journey for ${visitorId}.`,
+      'visitor_profile_access'
+    );
+
+    res.json(visitor);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch visitor profile.' });
+  }
+});
+
+router.patch('/visitors/admin/:visitorId', requireAdminAuth, async (req, res) => {
+  try {
+    const { visitorId } = req.params;
+    if (!isValidVisitorId(visitorId)) {
+      return res.status(400).json({ error: 'Invalid visitorId parameter.' });
+    }
+
+    const allowedStatuses = ['New', 'Prospect', 'Engaged', 'Qualified', 'Customer', 'Unqualified'];
+    const updates = {};
+    if (req.body.lead_status && allowedStatuses.includes(req.body.lead_status)) {
+      updates.lead_status = req.body.lead_status;
+    }
+    if (typeof req.body.admin_notes === 'string') {
+      updates.admin_notes = req.body.admin_notes.slice(0, 5000);
+    }
+
+    const updated = await db.updateVisitorLead(visitorId, updates);
+    if (!updated) {
+      return res.status(404).json({ error: 'Visitor record not found.' });
+    }
+
+    // Audit log update
+    await db.logActivity(
+      `Updated Visitor Record ${visitorId}`,
+      `Admin ${req.user?.email || 'admin'} updated status to ${updates.lead_status || 'unchanged'} with notes.`,
+      'visitor_update'
+    );
+
+    res.json({ success: true, visitor: updated });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update visitor record.' });
+  }
+});
+
+router.delete('/visitors/admin/:visitorId', requireAdminAuth, async (req, res) => {
+  try {
+    const { visitorId } = req.params;
+    if (!isValidVisitorId(visitorId)) {
+      return res.status(400).json({ error: 'Invalid visitorId parameter.' });
+    }
+
+    const deleted = await db.deleteVisitor(visitorId);
+    if (!deleted) {
+      return res.status(404).json({ error: 'Visitor record not found.' });
+    }
+
+    // Audit log deletion
+    await db.logActivity(
+      `Deleted Visitor Record ${visitorId}`,
+      `Admin ${req.user?.email || 'admin'} deleted visitor ${visitorId} and associated sessions under retention/privacy controls.`,
+      'visitor_delete'
+    );
+
+    res.json({ success: true, message: `Visitor ${visitorId} deleted successfully.` });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete visitor record.' });
+  }
+});
+
+router.get('/visitors/admin-export/csv', requireAdminAuth, async (req, res) => {
+  try {
+    const csvContent = await db.exportVisitorsCsv();
+
+    // Audit log export
+    await db.logActivity(
+      'Exported Visitor Intelligence CSV',
+      `Admin ${req.user?.email || 'admin'} generated and exported full visitor intelligence CSV.`,
+      'visitor_csv_export'
+    );
+
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename="smrikaam_visitor_intelligence.csv"');
+    res.send(csvContent);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to export CSV.' });
+  }
+});
+
+router.post('/visitors/admin/purge', requireAdminAuth, async (req, res) => {
+  try {
+    const retentionDays = parseInt(req.body.retentionDays, 10) || 90;
+    const result = await db.purgeOldVisitors(retentionDays);
+    await db.logActivity(
+      `Purged Anonymous Visitors older than ${retentionDays} days`,
+      `Admin ${req.user?.email || 'admin'} purged ${result.purgedVisitors} visitors and ${result.purgedSessions} sessions.`,
+      'visitors_purge'
+    );
+    res.json({ success: true, ...result });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to purge old visitor records.' });
+  }
+});
+

@@ -1485,9 +1485,81 @@ select.input:hover:not(:disabled) {
    ========================================================================== */
 
 .admin-theme {
-  background-color: var(--admin-bg) !important;
-  color: var(--admin-text-primary) !important;
+  /* Strict Black and White Enterprise Monochrome Tokens */
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-subtle: #F7F7F7;
+  --text: #111111;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: #E5E5E5;
+  --border-strong: #111111;
+  --accent: #111111;
+  --accent-hover: #333333;
+  --accent-contrast: #FFFFFF;
+
+  --color-bg: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-subtle: #F7F7F7;
+  --color-text: #111111;
+  --color-text-secondary: #555555;
+  --color-text-muted: #888888;
+  --color-border: #E5E5E5;
+  --color-border-strong: #111111;
+  --color-accent: #111111;
+  --color-accent-hover: #333333;
+  --color-accent-contrast: #FFFFFF;
+
+  --admin-bg: #FFFFFF;
+  --admin-surface: #FFFFFF;
+  --admin-surface-secondary: #F7F7F7;
+  --admin-surface-hover: #F2F2F2;
+  --admin-border: #E5E5E5;
+  --admin-border-strong: #111111;
+  --admin-text-primary: #111111;
+  --admin-text-secondary: #555555;
+  --admin-text-muted: #888888;
+  --admin-accent: #111111;
+
+  --sidebar-bg: #FFFFFF;
+  --sidebar-text: #333333;
+  --sidebar-border: #E5E5E5;
+  --nav-active-bg: #111111;
+  --nav-active-text: #FFFFFF;
+
+  --button-bg: #111111;
+  --button-text: #FFFFFF;
+  --button-border: #111111;
+  --button-hover-bg: #333333;
+  --button-hover-text: #FFFFFF;
+  --button-hover-border: #333333;
+
+  --button-secondary-bg: #FFFFFF;
+  --button-secondary-text: #111111;
+  --button-secondary-border: #E5E5E5;
+  --button-secondary-hover-bg: #F7F7F7;
+
+  background-color: #FFFFFF !important;
+  color: #111111 !important;
+  color-scheme: light;
   min-height: 100vh;
+}
+
+.admin-theme ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.admin-theme ::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+.admin-theme ::-webkit-scrollbar-thumb {
+  background: #E5E5E5;
+  border-radius: 0;
+}
+.admin-theme ::-webkit-scrollbar-thumb:hover {
+  background: #CCCCCC;
 }
 
 .admin-surface {
@@ -1503,29 +1575,29 @@ select.input:hover:not(:disabled) {
 .admin-theme input,
 .admin-theme select,
 .admin-theme textarea {
-  background-color: var(--admin-surface-hover) !important;
-  color: var(--admin-text-primary) !important;
-  border: 1px solid var(--admin-border-strong) !important;
+  background-color: #FFFFFF !important;
+  color: #111111 !important;
+  border: 1px solid #E5E5E5 !important;
   border-radius: 0 !important;
 }
 
 .admin-theme input:focus,
 .admin-theme select:focus,
 .admin-theme textarea:focus {
-  border-color: var(--admin-accent) !important;
-  outline: 2px solid var(--admin-accent) !important;
+  border-color: #111111 !important;
+  outline: 1px solid #111111 !important;
 }
 
 .admin-theme option {
-  background-color: var(--admin-surface) !important;
-  color: var(--admin-text-primary) !important;
+  background-color: #FFFFFF !important;
+  color: #111111 !important;
 }
 
-/* Admin Table Layout */
+/* Admin Table Layout - Enterprise Clean Black & White */
 .admin-table-wrapper {
   overflow-x: auto;
   border: 1px solid var(--admin-border);
-  background-color: var(--admin-surface);
+  background-color: #FFFFFF;
 }
 
 .admin-table {
@@ -1540,76 +1612,119 @@ select.input:hover:not(:disabled) {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  background-color: var(--admin-surface-hover) !important;
-  color: var(--admin-text-primary) !important;
-  padding: 0.9rem 1.1rem;
-  border-bottom: 2px solid var(--admin-border-strong) !important;
+  background-color: #F7F7F7 !important;
+  color: #111111 !important;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #E5E5E5 !important;
   font-weight: 700;
 }
 
 .admin-table td {
-  padding: 0.9rem 1.1rem;
-  border-bottom: 1px solid var(--admin-border) !important;
-  color: var(--admin-text-primary) !important;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #E5E5E5 !important;
+  color: #111111 !important;
+  background-color: #FFFFFF;
 }
 
 .admin-table tr:hover td {
-  background-color: var(--admin-surface-hover) !important;
+  background-color: #F7F7F7 !important;
 }
 
-.admin-btn {
-  background-color: var(--admin-surface-hover);
-  color: var(--admin-text-primary);
-  border: 1px solid var(--admin-border-strong);
+/* Admin Buttons */
+.admin-btn,
+.admin-theme .btn-secondary,
+.admin-theme .smk-btn-secondary {
+  background-color: #FFFFFF !important;
+  color: #111111 !important;
+  border: 1px solid #E5E5E5 !important;
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  padding: 0.4rem 0.8rem;
+  padding: 0.45rem 0.85rem;
   cursor: pointer;
   transition: all 0.15s ease;
+  font-weight: 600;
+  border-radius: 0;
+  box-shadow: none !important;
 }
 
-.admin-btn:hover {
-  background-color: #FFFFFF;
-  color: #000000;
-  border-color: #FFFFFF;
+.admin-btn:hover,
+.admin-theme .btn-secondary:hover,
+.admin-theme .smk-btn-secondary:hover {
+  background-color: #F7F7F7 !important;
+  color: #111111 !important;
+  border-color: #111111 !important;
+}
+
+.admin-theme .btn-primary,
+.admin-theme .smk-btn-primary,
+.admin-btn-primary {
+  background-color: #111111 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #111111 !important;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-weight: 600;
+  border-radius: 0;
+  box-shadow: none !important;
+}
+
+.admin-theme .btn-primary:hover,
+.admin-theme .smk-btn-primary:hover,
+.admin-btn-primary:hover {
+  background-color: #333333 !important;
+  color: #FFFFFF !important;
+  border-color: #333333 !important;
+}
+
+/* Blueprint wrapper in admin theme */
+.admin-theme .blueprint-dark {
+  background: #FFFFFF !important;
+  border-color: #E5E5E5 !important;
+  color: #111111 !important;
+}
+.admin-theme .blueprint-dark .corner {
+  color: #CCCCCC !important;
 }
 
 .admin-badge-published {
-  background-color: rgba(255, 255, 255, 0.12) !important;
+  background-color: #111111 !important;
   color: #FFFFFF !important;
-  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border: 1px solid #111111 !important;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.55rem;
   font-weight: 600;
 }
 
 .admin-badge-draft {
-  background-color: rgba(255, 255, 255, 0.06) !important;
-  color: #E5E5E5 !important;
-  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  background-color: #F7F7F7 !important;
+  color: #333333 !important;
+  border: 1px solid #E5E5E5 !important;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.55rem;
   font-weight: 600;
 }
 
 .admin-badge-archived {
-  background-color: rgba(255, 255, 255, 0.03) !important;
-  color: #888888 !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background-color: #FFFFFF !important;
+  color: #666666 !important;
+  border: 1px solid #E5E5E5 !important;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.55rem;
   font-weight: 600;
 }
 
 /* Modal Dialog Admin Override */
 .admin-dialog {
-  background-color: var(--admin-surface) !important;
-  border: 1px solid var(--admin-border-strong) !important;
-  color: var(--admin-text-primary) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E5E5 !important;
+  color: #111111 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Background grid utility */
@@ -3054,9 +3169,9 @@ input:-webkit-autofill:active {
 .admin-theme input:-webkit-autofill:hover,
 .admin-theme input:-webkit-autofill:focus,
 .admin-theme input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px #111111 inset !important;
-  -webkit-text-fill-color: #FFFFFF !important;
-  caret-color: #FFFFFF !important;
+  -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset !important;
+  -webkit-text-fill-color: #111111 !important;
+  caret-color: #111111 !important;
   transition: background-color 5000s ease-in-out 0s !important;
 }
 
@@ -3066,9 +3181,9 @@ input:-webkit-autofill:active {
   width: 100% !important;
   height: 46px !important;
   padding: 0.7rem 1rem 0.7rem 3rem !important; /* 48px left clearance for the icon */
-  background-color: #111111 !important;
-  color: #FFFFFF !important;
-  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  background-color: #FFFFFF !important;
+  color: #111111 !important;
+  border: 1px solid #E5E5E5 !important;
   border-radius: 0 !important;
   font-family: var(--font-mono, monospace) !important;
   font-size: 0.9rem !important;
@@ -3083,15 +3198,15 @@ input:-webkit-autofill:active {
 }
 
 .admin-login-input:hover {
-  border-color: rgba(255, 255, 255, 0.45) !important;
-  background-color: #1a1a1a !important;
+  border-color: #111111 !important;
+  background-color: #FFFFFF !important;
 }
 
 .admin-login-input:focus {
-  border-color: #FFFFFF !important;
+  border-color: #111111 !important;
   outline: none !important;
-  box-shadow: 0 0 0 1px #FFFFFF !important;
-  background-color: #1a1a1a !important;
+  box-shadow: 0 0 0 1px #111111 !important;
+  background-color: #FFFFFF !important;
 }
 
 .admin-login-submit-btn {
@@ -3106,20 +3221,20 @@ input:-webkit-autofill:active {
   font-weight: 700 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  background: #FFFFFF !important;
-  color: #000000 !important;
-  border: 1px solid #FFFFFF !important;
+  background: #111111 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #111111 !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
 }
 
 .admin-login-submit-btn:hover:not(:disabled) {
-  background: #000000 !important;
+  background: #333333 !important;
   color: #FFFFFF !important;
-  border-color: #FFFFFF !important;
+  border-color: #333333 !important;
   box-shadow: none !important;
-  transform: translateY(-1px) !important;
 }
 
 .admin-login-submit-btn:disabled {

@@ -35,7 +35,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
   };
 
   const renderSimpleMarkdown = (text) => {
-    if (!text) return '<p class="text-gray-500 italic">No content to preview.</p>';
+    if (!text) return '<p class="text-neutral-400 italic">No content to preview.</p>';
 
     let html = text
       // Escape basic HTML
@@ -43,41 +43,41 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       // Images: ![alt](url)
-      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<div class="my-4"><img src="$2" alt="$1" class="max-w-full rounded border border-[rgba(255,255,255,0.15)] shadow-md" /><p class="text-xs text-gray-400 font-mono mt-1">$1</p></div>')
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<div class="my-4"><img src="$2" alt="$1" class="max-w-full border border-[#E5E5E5] shadow-sm" /><p class="text-xs text-neutral-500 font-mono mt-1">$1</p></div>')
       // Links: [text](url)
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-white underline hover:text-neutral-300">$1</a>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-[#111111] underline hover:text-neutral-600 font-semibold">$1</a>')
       // Headings
-      .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold font-mono text-[#f4f4f4] mt-5 mb-2">$1</h3>')
-      .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold font-mono text-[#f4f4f4] mt-6 mb-3 border-b border-[rgba(255,255,255,0.12)] pb-1">$1</h2>')
-      .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold font-mono text-[#f4f4f4] mt-7 mb-4">$1</h1>')
+      .replace(/^### (.*$)/gim, '<h3 class="text-base font-bold font-mono text-[#111111] mt-5 mb-2">$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2 class="text-lg font-bold font-mono text-[#111111] mt-6 mb-3 border-b border-[#E5E5E5] pb-1">$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold font-mono text-[#111111] mt-7 mb-4">$1</h1>')
       // Horizontal rules
-      .replace(/^---$/gim, '<hr class="my-6 border-[rgba(255,255,255,0.15)]" />')
+      .replace(/^---$/gim, '<hr class="my-6 border-[#E5E5E5]" />')
       // Blockquotes
-      .replace(/^\> (.*$)/gim, '<blockquote class="border-l-4 border-white pl-4 py-1 my-3 bg-neutral-900/50 text-neutral-300 italic font-mono text-sm">$1</blockquote>')
+      .replace(/^\> (.*$)/gim, '<blockquote class="border-l-4 border-[#111111] pl-4 py-1 my-3 bg-[#F7F7F7] text-[#333333] italic font-mono text-sm">$1</blockquote>')
       // Bold & Italic
       .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[#f4f4f4]">$1</strong>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[#111111]">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
       // Code blocks
-      .replace(/```([^`]+)```/g, '<pre class="bg-black p-3 my-3 border border-neutral-700 font-mono text-xs text-white overflow-x-auto"><code>$1</code></pre>')
-      .replace(/`([^`]+)`/g, '<code class="bg-neutral-800 text-white px-1.5 py-0.5 font-mono text-xs">$1</code>')
+      .replace(/```([^`]+)```/g, '<pre class="bg-[#F7F7F7] p-3 my-3 border border-[#E5E5E5] font-mono text-xs text-[#111111] overflow-x-auto"><code>$1</code></pre>')
+      .replace(/`([^`]+)`/g, '<code class="bg-[#F7F7F7] border border-[#E5E5E5] text-[#111111] px-1.5 py-0.5 font-mono text-xs">$1</code>')
       // Lists
-      .replace(/^\- (.*$)/gim, '<li class="ml-4 list-disc text-gray-300 text-sm">$1</li>')
+      .replace(/^\- (.*$)/gim, '<li class="ml-4 list-disc text-[#333333] text-sm">$1</li>')
       // Paragraphs
-      .replace(/\n\n/g, '</p><p class="mb-3 text-sm text-gray-300 leading-relaxed">');
+      .replace(/\n\n/g, '</p><p class="mb-3 text-sm text-[#333333] leading-relaxed">');
 
-    return `<p class="mb-3 text-sm text-gray-300 leading-relaxed">${html}</p>`;
+    return `<p class="mb-3 text-sm text-[#333333] leading-relaxed">${html}</p>`;
   };
 
   return (
-    <div className="border border-[var(--admin-border)] bg-[var(--admin-surface)] rounded-none overflow-hidden">
+    <div className="border border-[#E5E5E5] bg-white rounded-none overflow-hidden">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-1 p-2 bg-[var(--admin-bg)] border-b border-[var(--admin-border)]">
+      <div className="flex flex-wrap items-center justify-between gap-1 p-2 bg-[#F7F7F7] border-b border-[#E5E5E5]">
         <div className="flex flex-wrap items-center gap-1 text-xs font-mono">
           <button
             type="button"
             onClick={() => insertFormat('## ', '', 'Heading 2')}
-            className="px-2 py-1 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)] flex items-center gap-1 font-bold"
+            className="px-2 py-1 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] flex items-center gap-1 font-bold cursor-pointer"
             title="Heading 2"
           >
             <Heading1 className="w-3.5 h-3.5" /> H2
@@ -85,18 +85,18 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           <button
             type="button"
             onClick={() => insertFormat('### ', '', 'Heading 3')}
-            className="px-2 py-1 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)] flex items-center gap-1 font-bold"
+            className="px-2 py-1 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] flex items-center gap-1 font-bold cursor-pointer"
             title="Heading 3"
           >
             <Heading2 className="w-3.5 h-3.5" /> H3
           </button>
 
-          <div className="h-4 w-px bg-[var(--admin-border)] mx-1" />
+          <div className="h-4 w-px bg-[#E5E5E5] mx-1" />
 
           <button
             type="button"
             onClick={() => insertFormat('**', '**', 'bold text')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Bold"
           >
             <Bold className="w-3.5 h-3.5" />
@@ -104,18 +104,18 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           <button
             type="button"
             onClick={() => insertFormat('*', '*', 'italic text')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Italic"
           >
             <Italic className="w-3.5 h-3.5" />
           </button>
 
-          <div className="h-4 w-px bg-[var(--admin-border)] mx-1" />
+          <div className="h-4 w-px bg-[#E5E5E5] mx-1" />
 
           <button
             type="button"
             onClick={() => insertFormat('- ', '', 'List item')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Bullet List"
           >
             <List className="w-3.5 h-3.5" />
@@ -123,7 +123,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           <button
             type="button"
             onClick={() => insertFormat('1. ', '', 'Numbered item')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Numbered List"
           >
             <ListOrdered className="w-3.5 h-3.5" />
@@ -131,7 +131,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           <button
             type="button"
             onClick={() => insertFormat('> ', '', 'Quoted insight')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Blockquote"
           >
             <Quote className="w-3.5 h-3.5" />
@@ -139,18 +139,18 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           <button
             type="button"
             onClick={() => insertFormat('```\n', '\n```', '// Code snippet')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Code Block"
           >
             <Code className="w-3.5 h-3.5" />
           </button>
 
-          <div className="h-4 w-px bg-[var(--admin-border)] mx-1" />
+          <div className="h-4 w-px bg-[#E5E5E5] mx-1" />
 
           <button
             type="button"
             onClick={() => insertFormat('[', '](https://example.com)', 'Link Title')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Add Link"
           >
             <LinkIcon className="w-3.5 h-3.5" />
@@ -158,7 +158,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           <button
             type="button"
             onClick={() => insertFormat('![Image Caption](', ')', 'https://images.unsplash.com/...')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Add Image"
           >
             <Image className="w-3.5 h-3.5" />
@@ -166,7 +166,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           <button
             type="button"
             onClick={insertTable}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Insert Table"
           >
             <Table className="w-3.5 h-3.5" />
@@ -174,7 +174,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           <button
             type="button"
             onClick={() => insertFormat('\n---\n')}
-            className="p-1.5 text-[var(--admin-text-secondary)] hover:text-white hover:bg-[var(--admin-surface-hover)] border border-transparent hover:border-[var(--admin-border)]"
+            className="p-1.5 text-[#555555] hover:text-[#111111] hover:bg-white border border-transparent hover:border-[#E5E5E5] cursor-pointer"
             title="Horizontal Divider"
           >
             <Minus className="w-3.5 h-3.5" />
@@ -187,8 +187,8 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           onClick={() => setPreviewMode(!previewMode)}
           className={`flex items-center gap-1.5 px-3 py-1 text-xs font-mono uppercase tracking-wider transition-colors border cursor-pointer ${
             previewMode
-              ? 'bg-white/10 text-white border-white/40 font-bold'
-              : 'bg-[var(--admin-surface-hover)] text-[var(--admin-text-secondary)] hover:text-white border-[var(--admin-border)]'
+              ? 'bg-[#111111] text-white border-[#111111] font-bold'
+              : 'bg-white text-[#555555] hover:text-[#111111] border-[#E5E5E5]'
           }`}
         >
           {previewMode ? (
@@ -206,7 +206,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
       {/* Editor Content / Preview Window */}
       {previewMode ? (
         <div
-          className="p-6 bg-[var(--admin-bg)] min-h-[300px] max-h-[500px] overflow-y-auto font-sans prose prose-invert max-w-none text-xs leading-relaxed"
+          className="p-6 bg-white min-h-[300px] max-h-[500px] overflow-y-auto font-sans max-w-none text-xs leading-relaxed text-[#111111]"
           dangerouslySetInnerHTML={{ __html: renderSimpleMarkdown(value) }}
         />
       ) : (
@@ -216,7 +216,7 @@ export default function RichEditor({ value = '', onChange, placeholder = 'Write 
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           rows={14}
-          className="w-full p-4 bg-[var(--admin-bg)] text-[var(--admin-text-primary)] font-mono text-xs leading-relaxed focus:outline-none resize-y min-h-[350px]"
+          className="w-full p-4 bg-white text-[#111111] font-mono text-xs leading-relaxed focus:outline-none resize-y min-h-[350px]"
         />
       )}
     </div>

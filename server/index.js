@@ -72,11 +72,13 @@ app.get([
 </html>`);
 });
 
-// Production: Serve frontend static build if dist exists
+// Production: Serve frontend static build if dist exists AND running in production/standalone mode
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const distIndexPath = path.join(DIST_DIR, 'index.html');
+const isDirectRun = process.argv[1] === fileURLToPath(import.meta.url);
+const isProduction = process.env.NODE_ENV === 'production' || isDirectRun;
 
-if (fs.existsSync(distIndexPath)) {
+if (isProduction && fs.existsSync(distIndexPath)) {
   app.use(express.static(DIST_DIR));
   app.use((req, res, next) => {
     if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
@@ -85,6 +87,7 @@ if (fs.existsSync(distIndexPath)) {
     res.sendFile(distIndexPath);
   });
 } else {
+  // Development mode under Vite: let Vite handle frontend routing and HMR
   app.use((req, res, next) => {
     if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
       return res.status(404).json({ error: 'API route not found' });

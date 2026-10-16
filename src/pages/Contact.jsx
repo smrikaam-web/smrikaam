@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Send, CheckCircle2, AlertTriangle, MapPin, Mail, Phone, ArrowUpRight, Cpu, Users, Layers, Handshake } from 'lucide-react';
 import api from '../api';
 import BlueprintWrapper from '../components/BlueprintWrapper';
+import { getVisitorId } from '../utils/visitorTracker';
 import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
@@ -14,7 +15,8 @@ export default function Contact() {
     email: '',
     phone: '',
     requirement_type: 'Technology Transformation',
-    message: ''
+    message: '',
+    consent_linking: true
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -84,7 +86,9 @@ export default function Contact() {
         phone: formData.phone ? formData.phone.trim() : '',
         service: formData.requirement_type || 'Technology Transformation',
         message: formData.message.trim(),
-        source: 'Contact Page'
+        source: 'Contact Page',
+        visitor_id: getVisitorId(),
+        consent_linking: formData.consent_linking !== false
       });
       setSuccessMsg(res.data.message || 'Thank you. Our engineering leads will connect with you shortly.');
       setFormData({
@@ -93,7 +97,8 @@ export default function Contact() {
         email: '',
         phone: '',
         requirement_type: 'Technology Transformation',
-        message: ''
+        message: '',
+        consent_linking: true
       });
     } catch (err) {
       setErrorMsg(err.response?.data?.error || err.message || 'Failed to submit inquiry. Please try again.');
@@ -276,6 +281,20 @@ export default function Contact() {
                     className="input"
                     placeholder="Describe your technical requirement, data goals, machinery lines, or staffing needs..."
                   />
+                </div>
+
+                <div className="flex items-start gap-2.5 pt-2 pb-1 font-mono text-xs text-[var(--color-text-secondary)]">
+                  <input
+                    type="checkbox"
+                    id="consent_linking"
+                    name="consent_linking"
+                    checked={formData.consent_linking}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, consent_linking: e.target.checked }))}
+                    className="mt-0.5 rounded-none border-[var(--color-border)] cursor-pointer"
+                  />
+                  <label htmlFor="consent_linking" className="cursor-pointer text-[11px] leading-tight select-none">
+                    I agree to allow SMRIKAAM to link my contact details with my visit journey to personalize my consultation.
+                  </label>
                 </div>
 
                 <button

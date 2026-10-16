@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import api from '../api';
 import BlueprintWrapper from './BlueprintWrapper';
+import { getVisitorId } from '../utils/visitorTracker';
 
 export function openBookCallModal(options = {}) {
   window.dispatchEvent(new CustomEvent('open-book-call-modal', { detail: options }));
@@ -22,7 +23,8 @@ export default function BookCallModal() {
     preferredDate: '',
     preferredTime: '10:00 AM - 12:00 PM',
     message: '',
-    source: 'Book a Call Modal'
+    source: 'Book a Call Modal',
+    consent_linking: true
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -93,7 +95,9 @@ export default function BookCallModal() {
         preferredDate: formData.preferredDate || '',
         preferredTime: formData.preferredTime || '',
         message: formData.message ? formData.message.trim() : 'Book a Call Request',
-        source: formData.source || 'Book a Call Modal'
+        source: formData.source || 'Book a Call Modal',
+        visitor_id: getVisitorId(),
+        consent_linking: formData.consent_linking !== false
       });
 
       setSuccessMsg(res.data?.message || 'Your strategy call request has been received. Our engineering leads will connect with you within 24 business hours.');
@@ -107,7 +111,8 @@ export default function BookCallModal() {
         preferredDate: '',
         preferredTime: '10:00 AM - 12:00 PM',
         message: '',
-        source: 'Book a Call Modal'
+        source: 'Book a Call Modal',
+        consent_linking: true
       });
     } catch (err) {
       setErrorMsg(err.response?.data?.error || err.message || 'Failed to submit call request. Please try again.');
@@ -364,8 +369,23 @@ export default function BookCallModal() {
                 />
               </div>
 
+              {/* Consent Linking Disclosure */}
+              <div className="flex items-start gap-2.5 pt-3 pb-1 font-mono text-xs text-[var(--color-text-secondary)]">
+                <input
+                  type="checkbox"
+                  id="modal_consent_linking"
+                  name="consent_linking"
+                  checked={formData.consent_linking}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, consent_linking: e.target.checked }))}
+                  className="mt-0.5 rounded-none border-[var(--color-border)] cursor-pointer"
+                />
+                <label htmlFor="modal_consent_linking" className="cursor-pointer text-[11px] leading-tight select-none">
+                  I agree to allow SMRIKAAM to link my contact details with my visit journey to personalize my strategy session.
+                </label>
+              </div>
+
               {/* 10. Submit Button */}
-              <div className="mt-6 md:mt-8 flex justify-center">
+              <div className="mt-4 md:mt-6 flex justify-center">
                 <button
                   type="submit"
                   disabled={submitting}

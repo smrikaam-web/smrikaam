@@ -59,14 +59,21 @@ export default function BlogDetail() {
           setError('The requested article is currently unavailable, in draft, or archived.');
         }
       } catch (err) {
-        const querySlug = cleanSlug(slug || rawSlug);
-        const fallback = defaultPostsMap[querySlug] || defaultPostsMap[rawSlug];
-        if (fallback) {
-          setPost(fallback);
-          setError(null);
-        } else {
+        if (err.response?.status === 404) {
+          // Explicit 404 from backend: article is draft, trashed, or does not exist.
           setPost(null);
           setError('The requested article is currently unavailable, in draft, or archived.');
+        } else {
+          // Network failure or offline fallback
+          const querySlug = cleanSlug(slug || rawSlug);
+          const fallback = defaultPostsMap[querySlug] || defaultPostsMap[rawSlug];
+          if (fallback) {
+            setPost(fallback);
+            setError(null);
+          } else {
+            setPost(null);
+            setError('The requested article is currently unavailable, in draft, or archived.');
+          }
         }
       } finally {
         setLoading(false);

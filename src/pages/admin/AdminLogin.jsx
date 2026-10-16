@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Lock, Mail, ShieldAlert, LogIn, Key, X, CheckCircle } from 'lucide-react';
+import { Lock, Mail, ShieldAlert, LogIn, X, CheckCircle } from 'lucide-react';
 import api from '../../api';
 import { ADMIN_ROUTE_BASE } from '../../constants/admin';
-import BlueprintWrapper from '../../components/BlueprintWrapper';
 import Logo from '../../components/Logo';
 
 export default function AdminLogin() {
@@ -16,77 +15,8 @@ export default function AdminLogin() {
   const [forgotSent, setForgotSent] = useState(false);
   const [forgotLoading, setForgotLoading] = useState(false);
 
-  const canvasRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Ambient Canvas Animation
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animationFrameId;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const particles = Array.from({ length: 45 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      radius: Math.random() * 2 + 1
-    }));
-
-    const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 140) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - dist / 140) * 0.35})`;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
-          }
-        }
-      }
-
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-      });
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -123,34 +53,31 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="admin-theme relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-black p-4 text-[#FFFFFF]">
-      {/* Background canvas */}
-      <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none" />
-
-      {/* Centered Glassmorphic Login Card */}
+    <div className="admin-theme relative min-h-screen w-full flex items-center justify-center bg-[#F7F7F7] p-4 text-[#111111]">
+      {/* Centered Enterprise Login Card */}
       <div className="relative z-10 w-full max-w-md">
-        <BlueprintWrapper dark className="bg-[#111111]/95 backdrop-blur-xl p-8 md:p-10 border border-neutral-700 shadow-2xl">
+        <div className="bg-white p-8 md:p-10 border border-[#E5E5E5] shadow-sm">
           <div className="text-center mb-8 flex flex-col items-center">
-            <Logo variant="stacked" dark forceDark isLightBackground={false} height={50} className="mb-4" />
-            <div className="font-mono text-[11px] text-white uppercase tracking-widest mt-2 border border-neutral-700 px-3.5 py-1.5 bg-neutral-900 font-semibold">
+            <Logo variant="stacked" isLightBackground={true} height={50} className="mb-4" />
+            <div className="font-mono text-[11px] text-[#111111] uppercase tracking-widest mt-2 border border-[#E5E5E5] px-3.5 py-1.5 bg-[#F7F7F7] font-semibold">
               ADMIN CONTROL ROOM — SECURE LOGIN
             </div>
           </div>
 
           {error && (
-            <div className="mb-6 p-3 bg-neutral-900 border border-neutral-500 text-white font-mono text-xs flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 shrink-0 text-white" />
+            <div className="mb-6 p-3 bg-[#F7F7F7] border border-[#111111] text-[#111111] font-mono text-xs flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 shrink-0 text-[#111111]" />
               <span>{error}</span>
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="field">
-              <label htmlFor="email" className="block text-xs font-mono uppercase text-neutral-300 mb-1.5 text-left font-semibold tracking-wider">
+              <label htmlFor="email" className="block text-xs font-mono uppercase text-[#333333] mb-1.5 text-left font-semibold tracking-wider">
                 Admin Email / Username
               </label>
               <div className="relative flex items-center">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none z-10" strokeWidth={1.5} />
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#666666] pointer-events-none z-10" strokeWidth={1.5} />
                 <input
                   type="email"
                   id="email"
@@ -166,7 +93,7 @@ export default function AdminLogin() {
 
             <div className="field">
               <div className="flex items-center justify-between mb-1.5">
-                <label htmlFor="password" className="block text-xs font-mono uppercase text-neutral-300 font-semibold tracking-wider">
+                <label htmlFor="password" className="block text-xs font-mono uppercase text-[#333333] font-semibold tracking-wider">
                   Password
                 </label>
                 <button
@@ -176,13 +103,13 @@ export default function AdminLogin() {
                     setForgotSent(false);
                     setForgotEmail(email);
                   }}
-                  className="font-mono text-[11px] text-white hover:underline focus:outline-none"
+                  className="font-mono text-[11px] text-[#666666] hover:text-[#111111] hover:underline focus:outline-none"
                 >
                   Forgot Password?
                 </button>
               </div>
               <div className="relative flex items-center">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none z-10" strokeWidth={1.5} />
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#666666] pointer-events-none z-10" strokeWidth={1.5} />
                 <input
                   type="password"
                   id="password"
@@ -212,48 +139,48 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-neutral-800 text-center font-mono text-[10px] text-neutral-400">
-            CENTRAL AUTHENTICATION — BCRYPT COST 10 &amp; PERSISTENT API
+          <div className="mt-6 pt-4 border-t border-[#E5E5E5] text-center font-mono text-[10px] text-[#888888]">
+            CENTRAL AUTHENTICATION — SECURE TOKEN &amp; PERSISTENT API
           </div>
-        </BlueprintWrapper>
+        </div>
       </div>
 
       {/* Forgot Password Modal */}
       {forgotModal && (
-        <div className="dialog-backdrop">
-          <BlueprintWrapper dark className="dialog admin-dialog max-w-md">
-            <div className="dialog-title flex items-center justify-between border-b border-neutral-700 pb-3">
-              <span className="font-heading text-lg text-white uppercase">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+          <div className="bg-white border border-[#E5E5E5] p-6 max-w-md w-full shadow-lg">
+            <div className="flex items-center justify-between border-b border-[#E5E5E5] pb-3">
+              <span className="font-mono text-sm font-bold text-[#111111] uppercase tracking-wider">
                 ADMIN PASSWORD RECOVERY
               </span>
-              <button onClick={() => setForgotModal(false)} className="text-gray-400 hover:text-white">
+              <button onClick={() => setForgotModal(false)} className="text-[#666666] hover:text-[#111111]">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {forgotSent ? (
               <div className="my-6 text-center space-y-3 font-mono">
-                <CheckCircle className="w-12 h-12 text-white mx-auto" />
-                <div className="text-sm text-white font-bold">RECOVERY DISPATCHED</div>
-                <p className="text-xs text-neutral-300">
+                <CheckCircle className="w-12 h-12 text-[#111111] mx-auto" />
+                <div className="text-sm text-[#111111] font-bold">RECOVERY DISPATCHED</div>
+                <p className="text-xs text-[#555555]">
                   A password reset authorization token has been logged to the system activity stream.
                 </p>
                 <button
                   type="button"
                   onClick={() => setForgotModal(false)}
-                  className="btn btn-primary text-xs w-full mt-4"
+                  className="admin-btn-primary text-xs w-full mt-4"
                 >
                   RETURN TO LOGIN
                 </button>
               </div>
             ) : (
               <form onSubmit={handleForgotPassword} className="my-4 space-y-4 font-mono">
-                <p className="text-xs text-neutral-300">
+                <p className="text-xs text-[#555555]">
                   Enter your registered Admin email address to request a secure password reset token:
                 </p>
 
                 <div>
-                  <label className="block text-[11px] uppercase text-neutral-300 mb-1 font-semibold">
+                  <label className="block text-[11px] uppercase text-[#333333] mb-1 font-semibold">
                     Admin Email
                   </label>
                   <input
@@ -266,7 +193,7 @@ export default function AdminLogin() {
                   />
                 </div>
 
-                <div className="dialog-actions border-t border-[rgba(255,255,255,0.15)] pt-3 flex items-center justify-between">
+                <div className="border-t border-[#E5E5E5] pt-3 flex items-center justify-between">
                   <button
                     type="button"
                     onClick={() => setForgotModal(false)}
@@ -277,14 +204,14 @@ export default function AdminLogin() {
                   <button
                     type="submit"
                     disabled={forgotLoading}
-                    className="btn btn-primary text-xs"
+                    className="admin-btn-primary text-xs"
                   >
                     {forgotLoading ? 'SENDING...' : 'DISPATCH RESET'}
                   </button>
                 </div>
               </form>
             )}
-          </BlueprintWrapper>
+          </div>
         </div>
       )}
     </div>

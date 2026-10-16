@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import { ADMIN_ROUTE_BASE } from '../../constants/admin';
-import BlueprintWrapper from '../../components/BlueprintWrapper';
 
 export default function DashboardPage() {
   const { refreshTrigger } = useCMS();
@@ -59,55 +58,56 @@ export default function DashboardPage() {
   }, [refreshTrigger]);
 
   const statCards = [
-    { label: 'Blog Posts', count: stats.totalPosts, icon: FileText, path: `${ADMIN_ROUTE_BASE}/blogs`, color: 'text-white' },
-    { label: 'Services', count: stats.totalServices, icon: Cpu, path: `${ADMIN_ROUTE_BASE}/services`, color: 'text-white' },
-    { label: 'Accelerators', count: stats.totalAccelerators, icon: Zap, path: `${ADMIN_ROUTE_BASE}/accelerators`, color: 'text-white' },
-    { label: 'Industries', count: stats.totalIndustries, icon: Factory, path: `${ADMIN_ROUTE_BASE}/industries`, color: 'text-white' },
-    { label: 'Case Studies', count: stats.totalCaseStudies, icon: Briefcase, path: `${ADMIN_ROUTE_BASE}/case-studies`, color: 'text-white' },
-    { label: 'Flash Reports', count: stats.totalReports, icon: FileBarChart, path: `${ADMIN_ROUTE_BASE}/reports`, color: 'text-white' }
+    { label: 'Blog Posts', count: stats.totalPosts, icon: FileText, path: `${ADMIN_ROUTE_BASE}/blogs` },
+    { label: 'Services', count: stats.totalServices, icon: Cpu, path: `${ADMIN_ROUTE_BASE}/services` },
+    { label: 'Accelerators', count: stats.totalAccelerators, icon: Zap, path: `${ADMIN_ROUTE_BASE}/accelerators` },
+    { label: 'Industries', count: stats.totalIndustries, icon: Factory, path: `${ADMIN_ROUTE_BASE}/industries` },
+    { label: 'Case Studies', count: stats.totalCaseStudies, icon: Briefcase, path: `${ADMIN_ROUTE_BASE}/case-studies` },
+    { label: 'Flash Reports', count: stats.totalReports, icon: FileBarChart, path: `${ADMIN_ROUTE_BASE}/reports` }
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-[#111111]">
       {/* Top Header */}
-      <div className="border-b border-neutral-800 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="border-b border-[#E5E5E5] pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="font-mono text-xs text-white uppercase tracking-widest mb-1">
+          <div className="font-mono text-xs text-[#888888] uppercase tracking-widest mb-1 font-semibold">
             CONTROL ROOM — OVERVIEW
           </div>
-          <h1 className="font-heading text-3xl font-bold uppercase text-white">
+          <h1 className="font-heading text-2xl md:text-3xl font-bold uppercase text-[#111111] tracking-tight">
             CMS DASHBOARD
           </h1>
         </div>
 
         {/* Quick Create Buttons */}
         <div className="flex flex-wrap items-center gap-2">
-          <Link to={`${ADMIN_ROUTE_BASE}/blogs`} className="btn btn-primary text-xs py-2 px-3">
+          <Link to={`${ADMIN_ROUTE_BASE}/blogs`} className="admin-btn-primary text-xs py-2 px-3 inline-flex items-center">
             <Plus className="w-3.5 h-3.5 mr-1" /> New Blog
           </Link>
-          <Link to={`${ADMIN_ROUTE_BASE}/reports`} className="btn btn-primary text-xs py-2 px-3">
+          <Link to={`${ADMIN_ROUTE_BASE}/reports`} className="admin-btn-primary text-xs py-2 px-3 inline-flex items-center">
             <Plus className="w-3.5 h-3.5 mr-1" /> New Flash Report
           </Link>
-          <Link to={`${ADMIN_ROUTE_BASE}/services`} className="admin-btn text-xs py-2 px-3">
+          <Link to={`${ADMIN_ROUTE_BASE}/services`} className="admin-btn text-xs py-2 px-3 inline-flex items-center">
             <Plus className="w-3.5 h-3.5 mr-1" /> Service
           </Link>
-          <Link to={`${ADMIN_ROUTE_BASE}/media`} className="admin-btn text-xs py-2 px-3">
+          <Link to={`${ADMIN_ROUTE_BASE}/media`} className="admin-btn text-xs py-2 px-3 inline-flex items-center">
             <ImageIcon className="w-3.5 h-3.5 mr-1" /> Upload Media
           </Link>
         </div>
       </div>
+
       {/* Book a Call & Lead KPI Section */}
-      <div className="bg-[#111111] border border-neutral-800 p-5 rounded-none">
-        <div className="flex items-center justify-between border-b border-neutral-800 pb-3 mb-4">
+      <div className="bg-white border border-[#E5E5E5] p-5">
+        <div className="flex items-center justify-between border-b border-[#E5E5E5] pb-3 mb-4">
           <div className="flex items-center gap-2">
-            <PhoneCall className="w-5 h-5 text-white" />
-            <span className="font-heading text-lg font-bold uppercase text-white">
+            <PhoneCall className="w-4 h-4 text-[#111111]" />
+            <span className="font-heading text-sm md:text-base font-bold uppercase text-[#111111]">
               BOOK A CALL &amp; ENQUIRY METRICS
             </span>
           </div>
           <Link
             to={`${ADMIN_ROUTE_BASE}/book-a-call`}
-            className="font-mono text-xs text-white hover:underline flex items-center gap-1"
+            className="font-mono text-xs text-[#555555] hover:text-[#111111] hover:underline flex items-center gap-1"
           >
             Manage Enquiries &rarr;
           </Link>
@@ -116,60 +116,60 @@ export default function DashboardPage() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           <Link
             to={`${ADMIN_ROUTE_BASE}/book-a-call`}
-            className="bg-black border border-neutral-800 p-3 hover:border-white transition-colors"
+            className="bg-[#F7F7F7] border border-[#E5E5E5] p-3 hover:border-[#111111] transition-colors"
           >
-            <div className="font-mono text-[10px] text-neutral-400 uppercase">TOTAL REQUESTS</div>
-            <div className="font-heading text-2xl font-bold text-white mt-1">
+            <div className="font-mono text-[10px] text-[#666666] uppercase font-semibold">TOTAL REQUESTS</div>
+            <div className="font-heading text-2xl font-bold text-[#111111] mt-1">
               {loading ? '—' : stats.totalBookCalls || 0}
             </div>
           </Link>
 
           <Link
             to={`${ADMIN_ROUTE_BASE}/book-a-call`}
-            className="bg-black border border-neutral-800 p-3 hover:border-white transition-colors"
+            className="bg-[#F7F7F7] border border-[#E5E5E5] p-3 hover:border-[#111111] transition-colors"
           >
-            <div className="font-mono text-[10px] text-neutral-400 uppercase">NEW / UNREAD</div>
-            <div className="font-heading text-2xl font-bold text-white mt-1">
+            <div className="font-mono text-[10px] text-[#666666] uppercase font-semibold">NEW / UNREAD</div>
+            <div className="font-heading text-2xl font-bold text-[#111111] mt-1">
               {loading ? '—' : stats.newBookCalls || 0}
             </div>
           </Link>
 
           <Link
             to={`${ADMIN_ROUTE_BASE}/book-a-call`}
-            className="bg-black border border-neutral-800 p-3 hover:border-white transition-colors"
+            className="bg-[#F7F7F7] border border-[#E5E5E5] p-3 hover:border-[#111111] transition-colors"
           >
-            <div className="font-mono text-[10px] text-neutral-400 uppercase">CONTACTED</div>
-            <div className="font-heading text-2xl font-bold text-white mt-1">
+            <div className="font-mono text-[10px] text-[#666666] uppercase font-semibold">CONTACTED</div>
+            <div className="font-heading text-2xl font-bold text-[#111111] mt-1">
               {loading ? '—' : stats.contactedBookCalls || 0}
             </div>
           </Link>
 
           <Link
             to={`${ADMIN_ROUTE_BASE}/book-a-call`}
-            className="bg-black border border-neutral-800 p-3 hover:border-white transition-colors"
+            className="bg-[#F7F7F7] border border-[#E5E5E5] p-3 hover:border-[#111111] transition-colors"
           >
-            <div className="font-mono text-[10px] text-neutral-400 uppercase">IN PROGRESS</div>
-            <div className="font-heading text-2xl font-bold text-white mt-1">
+            <div className="font-mono text-[10px] text-[#666666] uppercase font-semibold">IN PROGRESS</div>
+            <div className="font-heading text-2xl font-bold text-[#111111] mt-1">
               {loading ? '—' : stats.inProgressBookCalls || 0}
             </div>
           </Link>
 
           <Link
             to={`${ADMIN_ROUTE_BASE}/book-a-call`}
-            className="bg-black border border-neutral-800 p-3 hover:border-white transition-colors"
+            className="bg-[#F7F7F7] border border-[#E5E5E5] p-3 hover:border-[#111111] transition-colors"
           >
-            <div className="font-mono text-[10px] text-neutral-400 uppercase">CONVERTED / QUALIFIED</div>
-            <div className="font-heading text-2xl font-bold text-white mt-1">
+            <div className="font-mono text-[10px] text-[#666666] uppercase font-semibold">CONVERTED</div>
+            <div className="font-heading text-2xl font-bold text-[#111111] mt-1">
               {loading ? '—' : (stats.convertedBookCalls || 0) + (stats.qualifiedBookCalls || 0)}
             </div>
           </Link>
 
           <Link
             to={`${ADMIN_ROUTE_BASE}/book-a-call`}
-            className="bg-black border border-neutral-800 p-3 hover:border-white transition-colors"
+            className="bg-[#F7F7F7] border border-[#E5E5E5] p-3 hover:border-[#111111] transition-colors"
           >
-            <div className="font-mono text-[10px] text-neutral-400 uppercase">CLOSED</div>
-            <div className="font-heading text-2xl font-bold text-neutral-400 mt-1">
+            <div className="font-mono text-[10px] text-[#666666] uppercase font-semibold">CLOSED</div>
+            <div className="font-heading text-2xl font-bold text-[#888888] mt-1">
               {loading ? '—' : stats.closedBookCalls || 0}
             </div>
           </Link>
@@ -184,16 +184,16 @@ export default function DashboardPage() {
             <Link
               key={c.label}
               to={c.path}
-              className="bg-[#111111] border border-neutral-800 p-4 hover:border-white transition-colors group block"
+              className="bg-white border border-[#E5E5E5] p-4 hover:border-[#111111] transition-colors group block"
             >
               <div className="flex items-center justify-between mb-2">
-                <Icon className={`w-4 h-4 ${c.color}`} />
-                <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-colors" />
+                <Icon className="w-4 h-4 text-[#111111]" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#888888] group-hover:text-[#111111] transition-colors" />
               </div>
-              <div className="font-heading text-2xl font-bold text-white">
+              <div className="font-heading text-2xl font-bold text-[#111111]">
                 {loading ? '—' : c.count}
               </div>
-              <div className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider mt-1">
+              <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider mt-1 font-semibold">
                 {c.label}
               </div>
             </Link>
@@ -205,62 +205,62 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Link
           to={`${ADMIN_ROUTE_BASE}/published`}
-          className="bg-[#111111] border border-neutral-800 p-4 flex items-center justify-between hover:bg-black transition-colors"
+          className="bg-white border border-[#E5E5E5] p-4 flex items-center justify-between hover:bg-[#F7F7F7] hover:border-[#111111] transition-colors"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-black border border-neutral-700 flex items-center justify-center text-white">
+            <div className="w-9 h-9 bg-[#111111] flex items-center justify-center text-white">
               <CheckCircle className="w-4 h-4" />
             </div>
             <div>
-              <div className="font-heading text-xl font-bold text-white">
+              <div className="font-heading text-xl font-bold text-[#111111]">
                 {loading ? '—' : stats.published}
               </div>
-              <div className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+              <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider font-semibold">
                 Total Published Items
               </div>
             </div>
           </div>
-          <span className="font-mono text-xs text-white">View All →</span>
+          <span className="font-mono text-xs text-[#555555] font-semibold">View All →</span>
         </Link>
 
         <Link
           to={`${ADMIN_ROUTE_BASE}/drafts`}
-          className="bg-[#111111] border border-neutral-800 p-4 flex items-center justify-between hover:bg-black transition-colors"
+          className="bg-white border border-[#E5E5E5] p-4 flex items-center justify-between hover:bg-[#F7F7F7] hover:border-[#111111] transition-colors"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-black border border-neutral-700 flex items-center justify-center text-white">
+            <div className="w-9 h-9 bg-[#F7F7F7] border border-[#E5E5E5] flex items-center justify-center text-[#111111]">
               <Clock className="w-4 h-4" />
             </div>
             <div>
-              <div className="font-heading text-xl font-bold text-white">
+              <div className="font-heading text-xl font-bold text-[#111111]">
                 {loading ? '—' : stats.drafts}
               </div>
-              <div className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+              <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider font-semibold">
                 Drafts in Progress
               </div>
             </div>
           </div>
-          <span className="font-mono text-xs text-white">View Drafts →</span>
+          <span className="font-mono text-xs text-[#555555] font-semibold">View Drafts →</span>
         </Link>
 
         <Link
           to={`${ADMIN_ROUTE_BASE}/trash`}
-          className="bg-[#111111] border border-neutral-800 p-4 flex items-center justify-between hover:bg-black transition-colors"
+          className="bg-white border border-[#E5E5E5] p-4 flex items-center justify-between hover:bg-[#F7F7F7] hover:border-[#111111] transition-colors"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-black border border-neutral-700 flex items-center justify-center text-white">
+            <div className="w-9 h-9 bg-[#F7F7F7] border border-[#E5E5E5] flex items-center justify-center text-[#888888]">
               <Trash2 className="w-4 h-4" />
             </div>
             <div>
-              <div className="font-heading text-xl font-bold text-white">
+              <div className="font-heading text-xl font-bold text-[#111111]">
                 {loading ? '—' : stats.trash}
               </div>
-              <div className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+              <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider font-semibold">
                 Trash &amp; Soft Deleted
               </div>
             </div>
           </div>
-          <span className="font-mono text-xs text-white">View Trash →</span>
+          <span className="font-mono text-xs text-[#555555] font-semibold">View Trash →</span>
         </Link>
       </div>
 
@@ -268,34 +268,34 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Column 1: Real-time Activity Log (7 cols) */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
+          <div className="flex items-center justify-between border-b border-[#E5E5E5] pb-3">
             <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-white" />
-              <h2 className="font-mono text-sm font-bold uppercase tracking-wider text-white">
+              <Activity className="w-4 h-4 text-[#111111]" />
+              <h2 className="font-mono text-sm font-bold uppercase tracking-wider text-[#111111]">
                 RECENT ACTIVITY AUDIT
               </h2>
             </div>
-            <span className="font-mono text-[10px] text-neutral-400">
+            <span className="font-mono text-[10px] text-[#888888]">
               AUTO-AUDIT LOGS
             </span>
           </div>
 
           <div className="space-y-2.5">
             {activityLogs.length === 0 ? (
-              <div className="p-6 bg-[#111111] border border-neutral-800 text-center font-mono text-xs text-neutral-400">
+              <div className="p-6 bg-white border border-[#E5E5E5] text-center font-mono text-xs text-[#888888]">
                 NO RECENT ACTIVITY LOGGED.
               </div>
             ) : (
               activityLogs.slice(0, 7).map((log) => (
                 <div
                   key={log.id}
-                  className="bg-[#111111] border border-neutral-800 p-3.5 flex items-start justify-between gap-4 font-mono text-xs"
+                  className="bg-white border border-[#E5E5E5] p-3.5 flex items-start justify-between gap-4 font-mono text-xs hover:border-[#111111] transition-colors"
                 >
                   <div className="space-y-0.5">
-                    <div className="font-semibold text-white">{log.title}</div>
-                    <div className="text-[11px] text-neutral-400">{log.description}</div>
+                    <div className="font-semibold text-[#111111]">{log.title}</div>
+                    <div className="text-[11px] text-[#666666]">{log.description}</div>
                   </div>
-                  <div className="px-2 py-0.5 bg-black border border-neutral-700 text-[10px] text-white shrink-0 font-bold">
+                  <div className="px-2 py-0.5 bg-[#F7F7F7] border border-[#E5E5E5] text-[10px] text-[#111111] shrink-0 font-bold">
                     {log.date}
                   </div>
                 </div>
@@ -306,16 +306,16 @@ export default function DashboardPage() {
 
         {/* Column 2: Recently Updated Articles & Content (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
+          <div className="flex items-center justify-between border-b border-[#E5E5E5] pb-3">
             <div className="flex items-center gap-2">
-              <FileText className="w-4 h-4 text-white" />
-              <h2 className="font-mono text-sm font-bold uppercase tracking-wider text-white">
+              <FileText className="w-4 h-4 text-[#111111]" />
+              <h2 className="font-mono text-sm font-bold uppercase tracking-wider text-[#111111]">
                 RECENT BLOG POSTS
               </h2>
             </div>
             <Link
               to={`${ADMIN_ROUTE_BASE}/blogs`}
-              className="font-mono text-[10px] text-white hover:underline"
+              className="font-mono text-[10px] text-[#555555] hover:text-[#111111] hover:underline"
             >
               View All
             </Link>
@@ -323,7 +323,7 @@ export default function DashboardPage() {
 
           <div className="space-y-2.5">
             {recentPosts.length === 0 ? (
-              <div className="p-6 bg-[#111111] border border-neutral-800 text-center font-mono text-xs text-neutral-400">
+              <div className="p-6 bg-white border border-[#E5E5E5] text-center font-mono text-xs text-[#888888]">
                 NO POSTS FOUND.
               </div>
             ) : (
@@ -331,13 +331,13 @@ export default function DashboardPage() {
                 <Link
                   key={post.id}
                   to={`${ADMIN_ROUTE_BASE}/blogs`}
-                  className="bg-[#111111] border border-neutral-800 p-3 block hover:border-white transition-colors"
+                  className="bg-white border border-[#E5E5E5] p-3 block hover:border-[#111111] transition-colors"
                 >
-                  <div className="flex items-center justify-between text-[10px] font-mono text-neutral-400 mb-1">
-                    <span className="text-white">{post.category || 'General'}</span>
+                  <div className="flex items-center justify-between text-[10px] font-mono text-[#888888] mb-1">
+                    <span className="text-[#111111] font-semibold">{post.category || 'General'}</span>
                     <span>{new Date(post.updated_at || post.created_at).toLocaleDateString()}</span>
                   </div>
-                  <div className="font-semibold text-xs text-white truncate">
+                  <div className="font-semibold text-xs text-[#111111] truncate">
                     {post.title}
                   </div>
                 </Link>

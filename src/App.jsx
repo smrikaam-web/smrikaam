@@ -8,6 +8,8 @@ import BottomControlBar from './components/BottomControlBar';
 import IntroLoader from './components/IntroLoader';
 import VerticalScrollRail from './components/VerticalScrollRail';
 import BookCallModal from './components/BookCallModal';
+import PrivacyConsentBanner from './components/PrivacyConsentBanner';
+import { trackPageView, initVisitorTracker } from './utils/visitorTracker';
 
 // Ambient 3D Scene (Deferred to keep Three.js off mobile and critical desktop path)
 import DeferredFixedScene3D from './components/DeferredFixedScene3D';
@@ -55,6 +57,7 @@ const InboxPage = lazy(() => import('./pages/admin/InboxPage'));
 const AdminBookCallPage = lazy(() => import('./pages/admin/AdminBookCallPage'));
 const AdminBlogManager = lazy(() => import('./pages/admin/AdminBlogManager'));
 const AdminContentManager = lazy(() => import('./components/admin/AdminContentManager'));
+const AdminVisitorsPage = lazy(() => import('./pages/admin/AdminVisitorsPage'));
 import RequireAuth from './components/RequireAuth';
 
 // Field configs for Central CMS
@@ -375,7 +378,19 @@ function RouteLoadingFallback() {
   );
 }
 
+function RouteTracker() {
+  const location = useLocation();
+  useEffect(() => {
+    trackPageView(location.pathname, document.title);
+  }, [location.pathname]);
+  return null;
+}
+
 export default function App() {
+  useEffect(() => {
+    const cleanup = initVisitorTracker();
+    return cleanup;
+  }, []);
   return (
     <CMSProvider>
       <BrowserRouter>
@@ -464,9 +479,9 @@ export default function App() {
               <Route path="drafts" element={<PublishingLifecyclePage viewType="draft" />} />
               <Route path="published" element={<PublishingLifecyclePage viewType="published" />} />
               <Route path="trash" element={<PublishingLifecyclePage viewType="trash" />} />
-              <Route path="settings" element={<SettingsPage />} />
               <Route path="inbox" element={<InboxPage />} />
               <Route path="book-a-call" element={<AdminBookCallPage />} />
+              <Route path="visitors" element={<AdminVisitorsPage />} />
             </Route>
 
             {/* Protected Admin Routes for /admin */}
@@ -497,6 +512,7 @@ export default function App() {
               <Route path="trash" element={<PublishingLifecyclePage viewType="trash" />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="inbox" element={<InboxPage />} />
+              <Route path="visitors" element={<AdminVisitorsPage />} />
             </Route>
 
             {/* Fallback route with intelligent CMS slug resolution */}
@@ -504,8 +520,10 @@ export default function App() {
           </Routes>
         </Suspense>
       </PageTransition>
+      <RouteTracker />
       </BrowserRouter>
       <BookCallModal />
+      <PrivacyConsentBanner />
     </CMSProvider>
   );
 }

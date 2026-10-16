@@ -246,8 +246,15 @@ export default function Footer() {
         <div>
           &copy; 2026 SMRIKAAM Technologies. All rights reserved.
         </div>
-        <div className="flex gap-4 font-mono text-[11px]">
+        <div className="flex flex-wrap gap-4 font-mono text-[11px] items-center">
           <Link to="/contact" className="hover:text-[var(--color-text)] transition-colors">Privacy Policy</Link>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('smk_open_cookie_settings'))}
+            className="hover:text-[var(--color-text)] transition-colors cursor-pointer bg-transparent border-none p-0 font-mono text-[11px] text-[var(--color-text-muted)]"
+          >
+            Cookie Preferences
+          </button>
           <Link to="/contact" className="hover:text-[var(--color-text)] transition-colors">Terms of Service</Link>
           <Link to="/contact" className="hover:text-[var(--color-text)] transition-colors">Security</Link>
         </div>

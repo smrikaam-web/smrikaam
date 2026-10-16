@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import bcrypt from 'bcryptjs';
 import { initialSeedData } from '../data/seedData.js';
 import { postgres } from './postgres.js';
 import { cleanSlug } from '../utils/slug.js';
@@ -32,7 +33,9 @@ const tableMap = {
   staffing: 'staffing',
   locations: 'locations',
   settings: 'settings',
-  engagements: 'engagements'
+  engagements: 'engagements',
+  visitors: 'visitors',
+  visitor_sessions: 'visitor_sessions'
 };
 
 function safeParseJson(val, defaultVal = []) {
@@ -96,17 +99,12 @@ class Database {
   }
 
   getCollection(name) {
-    if (fs.existsSync(DB_FILE)) {
-      try {
-        const raw = fs.readFileSync(DB_FILE, 'utf8');
-        this.data = JSON.parse(raw);
-      } catch (err) {
-        // use existing in-memory data
-      }
+    if (!this.data) {
+      this.initLocalFallback();
     }
-    if (!this.data || !this.data[name]) {
-      if (this.data) this.data[name] = [];
-      return [];
+    if (!this.data) this.data = {};
+    if (!Array.isArray(this.data[name])) {
+      this.data[name] = [];
     }
     return this.data[name];
   }
@@ -376,15 +374,28 @@ class Database {
     return items.find((item) => cleanSlug(item.slug) === cleanedSlug || item.slug === slug || item.slug === cleanedSlug) || null;
   }
 
+  generateUniqueSlug(collectionName, baseSlug, existingId = null) {
+    let slug = cleanSlug(baseSlug);
+    if (!slug) slug = `${collectionName.slice(0, 4)}-${Date.now().toString(36)}`;
+    const items = this.getCollection(collectionName) || [];
+    let candidate = slug;
+    let counter = 2;
+    while (items.some((item) => String(item.id) !== String(existingId) && cleanSlug(item.slug) === candidate)) {
+      candidate = `${slug}-${counter}`;
+      counter++;
+    }
+    return candidate;
+  }
+
   async create(collectionName, data, user = null) {
     const table = tableMap[collectionName] || collectionName;
     const id = data.id || `${collectionName.slice(0, 3)}_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`;
     const now = new Date().toISOString();
-    const sanitizedSlug = cleanSlug(data.slug || data.title || data.name || '');
+    const sanitizedSlug = this.generateUniqueSlug(collectionName, data.slug || data.title || data.name || '', id);
 
     const newItem = {
       ...data,
-      slug: sanitizedSlug || data.slug,
+      slug: sanitizedSlug,
       id,
       created_at: now,
       updated_at: now,
@@ -422,7 +433,7 @@ class Database {
     const now = new Date().toISOString();
     const wasPublished = existing.status === 'published';
     const isNowPublished = data.status === 'published';
-    const sanitizedSlug = data.slug !== undefined ? cleanSlug(data.slug) : undefined;
+    const sanitizedSlug = data.slug !== undefined ? this.generateUniqueSlug(collectionName, data.slug, id) : undefined;
 
     const updatedItem = {
       ...existing,
@@ -701,6 +712,19 @@ class Database {
 
     // Fallback
     const localEng = this.getCollection('engagements') || [];
+    const contentCollections = ['posts', 'services', 'accelerators', 'industries', 'caseStudies', 'reports'];
+    let localPublished = 0;
+    let localDrafts = 0;
+    let localTrash = 0;
+    for (const col of contentCollections) {
+      const items = this.getCollection(col) || [];
+      for (const it of items) {
+        if (it.status === 'published') localPublished++;
+        else if (it.status === 'draft') localDrafts++;
+        else if (it.status === 'trash') localTrash++;
+      }
+    }
+
     return {
       totalPosts: this.getCollection('posts').length,
       totalServices: this.getCollection('services').length,
@@ -709,9 +733,9 @@ class Database {
       totalCaseStudies: this.getCollection('caseStudies').length,
       totalReports: this.getCollection('reports').length,
       totalMedia: this.getCollection('media').length,
-      published: 0,
-      drafts: 0,
-      trash: 0,
+      published: localPublished,
+      drafts: localDrafts,
+      trash: localTrash,
       totalBookCalls: localEng.length,
       newBookCalls: localEng.filter(e => e.status === 'NEW' || e.status === 'unread' || !e.status).length,
       contactedBookCalls: localEng.filter(e => e.status === 'CONTACTED').length,
@@ -993,6 +1017,7 @@ class Database {
       preferred_date: payload.preferred_date || payload.preferredDate || '',
       preferred_time: payload.preferred_time || payload.preferredTime || '',
       source: payload.source || 'Public Website',
+      visitor_id: payload.visitor_id || payload.visitorId || '',
       status: payload.status || 'NEW',
       priority: payload.priority || 'MEDIUM',
       assigned_to: payload.assigned_to || payload.assignedTo || '',
@@ -1006,16 +1031,25 @@ class Database {
     engagements.unshift(record);
     this.saveLocalSnapshot();
 
+    if (record.visitor_id && payload.consent_linking !== false) {
+      try {
+        await this.linkVisitorToLead(record.visitor_id, record, payload.consent_linking !== false);
+      } catch (err) {
+        // Non-blocking fallback
+      }
+    }
+
     if (this.usePostgres()) {
       try {
         await postgres.query(
-          `INSERT INTO engagements (id, full_name, company_name, email, phone, job_title, requirement_type, message, preferred_date, preferred_time, source, status, priority, assigned_to, admin_notes, is_read, created_at, updated_at)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)`,
+          `INSERT INTO engagements (id, full_name, company_name, email, phone, job_title, requirement_type, message, preferred_date, preferred_time, source, status, priority, assigned_to, admin_notes, is_read, visitor_id, created_at, updated_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
           [
             record.id, record.full_name, record.company_name, record.email, record.phone,
             record.job_title, record.requirement_type, record.message, record.preferred_date,
             record.preferred_time, record.source, record.status, record.priority,
-            record.assigned_to, record.admin_notes, record.is_read, record.created_at, record.updated_at
+            record.assigned_to, record.admin_notes, record.is_read, record.visitor_id,
+            record.created_at, record.updated_at
           ]
         );
       } catch (err) {
@@ -1109,6 +1143,493 @@ class Database {
       }
     }
     return true;
+  }
+
+  // ============================================================
+  // VISITOR INTELLIGENCE & REVERSE-DNS NETWORK TRACKING
+  // ============================================================
+
+  async recordVisitorHit({
+    visitorId,
+    sessionId,
+    path = '/',
+    title = '',
+    referrer = '',
+    anonymizedIp = '0.0.0.0',
+    networkOrg = 'Anonymous Visitor',
+    networkDomain = null,
+    networkType = 'Anonymous / Unresolved',
+    networkConfidence = 'Low',
+    country = 'Unknown',
+    region = '',
+    city = '',
+    userAgentCategory = 'Desktop (Other)',
+    deviceCategory = 'Desktop',
+    browserCategory = 'Other',
+    referralSource = 'Direct',
+    consentStatus = 'Consented',
+    duration = 0,
+    isOptedOut = false
+  }) {
+    if (!visitorId) return null;
+    const now = new Date().toISOString();
+
+    const visitors = this.getCollection('visitors');
+    let visitor = visitors.find((v) => v.id === visitorId);
+
+    if (!visitor) {
+      visitor = {
+        id: visitorId,
+        anonymized_ip: anonymizedIp,
+        network_org: networkOrg,
+        network_domain: networkDomain,
+        network_type: networkType,
+        network_confidence: networkConfidence,
+        country,
+        region,
+        city,
+        referral_source: referralSource,
+        device_category: deviceCategory,
+        browser_category: browserCategory,
+        consent_status: isOptedOut ? 'Opted Out' : consentStatus,
+        first_seen: now,
+        last_seen: now,
+        total_visits: 1,
+        total_pageviews: 1,
+        lead_status: 'New',
+        admin_notes: '',
+        voluntary_name: null,
+        voluntary_company: null,
+        voluntary_email: null,
+        voluntary_phone: null,
+        voluntary_lead_id: null,
+        is_opted_out: Boolean(isOptedOut),
+        created_at: now,
+        updated_at: now
+      };
+      visitors.unshift(visitor);
+    } else {
+      visitor.last_seen = now;
+      visitor.total_pageviews = (visitor.total_pageviews || 0) + 1;
+      visitor.updated_at = now;
+      if (isOptedOut) {
+        visitor.is_opted_out = true;
+        visitor.consent_status = 'Opted Out';
+      } else if (consentStatus && (!visitor.consent_status || visitor.consent_status === 'Consented' || consentStatus !== 'Consented')) {
+        visitor.consent_status = consentStatus;
+      }
+      if (referralSource && referralSource !== 'Direct' && (!visitor.referral_source || visitor.referral_source === 'Direct')) {
+        visitor.referral_source = referralSource;
+      }
+      if (deviceCategory && (!visitor.device_category || visitor.device_category === 'Desktop')) {
+        visitor.device_category = deviceCategory;
+      }
+      if (browserCategory && (!visitor.browser_category || visitor.browser_category === 'Other')) {
+        visitor.browser_category = browserCategory;
+      }
+      if (anonymizedIp && visitor.anonymized_ip === '0.0.0.0') visitor.anonymized_ip = anonymizedIp;
+      if (networkOrg && (!visitor.network_org || visitor.network_org === 'Anonymous Visitor')) {
+        visitor.network_org = networkOrg;
+        visitor.network_domain = networkDomain;
+        visitor.network_type = networkType;
+        visitor.network_confidence = networkConfidence;
+      }
+      if (country && visitor.country === 'Unknown') visitor.country = country;
+      if (region && !visitor.region) visitor.region = region;
+      if (city && !visitor.city) visitor.city = city;
+    }
+
+    // Handle Session & Page Journey
+    const sessions = this.getCollection('visitor_sessions');
+    const effectiveSessionId = sessionId || `sess_${visitorId}_${now.slice(0, 10)}`;
+    let session = sessions.find((s) => s.id === effectiveSessionId);
+
+    const hitPage = {
+      path,
+      title: title || path,
+      timestamp: now,
+      duration: duration || 0
+    };
+
+    if (!session) {
+      session = {
+        id: effectiveSessionId,
+        visitor_id: visitorId,
+        started_at: now,
+        last_active_at: now,
+        referrer: referralSource || referrer || 'Direct',
+        user_agent_category: userAgentCategory,
+        device_category: deviceCategory,
+        browser_category: browserCategory,
+        pages_viewed: [hitPage],
+        total_duration_sec: duration || 0,
+        created_at: now
+      };
+      sessions.unshift(session);
+      if (visitors.some((v) => v.id === visitorId && v.first_seen !== now)) {
+        visitor.total_visits = (visitor.total_visits || 1) + 1;
+      }
+    } else {
+      session.last_active_at = now;
+      session.total_duration_sec = (session.total_duration_sec || 0) + (duration || 0);
+      if (referralSource && referralSource !== 'Direct' && (!session.referrer || session.referrer === 'Direct')) {
+        session.referrer = referralSource;
+      }
+      if (!Array.isArray(session.pages_viewed)) session.pages_viewed = [];
+      const lastPage = session.pages_viewed[session.pages_viewed.length - 1];
+      if (!lastPage || lastPage.path !== path) {
+        session.pages_viewed.push(hitPage);
+      } else if (duration > 0) {
+        lastPage.duration = (lastPage.duration || 0) + duration;
+      }
+    }
+
+    this.saveLocalSnapshot();
+
+    if (this.usePostgres()) {
+      try {
+        await postgres.query(`
+          INSERT INTO visitors (id, anonymized_ip, network_org, network_domain, network_type, network_confidence, country, region, city, first_seen, last_seen, total_visits, total_pageviews, lead_status, admin_notes, is_opted_out, created_at, updated_at)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+          ON CONFLICT (id) DO UPDATE SET
+            last_seen = EXCLUDED.last_seen,
+            total_pageviews = visitors.total_pageviews + 1,
+            network_org = COALESCE(NULLIF(visitors.network_org, 'Anonymous Visitor'), EXCLUDED.network_org),
+            updated_at = NOW()
+        `, [
+          visitor.id, visitor.anonymized_ip, visitor.network_org, visitor.network_domain,
+          visitor.network_type, visitor.network_confidence, visitor.country, visitor.region,
+          visitor.city, visitor.first_seen, visitor.last_seen, visitor.total_visits,
+          visitor.total_pageviews, visitor.lead_status, visitor.admin_notes,
+          visitor.is_opted_out, visitor.created_at, visitor.updated_at
+        ]);
+
+        await postgres.query(`
+          INSERT INTO visitor_sessions (id, visitor_id, started_at, last_active_at, referrer, user_agent_category, pages_viewed, total_duration_sec, created_at)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+          ON CONFLICT (id) DO UPDATE SET
+            last_active_at = EXCLUDED.last_active_at,
+            pages_viewed = EXCLUDED.pages_viewed,
+            total_duration_sec = visitor_sessions.total_duration_sec + EXCLUDED.total_duration_sec
+        `, [
+          session.id, session.visitor_id, session.started_at, session.last_active_at,
+          session.referrer, session.user_agent_category, JSON.stringify(session.pages_viewed),
+          session.total_duration_sec, session.created_at
+        ]);
+      } catch (err) {
+        console.warn('Postgres recordVisitorHit warning:', err.message);
+      }
+    }
+
+    return { visitor, session };
+  }
+
+  async linkVisitorToLead(visitorId, leadData, consentLinking = true) {
+    if (!visitorId) return false;
+    const visitors = this.getCollection('visitors');
+    const visitor = visitors.find((v) => v.id === visitorId);
+    if (!visitor) return false;
+
+    // Strict privacy rule: Do not link identities to past sessions if user opted out or did not consent to linking
+    if (visitor.is_opted_out || consentLinking === false) {
+      return false;
+    }
+
+    visitor.voluntary_lead_id = leadData.id;
+    visitor.voluntary_name = leadData.full_name || leadData.name;
+    visitor.voluntary_company = leadData.company_name || leadData.company;
+    visitor.voluntary_email = leadData.email;
+    visitor.voluntary_phone = leadData.phone || '';
+    visitor.consent_status = 'Consented & Linked';
+    if (visitor.lead_status === 'New') {
+      visitor.lead_status = 'Qualified Inbound Lead';
+    }
+    visitor.network_confidence = 'Verified (Voluntary Submission)';
+    visitor.updated_at = new Date().toISOString();
+
+    this.saveLocalSnapshot();
+
+    if (this.usePostgres()) {
+      try {
+        await postgres.query(`
+          UPDATE visitors SET
+            voluntary_lead_id = $1, voluntary_name = $2, voluntary_company = $3,
+            voluntary_email = $4, voluntary_phone = $5, lead_status = $6,
+            network_confidence = $7, updated_at = NOW()
+          WHERE id = $8
+        `, [
+          visitor.voluntary_lead_id, visitor.voluntary_name, visitor.voluntary_company,
+          visitor.voluntary_email, visitor.voluntary_phone, visitor.lead_status,
+          visitor.network_confidence, visitor.id
+        ]);
+      } catch (err) {
+        console.warn('Postgres linkVisitorToLead warning:', err.message);
+      }
+    }
+
+    return true;
+  }
+
+  async deleteVisitor(visitorId) {
+    if (!visitorId) return false;
+    const visitors = this.getCollection('visitors');
+    const sessions = this.getCollection('visitor_sessions');
+
+    const idx = visitors.findIndex((v) => v.id === visitorId);
+    if (idx === -1) return false;
+
+    visitors.splice(idx, 1);
+    this.data.visitor_sessions = sessions.filter((s) => s.visitor_id !== visitorId);
+    this.saveLocalSnapshot();
+
+    if (this.usePostgres()) {
+      try {
+        await postgres.query('DELETE FROM visitor_sessions WHERE visitor_id = $1', [visitorId]);
+        await postgres.query('DELETE FROM visitors WHERE id = $1', [visitorId]);
+      } catch (err) {
+        console.warn('Postgres deleteVisitor warning:', err.message);
+      }
+    }
+
+    return true;
+  }
+
+  async getVisitors({ search = '', status = 'all', networkType = 'all', limit = 50, offset = 0 } = {}) {
+    let list = this.getCollection('visitors') || [];
+    const sessions = this.getCollection('visitor_sessions') || [];
+
+    if (this.usePostgres()) {
+      try {
+        const res = await postgres.query('SELECT * FROM visitors ORDER BY last_seen DESC LIMIT $1 OFFSET $2', [limit, offset]);
+        if (res.rows.length > 0) {
+          list = res.rows;
+        }
+      } catch (err) {
+        console.warn('Postgres getVisitors query warning:', err.message);
+      }
+    }
+
+    let enriched = list.map((v) => {
+      const vSessions = sessions.filter((s) => s.visitor_id === v.id);
+      vSessions.sort((a, b) => new Date(b.last_active_at) - new Date(a.last_active_at));
+      const latestSession = vSessions[0] || null;
+      const allPages = vSessions.flatMap((s) => (Array.isArray(s.pages_viewed) ? s.pages_viewed : [])).map((p) => p.path);
+      const uniquePages = [...new Set(allPages)];
+
+      return {
+        ...v,
+        latestSession,
+        latestSessionId: latestSession?.id || null,
+        referral_source: v.referral_source || latestSession?.referrer || 'Direct',
+        device_category: v.device_category || latestSession?.device_category || 'Desktop',
+        browser_category: v.browser_category || latestSession?.browser_category || 'Other',
+        consent_status: v.consent_status || (v.is_opted_out ? 'Opted Out' : 'Consented'),
+        uniquePages,
+        sessionCount: vSessions.length
+      };
+    });
+
+    if (status && status !== 'all') {
+      enriched = enriched.filter((v) => (v.lead_status || 'New').toLowerCase() === status.toLowerCase());
+    }
+    if (networkType && networkType !== 'all') {
+      enriched = enriched.filter((v) => (v.network_type || '').toLowerCase().includes(networkType.toLowerCase()));
+    }
+    if (search) {
+      const q = search.toLowerCase();
+      enriched = enriched.filter((v) =>
+        (v.id || '').toLowerCase().includes(q) ||
+        (v.latestSessionId || '').toLowerCase().includes(q) ||
+        (v.network_org || '').toLowerCase().includes(q) ||
+        (v.voluntary_company || '').toLowerCase().includes(q) ||
+        (v.voluntary_name || '').toLowerCase().includes(q) ||
+        (v.voluntary_email || '').toLowerCase().includes(q) ||
+        (v.voluntary_phone || '').toLowerCase().includes(q) ||
+        (v.country || '').toLowerCase().includes(q) ||
+        (v.anonymized_ip || '').toLowerCase().includes(q) ||
+        (v.referral_source || '').toLowerCase().includes(q) ||
+        (v.uniquePages || []).some((p) => p.toLowerCase().includes(q))
+      );
+    }
+
+    enriched.sort((a, b) => new Date(b.last_seen || b.created_at) - new Date(a.last_seen || a.created_at));
+
+    return {
+      total: enriched.length,
+      visitors: enriched.slice(offset, offset + limit)
+    };
+  }
+
+  async getVisitorById(visitorId) {
+    if (!visitorId) return null;
+    const visitors = this.getCollection('visitors');
+    let visitor = visitors.find((v) => v.id === visitorId);
+    if (!visitor) return null;
+
+    const sessions = (this.getCollection('visitor_sessions') || [])
+      .filter((s) => s.visitor_id === visitorId)
+      .sort((a, b) => new Date(b.last_active_at) - new Date(a.last_active_at));
+
+    const latestSession = sessions[0] || null;
+
+    // Check if there is an associated lead in engagements
+    let associatedLead = null;
+    if (visitor.voluntary_lead_id) {
+      const engagements = this.getCollection('engagements') || [];
+      associatedLead = engagements.find((e) => e.id === visitor.voluntary_lead_id) || null;
+    }
+
+    return {
+      ...visitor,
+      latestSessionId: latestSession?.id || null,
+      referral_source: visitor.referral_source || latestSession?.referrer || 'Direct',
+      device_category: visitor.device_category || latestSession?.device_category || 'Desktop',
+      browser_category: visitor.browser_category || latestSession?.browser_category || 'Other',
+      consent_status: visitor.consent_status || (visitor.is_opted_out ? 'Opted Out' : 'Consented'),
+      sessions,
+      associatedLead
+    };
+  }
+
+  async updateVisitorLead(visitorId, updates = {}) {
+    const visitors = this.getCollection('visitors');
+    const idx = visitors.findIndex((v) => v.id === visitorId);
+    if (idx === -1) return null;
+
+    const now = new Date().toISOString();
+    visitors[idx] = {
+      ...visitors[idx],
+      ...updates,
+      updated_at: now
+    };
+    this.saveLocalSnapshot();
+
+    if (this.usePostgres()) {
+      try {
+        await postgres.query(`
+          UPDATE visitors SET
+            lead_status = COALESCE($1, lead_status),
+            admin_notes = COALESCE($2, admin_notes),
+            updated_at = NOW()
+          WHERE id = $3
+        `, [updates.lead_status, updates.admin_notes, visitorId]);
+      } catch (err) {
+        console.warn('Postgres updateVisitorLead warning:', err.message);
+      }
+    }
+
+    return visitors[idx];
+  }
+
+  async getVisitorStats() {
+    const visitors = this.getCollection('visitors') || [];
+    const corporateCount = visitors.filter((v) => (v.network_type || '').includes('Corporate') || (v.network_type || '').includes('Institutional')).length;
+    const voluntaryCount = visitors.filter((v) => Boolean(v.voluntary_lead_id)).length;
+    const today = new Date().toISOString().slice(0, 10);
+    const activeTodayCount = visitors.filter((v) => (v.last_seen || '').slice(0, 10) === today).length;
+
+    return {
+      totalVisitors: visitors.length,
+      corporateNetworks: corporateCount,
+      voluntaryLeads: voluntaryCount,
+      activeToday: activeTodayCount
+    };
+  }
+
+  async purgeOldVisitors(retentionDays = 90) {
+    const cutoffDate = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000).toISOString();
+    const visitors = this.getCollection('visitors') || [];
+    const sessions = this.getCollection('visitor_sessions') || [];
+
+    const initialVisitorCount = visitors.length;
+    const initialSessionCount = sessions.length;
+
+    // Preserve voluntary leads, only purge anonymous inactive visitors
+    this.data.visitors = visitors.filter((v) => v.voluntary_lead_id || v.last_seen >= cutoffDate);
+    const retainedVisitorIds = new Set(this.data.visitors.map((v) => v.id));
+    this.data.visitor_sessions = sessions.filter((s) => retainedVisitorIds.has(s.visitor_id) && s.last_active_at >= cutoffDate);
+
+    this.saveLocalSnapshot();
+
+    if (this.usePostgres()) {
+      try {
+        await postgres.query('DELETE FROM visitor_sessions WHERE last_active_at < $1', [cutoffDate]);
+        await postgres.query('DELETE FROM visitors WHERE last_seen < $1 AND voluntary_lead_id IS NULL', [cutoffDate]);
+      } catch (err) {
+        console.warn('Postgres purgeOldVisitors warning:', err.message);
+      }
+    }
+
+    return {
+      purgedVisitors: initialVisitorCount - this.data.visitors.length,
+      purgedSessions: initialSessionCount - this.data.visitor_sessions.length
+    };
+  }
+
+  async exportVisitorsCsv() {
+    const { visitors } = await this.getVisitors({ limit: 10000 });
+    const headers = [
+      'Visitor ID',
+      'Latest Session ID',
+      'Known Name',
+      'Email',
+      'Phone',
+      'First Visit',
+      'Last Visit',
+      'Pages Viewed',
+      'Referral Source',
+      'Device Category',
+      'Browser Category',
+      'Consent Status',
+      'Associated Lead',
+      'Company',
+      'Network / Organization',
+      'Network Type',
+      'Confidence',
+      'Country',
+      'Region',
+      'City',
+      'Lead Status',
+      'Admin Notes',
+      'Pages Journey'
+    ];
+
+    const escapeCsv = (val) => {
+      let str = String(val ?? '');
+      // Neutralize spreadsheet formula injection characters (=, +, -, @, \t, \r)
+      if (/^[=+\-@\t\r]/.test(str)) {
+        str = `'${str}`;
+      }
+      return `"${str.replace(/"/g, '""')}"`;
+    };
+
+    const rows = visitors.map((v) => [
+      escapeCsv(v.id),
+      escapeCsv(v.latestSessionId || ''),
+      escapeCsv(v.voluntary_name || 'Anonymous Visitor'),
+      escapeCsv(v.voluntary_email || ''),
+      escapeCsv(v.voluntary_phone || ''),
+      escapeCsv(v.first_seen),
+      escapeCsv(v.last_seen),
+      escapeCsv(v.total_pageviews || 1),
+      escapeCsv(v.referral_source || 'Direct'),
+      escapeCsv(v.device_category || 'Desktop'),
+      escapeCsv(v.browser_category || 'Other'),
+      escapeCsv(v.consent_status || 'Consented'),
+      escapeCsv(v.voluntary_lead_id || ''),
+      escapeCsv(v.voluntary_company || ''),
+      escapeCsv(v.network_org || 'Anonymous Visitor'),
+      escapeCsv(v.network_type || 'Unresolved'),
+      escapeCsv(v.network_confidence || 'Low'),
+      escapeCsv(v.country || 'Unknown'),
+      escapeCsv(v.region || ''),
+      escapeCsv(v.city || ''),
+      escapeCsv(v.lead_status || 'New'),
+      escapeCsv(v.admin_notes || ''),
+      escapeCsv((v.uniquePages || []).join(' -> '))
+    ]);
+
+    return [headers.map(escapeCsv).join(','), ...rows.map((r) => r.join(','))].join('\r\n');
   }
 }
 

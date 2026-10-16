@@ -323,7 +323,46 @@ class PostgresService {
           updated_at TIMESTAMPTZ DEFAULT NOW()
         );
 
+        CREATE TABLE IF NOT EXISTS visitors (
+          id VARCHAR(64) PRIMARY KEY,
+          anonymized_ip VARCHAR(64),
+          network_org VARCHAR(255),
+          network_domain VARCHAR(255),
+          network_type VARCHAR(64) DEFAULT 'Anonymous / Unresolved',
+          network_confidence VARCHAR(64) DEFAULT 'Low',
+          country VARCHAR(64),
+          region VARCHAR(64),
+          city VARCHAR(64),
+          first_seen TIMESTAMPTZ DEFAULT NOW(),
+          last_seen TIMESTAMPTZ DEFAULT NOW(),
+          total_visits INT DEFAULT 1,
+          total_pageviews INT DEFAULT 1,
+          lead_status VARCHAR(32) DEFAULT 'New',
+          admin_notes TEXT,
+          voluntary_name VARCHAR(255),
+          voluntary_company VARCHAR(255),
+          voluntary_email VARCHAR(255),
+          voluntary_phone VARCHAR(64),
+          voluntary_lead_id VARCHAR(64),
+          is_opted_out BOOLEAN DEFAULT false,
+          created_at TIMESTAMPTZ DEFAULT NOW(),
+          updated_at TIMESTAMPTZ DEFAULT NOW()
+        );
+
+        CREATE TABLE IF NOT EXISTS visitor_sessions (
+          id VARCHAR(64) PRIMARY KEY,
+          visitor_id VARCHAR(64) NOT NULL,
+          started_at TIMESTAMPTZ DEFAULT NOW(),
+          last_active_at TIMESTAMPTZ DEFAULT NOW(),
+          referrer TEXT,
+          user_agent_category VARCHAR(32) DEFAULT 'Desktop',
+          pages_viewed JSONB DEFAULT '[]'::jsonb,
+          total_duration_sec INT DEFAULT 0,
+          created_at TIMESTAMPTZ DEFAULT NOW()
+        );
+
         -- Safe column migrations for existing tables
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS visitor_id VARCHAR(64);
         ALTER TABLE engagements ADD COLUMN IF NOT EXISTS job_title VARCHAR(255);
         ALTER TABLE engagements ADD COLUMN IF NOT EXISTS preferred_date VARCHAR(64);
         ALTER TABLE engagements ADD COLUMN IF NOT EXISTS preferred_time VARCHAR(64);

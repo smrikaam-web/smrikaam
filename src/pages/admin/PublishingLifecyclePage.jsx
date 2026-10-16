@@ -111,77 +111,77 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-neutral-800 pb-6">
-        <div className="font-mono text-xs text-white uppercase tracking-widest mb-1">
-          PUBLISHING LIFECYCLE — {viewType.toUpperCase()}
+      <div className="border-b border-[#E5E5E5] pb-6">
+        <div className="font-mono text-xs text-[#666666] uppercase tracking-widest mb-1 font-semibold">
+          PUBLISHING LIFECYCLE &mdash; {viewType.toUpperCase()}
         </div>
-        <h1 className="font-heading text-3xl font-bold uppercase text-white">
+        <h1 className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-[#111111]">
           {getTitle()}
         </h1>
-        <p className="font-mono text-xs text-neutral-400 mt-1">
+        <p className="font-mono text-xs text-[#666666] mt-1">
           {getSubtitle()}
         </p>
       </div>
 
       {/* Search Filter */}
-      <div className="bg-[#111111] border border-neutral-800 p-4 flex items-center justify-between">
+      <div className="bg-[#F7F7F7] border border-[#E5E5E5] p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div className="relative w-full max-w-md">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#888888] pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search within this list..."
-            className="input w-full pl-9 py-1.5 text-xs bg-black border-neutral-700 text-white"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-[#E5E5E5] text-[#111111] placeholder:text-[#888888] focus:border-[#111111] focus:outline-none"
           />
         </div>
 
-        <div className="font-mono text-xs text-neutral-400">
-          Showing <span className="text-white font-bold">{filteredItems.length}</span> records
+        <div className="font-mono text-xs text-[#666666]">
+          Showing <span className="text-[#111111] font-bold">{filteredItems.length}</span> records
         </div>
       </div>
 
       {/* Table */}
       {loading ? (
-        <div className="text-center py-16 font-mono text-xs text-neutral-400">
+        <div className="text-center py-16 font-mono text-xs text-[#666666] bg-white border border-[#E5E5E5]">
           LOADING_{viewType.toUpperCase()}_ITEMS...
         </div>
       ) : filteredItems.length === 0 ? (
-        <div className="text-center py-16 font-mono text-xs text-neutral-400 bg-[#111111] border border-neutral-800 p-8">
+        <div className="text-center py-16 font-mono text-xs text-[#666666] bg-white border border-[#E5E5E5] p-8">
           NO ITEMS FOUND IN {viewType.toUpperCase()}.
         </div>
       ) : (
-        <BlueprintWrapper dark className="admin-surface">
-          <div className="admin-table-wrapper">
-            <table className="admin-table">
+        <div className="bg-white border border-[#E5E5E5] overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs font-mono border-collapse">
               <thead>
-                <tr>
-                  <th>Title / Name</th>
-                  <th>Content Type</th>
-                  <th>Status</th>
-                  <th>Last Updated</th>
-                  <th className="text-right">Actions</th>
+                <tr className="border-b border-[#E5E5E5] bg-[#F7F7F7] text-[#333333] uppercase tracking-wider font-semibold">
+                  <th className="p-3.5">Title / Name</th>
+                  <th className="p-3.5">Content Type</th>
+                  <th className="p-3.5">Status</th>
+                  <th className="p-3.5">Last Updated</th>
+                  <th className="p-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-[#E5E5E5] bg-white">
                 {filteredItems.map((item) => (
-                  <tr key={`${item._collection}_${item.id}`}>
-                    <td>
-                      <div className="font-semibold text-white">
+                  <tr key={`${item._collection}_${item.id}`} className="hover:bg-[#F7F7F7] transition-colors">
+                    <td className="p-3.5">
+                      <div className="font-semibold text-[#111111] font-sans text-sm">
                         {item.title || item.name || 'Untitled'}
                       </div>
                       {item.slug && (
-                        <div className="font-mono text-[10px] text-neutral-400">
+                        <div className="font-mono text-[10px] text-[#666666]">
                           /{item._collection === 'posts' ? 'blog' : item._collection}/{cleanSlug(item.slug)}
                         </div>
                       )}
                     </td>
-                    <td>
-                      <span className="bg-neutral-800 text-neutral-200 border border-neutral-700 px-2 py-0.5 text-xs font-mono">
+                    <td className="p-3.5">
+                      <span className="bg-[#F7F7F7] text-[#333333] border border-[#E5E5E5] px-2 py-0.5 text-xs font-mono">
                         {item._typeLabel}
                       </span>
                     </td>
-                    <td>
+                    <td className="p-3.5">
                       {item.status === 'published' ? (
                         <span className="admin-badge-published flex items-center gap-1 w-fit">
                           <CheckCircle className="w-3 h-3" /> Published
@@ -191,46 +191,46 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
                           <Clock className="w-3 h-3" /> Draft
                         </span>
                       ) : (
-                        <span className="bg-transparent text-neutral-400 border border-neutral-700 px-2 py-0.5 text-[11px] font-mono flex items-center gap-1 w-fit">
+                        <span className="bg-transparent text-[#666666] border border-[#E5E5E5] px-2 py-0.5 text-[11px] font-mono flex items-center gap-1 w-fit">
                           <Trash2 className="w-3 h-3" /> In Trash
                         </span>
                       )}
                     </td>
-                    <td className="font-mono text-xs text-neutral-400">
+                    <td className="p-3.5 font-mono text-xs text-[#666666]">
                       {new Date(item.updated_at || item.created_at).toLocaleDateString()}
                     </td>
-                    <td className="text-right">
+                    <td className="p-3.5 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
                         {viewType === 'trash' ? (
                           <>
                             <button
                               type="button"
                               onClick={() => handleRestore(item._collection, item.id)}
-                              className="admin-btn text-xs py-1 text-white hover:text-neutral-200 border-neutral-600"
+                              className="text-xs py-1 px-2.5 bg-white text-[#111111] hover:bg-[#F7F7F7] border border-[#E5E5E5] font-mono transition-colors cursor-pointer inline-flex items-center"
                             >
-                              <RotateCcw className="w-3.5 h-3.5 inline mr-1" /> Restore
+                              <RotateCcw className="w-3.5 h-3.5 mr-1" /> Restore
                             </button>
                             <button
                               type="button"
                               onClick={() => handlePermanentDelete(item._collection, item.id)}
-                              className="admin-btn text-xs py-1 text-neutral-400 hover:text-white border-neutral-600"
+                              className="text-xs py-1 px-2.5 bg-white text-[#666666] hover:text-[#111111] hover:border-[#111111] border border-[#E5E5E5] font-mono transition-colors cursor-pointer inline-flex items-center"
                             >
-                              <Trash2 className="w-3.5 h-3.5 inline mr-1" /> Delete Permanently
+                              <Trash2 className="w-3.5 h-3.5 mr-1" /> Delete Permanently
                             </button>
                           </>
                         ) : viewType === 'draft' ? (
                           <button
                             type="button"
                             onClick={() => handlePublish(item._collection, item.id)}
-                            className="btn btn-primary text-xs py-1"
+                            className="text-xs py-1.5 px-4 bg-[#111111] text-white hover:bg-[#333333] border border-[#111111] font-bold uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center gap-1"
                           >
-                            <CheckCircle className="w-3.5 h-3.5 inline mr-1" /> Publish Now
+                            <CheckCircle className="w-3.5 h-3.5" /> Publish Now
                           </button>
                         ) : (
                           <button
                             type="button"
                             onClick={() => handleUnpublish(item._collection, item.id)}
-                            className="admin-btn text-xs py-1 text-neutral-300 hover:text-white border-neutral-600"
+                            className="text-xs py-1 px-2.5 bg-white text-[#111111] hover:bg-[#F7F7F7] border border-[#E5E5E5] font-mono transition-colors cursor-pointer"
                           >
                             Unpublish to Draft
                           </button>
@@ -242,7 +242,7 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
               </tbody>
             </table>
           </div>
-        </BlueprintWrapper>
+        </div>
       )}
     </div>
   );

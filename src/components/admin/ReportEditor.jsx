@@ -93,12 +93,12 @@ export default function ReportEditor({ report, onSave, onCancel }) {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
+      <div className="flex items-center justify-between border-b border-[#E5E5E5] pb-4">
         <div>
-          <div className="font-mono text-xs text-white uppercase tracking-widest mb-1">
-            FLASH REPORT EDITOR — HOMEPAGE WORKBENCH
+          <div className="font-mono text-xs text-[#666666] uppercase tracking-widest mb-1 font-semibold">
+            FLASH REPORT EDITOR &mdash; HOMEPAGE WORKBENCH
           </div>
-          <h2 className="font-heading text-2xl font-bold uppercase text-white">
+          <h2 className="font-heading text-2xl font-bold uppercase text-[#111111]">
             {report ? 'EDIT FLASH REPORT' : 'CREATE NEW FLASH REPORT'}
           </h2>
         </div>
@@ -107,14 +107,14 @@ export default function ReportEditor({ report, onSave, onCancel }) {
           <button
             type="button"
             onClick={() => setPreviewModal(true)}
-            className="admin-btn text-xs"
+            className="text-xs py-1.5 px-3 bg-white text-[#111111] hover:bg-[#F7F7F7] border border-[#E5E5E5] font-mono cursor-pointer transition-colors"
           >
             <Eye className="w-3.5 h-3.5 inline mr-1" /> Preview Card
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="admin-btn text-xs text-neutral-400 hover:text-white"
+            className="text-xs py-1.5 px-3 bg-white text-[#666666] hover:text-[#111111] border border-[#E5E5E5] font-mono cursor-pointer transition-colors"
           >
             Cancel
           </button>
@@ -122,7 +122,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
       </div>
 
       {errorMsg && (
-        <div className="p-3 bg-black border border-white text-white font-mono text-xs">
+        <div className="p-3 bg-[#F7F7F7] border-l-4 border-[#111111] border border-[#E5E5E5] text-[#111111] font-mono text-xs">
           {errorMsg}
         </div>
       )}
@@ -131,13 +131,13 @@ export default function ReportEditor({ report, onSave, onCancel }) {
         {/* Row 1: Report Type + Category + Date */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+            <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
               Report Type *
             </label>
             <select
               value={formData.reportType}
               onChange={(e) => setFormData({ ...formData, reportType: e.target.value })}
-              className="input w-full bg-black border-neutral-700 text-white"
+              className="w-full p-2.5 bg-white border border-[#E5E5E5] text-[#111111] text-xs font-mono focus:border-[#111111] focus:outline-none cursor-pointer"
             >
               <option value="Weekly">Weekly Report</option>
               <option value="Monthly">Monthly Report</option>
@@ -145,13 +145,13 @@ export default function ReportEditor({ report, onSave, onCancel }) {
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+            <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
               Category *
             </label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="input w-full bg-black border-neutral-700 text-white"
+              className="w-full p-2.5 bg-white border border-[#E5E5E5] text-[#111111] text-xs font-mono focus:border-[#111111] focus:outline-none cursor-pointer"
             >
               <option value="Services">Services</option>
               <option value="Accelerators">Accelerators</option>
@@ -161,21 +161,21 @@ export default function ReportEditor({ report, onSave, onCancel }) {
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+            <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
               Publish Date *
             </label>
             <input
               type="date"
               value={formData.date}
               onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              className="input w-full bg-black border-neutral-700 text-white"
+              className="w-full p-2.5 bg-white border border-[#E5E5E5] text-[#111111] text-xs font-mono focus:border-[#111111] focus:outline-none"
             />
           </div>
         </div>
 
         {/* Title */}
         <div>
-          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+          <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
             Report Title *
           </label>
           <input
@@ -184,13 +184,13 @@ export default function ReportEditor({ report, onSave, onCancel }) {
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             placeholder="e.g. Edge Telemetry & OPC-UA Ingestion Benchmark"
-            className="input w-full bg-black border-neutral-700 text-white"
+            className="w-full p-2.5 bg-white border border-[#E5E5E5] text-[#111111] text-xs font-mono placeholder:text-[#888888] focus:border-[#111111] focus:outline-none"
           />
         </div>
 
         {/* Problem Statement (One-line) */}
         <div>
-          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+          <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
             Problem Statement (One concise sentence) *
           </label>
           <input
@@ -199,13 +199,13 @@ export default function ReportEditor({ report, onSave, onCancel }) {
             value={formData.problemStatement}
             onChange={(e) => setFormData({ ...formData, problemStatement: e.target.value })}
             placeholder="e.g. Legacy machines lack real-time operational visibility."
-            className="input w-full bg-black border-neutral-700 text-white"
+            className="w-full p-2.5 bg-white border border-[#E5E5E5] text-[#111111] text-xs font-mono placeholder:text-[#888888] focus:border-[#111111] focus:outline-none"
           />
         </div>
 
         {/* Solution Statement (One-line) */}
         <div>
-          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+          <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
             Solution Statement (One concise sentence) *
           </label>
           <input
@@ -214,26 +214,26 @@ export default function ReportEditor({ report, onSave, onCancel }) {
             value={formData.solutionStatement}
             onChange={(e) => setFormData({ ...formData, solutionStatement: e.target.value })}
             placeholder="e.g. Connected telemetry provides live machine intelligence."
-            className="input w-full bg-black border-neutral-700 text-white"
+            className="w-full p-2.5 bg-white border border-[#E5E5E5] text-[#111111] text-xs font-mono placeholder:text-[#888888] focus:border-[#111111] focus:outline-none"
           />
         </div>
 
         {/* Tech Stack Tags */}
         <div>
-          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+          <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
             Technology Stack Tags
           </label>
-          <div className="flex flex-wrap items-center gap-2 mb-2 p-2 bg-black border border-neutral-700">
+          <div className="flex flex-wrap items-center gap-2 mb-2 p-2.5 bg-[#F7F7F7] border border-[#E5E5E5]">
             {formData.techStack.map((tech) => (
               <span
                 key={tech}
-                className="bg-neutral-800 text-white border border-neutral-700 px-2.5 py-1 text-xs font-mono flex items-center gap-1.5"
+                className="bg-white text-[#111111] border border-[#E5E5E5] px-2.5 py-1 text-xs font-mono flex items-center gap-1.5 shadow-xs"
               >
                 {tech}
                 <button
                   type="button"
                   onClick={() => removeTechTag(tech)}
-                  className="hover:text-neutral-400"
+                  className="hover:text-red-600 text-[#666666] cursor-pointer"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -246,12 +246,12 @@ export default function ReportEditor({ report, onSave, onCancel }) {
                 onChange={(e) => setTechInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addTechTag(e)}
                 placeholder="Add tech..."
-                className="bg-transparent text-xs font-mono text-white focus:outline-none w-28 px-1"
+                className="bg-white border border-[#E5E5E5] text-xs font-mono text-[#111111] placeholder:text-[#888888] focus:border-[#111111] focus:outline-none w-28 px-2 py-1"
               />
               <button
                 type="button"
                 onClick={addTechTag}
-                className="text-xs text-white hover:text-neutral-300"
+                className="text-xs p-1 bg-white border border-[#E5E5E5] text-[#111111] hover:bg-[#F7F7F7] cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
               </button>
@@ -262,7 +262,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
         {/* Image Upload & URL */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+            <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
               Report Image URL
             </label>
             <input
@@ -270,15 +270,15 @@ export default function ReportEditor({ report, onSave, onCancel }) {
               value={formData.cover_image_url}
               onChange={(e) => setFormData({ ...formData, cover_image_url: e.target.value })}
               placeholder="https://..."
-              className="input w-full bg-black border-neutral-700 text-white"
+              className="w-full p-2.5 bg-white border border-[#E5E5E5] text-[#111111] text-xs font-mono placeholder:text-[#888888] focus:border-[#111111] focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+            <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
               Upload Image from Device
             </label>
-            <label className="admin-btn w-full justify-center text-xs py-2.5 cursor-pointer">
+            <label className="w-full justify-center text-xs py-2.5 cursor-pointer bg-white text-[#111111] hover:bg-[#F7F7F7] border border-dashed border-[#E5E5E5] font-mono flex items-center transition-colors">
               <Upload className="w-4 h-4 mr-1.5" />
               <span>{uploading ? 'UPLOADING...' : 'CHOOSE IMAGE FILE'}</span>
               <input
@@ -294,7 +294,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
 
         {/* Related Content */}
         <div>
-          <label className="block text-xs font-mono uppercase text-neutral-300 mb-1.5">
+          <label className="block text-xs font-mono uppercase text-[#333333] mb-1.5 font-semibold">
             Related Page / Section Reference
           </label>
           <input
@@ -302,24 +302,24 @@ export default function ReportEditor({ report, onSave, onCancel }) {
             value={formData.relatedContent}
             onChange={(e) => setFormData({ ...formData, relatedContent: e.target.value })}
             placeholder="e.g. Industrial IoT (IIoT)"
-            className="input w-full bg-black border-neutral-700 text-white"
+            className="w-full p-2.5 bg-white border border-[#E5E5E5] text-[#111111] text-xs font-mono placeholder:text-[#888888] focus:border-[#111111] focus:outline-none"
           />
         </div>
 
         {/* Actions Bar */}
-        <div className="flex items-center justify-between pt-6 border-t border-neutral-800">
+        <div className="flex items-center justify-between pt-6 border-t border-[#E5E5E5]">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => handleSubmit('draft')}
-              className="admin-btn text-xs"
+              className="text-xs py-2 px-4 bg-white text-[#111111] hover:bg-[#F7F7F7] border border-[#E5E5E5] font-mono transition-colors cursor-pointer"
             >
               <Save className="w-3.5 h-3.5 inline mr-1" /> SAVE DRAFT
             </button>
             <button
               type="button"
               onClick={() => handleSubmit('published')}
-              className="btn btn-primary text-xs font-bold"
+              className="text-xs py-2 px-5 font-bold uppercase tracking-wider cursor-pointer bg-[#111111] text-white hover:bg-[#333333] border border-[#111111] transition-colors"
             >
               <CheckCircle className="w-3.5 h-3.5 inline mr-1" /> PUBLISH FLASH REPORT
             </button>
@@ -328,7 +328,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
           <button
             type="button"
             onClick={onCancel}
-            className="admin-btn text-xs text-neutral-400 hover:text-white"
+            className="text-xs px-4 py-2 bg-white text-[#666666] hover:text-[#111111] border border-[#E5E5E5] font-mono transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -337,20 +337,20 @@ export default function ReportEditor({ report, onSave, onCancel }) {
 
       {/* Preview Modal */}
       {previewModal && (
-        <div className="dialog-backdrop">
-          <BlueprintWrapper dark className="dialog admin-dialog max-w-xl">
-            <div className="dialog-title flex items-center justify-between border-b border-neutral-700 pb-3">
-              <span className="font-heading text-lg text-white uppercase">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white border border-[#E5E5E5] shadow-2xl max-w-xl w-full p-6 space-y-4 relative">
+            <div className="flex items-center justify-between border-b border-[#E5E5E5] pb-3">
+              <span className="font-heading text-lg text-[#111111] font-bold uppercase">
                 HOMEPAGE FLASH REPORT CARD PREVIEW
               </span>
-              <button onClick={() => setPreviewModal(false)} className="text-neutral-400 hover:text-white">
+              <button onClick={() => setPreviewModal(false)} className="text-[#888888] hover:text-[#111111] transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-4 bg-black my-4 border border-neutral-800">
+            <div className="p-4 bg-[#F7F7F7] my-4 border border-[#E5E5E5]">
               {formData.cover_image_url && (
-                <div className="h-44 w-full overflow-hidden border-b border-neutral-800 mb-4">
+                <div className="h-44 w-full overflow-hidden border-b border-[#E5E5E5] mb-4">
                   <img
                     src={formData.cover_image_url}
                     alt={formData.title}
@@ -360,46 +360,46 @@ export default function ReportEditor({ report, onSave, onCancel }) {
               )}
 
               <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-[10px] text-white uppercase tracking-widest font-bold">
-                  {formData.reportType.toUpperCase()} REPORT • {formData.category.toUpperCase()}
+                <span className="font-mono text-[10px] text-[#111111] uppercase tracking-widest font-bold">
+                  {formData.reportType.toUpperCase()} REPORT &bull; {formData.category.toUpperCase()}
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400">
+                <span className="font-mono text-[10px] text-[#666666]">
                   {formData.date}
                 </span>
               </div>
 
-              <h3 className="font-mono text-base font-bold uppercase text-white mb-3">
+              <h3 className="font-heading text-base font-bold uppercase text-[#111111] mb-3">
                 {formData.title || 'Untitled Report'}
               </h3>
 
-              <div className="space-y-1.5 border-t border-neutral-800 pt-2.5 text-xs font-mono">
-                <div className="text-neutral-300">
-                  <strong className="text-neutral-400">PROBLEM:</strong> {formData.problemStatement || '—'}
+              <div className="space-y-1.5 border-t border-[#E5E5E5] pt-2.5 text-xs font-mono">
+                <div className="text-[#666666]">
+                  <strong className="text-[#111111]">PROBLEM:</strong> {formData.problemStatement || '—'}
                 </div>
-                <div className="text-white">
-                  <strong className="text-white">SOLUTION:</strong> {formData.solutionStatement || '—'}
+                <div className="text-[#111111]">
+                  <strong className="text-[#111111]">SOLUTION:</strong> {formData.solutionStatement || '—'}
                 </div>
               </div>
 
-              <div className="mt-3 pt-2.5 border-t border-neutral-800 flex flex-wrap gap-1.5">
+              <div className="mt-3 pt-2.5 border-t border-[#E5E5E5] flex flex-wrap gap-1.5">
                 {formData.techStack.map((tech) => (
-                  <span key={tech} className="bg-black border border-neutral-700 px-2 py-0.5 text-[10px] font-mono text-white">
+                  <span key={tech} className="bg-white border border-[#E5E5E5] px-2 py-0.5 text-[10px] font-mono text-[#111111]">
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="dialog-actions border-t border-neutral-800 pt-3 flex justify-end">
+            <div className="border-t border-[#E5E5E5] pt-3 flex justify-end">
               <button
                 type="button"
                 onClick={() => setPreviewModal(false)}
-                className="btn btn-primary text-xs"
+                className="text-xs py-2 px-5 font-bold uppercase tracking-wider cursor-pointer bg-[#111111] text-white hover:bg-[#333333] border border-[#111111] transition-colors"
               >
                 Close Preview
               </button>
             </div>
-          </BlueprintWrapper>
+          </div>
         </div>
       )}
     </div>

@@ -5,7 +5,6 @@ import {
   Tag, AlertTriangle, ShieldCheck, MessageSquare, ChevronRight, X, UserCheck
 } from 'lucide-react';
 import api from '../../api';
-import BlueprintWrapper from '../../components/BlueprintWrapper';
 
 export default function AdminBookCallPage() {
   const [requests, setRequests] = useState([]);
@@ -202,18 +201,18 @@ export default function AdminBookCallPage() {
     switch (s) {
       case 'NEW':
       case 'UNREAD':
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white text-black border border-white">NEW</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-[#111111] text-white border border-[#111111]">NEW</span>;
       case 'CONTACTED':
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white/10 text-white border border-[var(--admin-border)]">CONTACTED</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-[#F7F7F7] text-[#111111] border border-[#E5E5E5]">CONTACTED</span>;
       case 'IN_PROGRESS':
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white/10 text-white border border-[var(--admin-border)]">IN PROGRESS</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-[#F7F7F7] text-[#111111] border border-[#E5E5E5]">IN PROGRESS</span>;
       case 'QUALIFIED':
       case 'CONVERTED':
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-transparent text-white border border-white font-bold">QUALIFIED</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white text-[#111111] border border-[#111111] font-bold">QUALIFIED</span>;
       case 'CLOSED':
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-transparent text-neutral-400 border border-neutral-700">CLOSED</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-[#F7F7F7] text-[#888888] border border-[#E5E5E5]">CLOSED</span>;
       default:
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-transparent text-neutral-300 border border-[var(--admin-border)]">{s}</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white text-[#555555] border border-[#E5E5E5]">{s}</span>;
     }
   };
 
@@ -222,34 +221,34 @@ export default function AdminBookCallPage() {
     switch (p) {
       case 'URGENT':
       case 'HIGH':
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white text-black border border-white">HIGH</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-[#111111] text-white border border-[#111111]">HIGH</span>;
       case 'MEDIUM':
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white/10 text-white border border-[var(--admin-border)]">MED</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-[#F7F7F7] text-[#111111] border border-[#E5E5E5]">MED</span>;
       case 'LOW':
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-transparent text-neutral-400 border border-neutral-700">LOW</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white text-[#888888] border border-[#E5E5E5]">LOW</span>;
       default:
-        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400">{p}</span>;
+        return <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-[#888888]">{p}</span>;
     }
   };
 
   return (
-    <div className="space-y-6 admin-theme">
+    <div className="space-y-6 text-[#111111]">
       {/* Header */}
-      <div className="border-b border-[rgba(255,255,255,0.15)] pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="border-b border-[#E5E5E5] pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="font-mono text-xs text-white uppercase tracking-widest mb-1 flex items-center gap-2">
-            <PhoneCall className="w-4 h-4 text-white" />
+          <div className="font-mono text-xs text-[#888888] uppercase tracking-widest mb-1 flex items-center gap-2 font-semibold">
+            <PhoneCall className="w-4 h-4 text-[#111111]" />
             SMRIKAAM LEAD MANAGEMENT &amp; INQUIRIES
           </div>
-          <h1 className="font-heading text-3xl font-bold uppercase text-white">
+          <h1 className="font-heading text-2xl md:text-3xl font-bold uppercase text-[#111111] tracking-tight">
             BOOK A CALL &amp; ENQUIRIES
           </h1>
         </div>
 
         <div className="flex items-center gap-3 self-start md:self-center">
           {lastRefreshed && (
-            <span className="text-[11px] font-mono text-white hidden sm:inline-flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            <span className="text-[11px] font-mono text-[#666666] hidden sm:inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#111111] animate-pulse" />
               Synced {lastRefreshed}
             </span>
           )}
@@ -267,67 +266,67 @@ export default function AdminBookCallPage() {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <div
           onClick={() => setStatusFilter('ALL')}
-          className={`bg-[#111111] border p-4 cursor-pointer transition-colors ${
-            statusFilter === 'ALL' ? 'border-white bg-white/10' : 'border-[rgba(255,255,255,0.15)] hover:border-white/50'
+          className={`bg-white border p-4 cursor-pointer transition-colors ${
+            statusFilter === 'ALL' ? 'border-[#111111] bg-[#F7F7F7]' : 'border-[#E5E5E5] hover:border-[#111111]'
           }`}
         >
-          <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider mb-1">TOTAL ENQUIRIES</div>
-          <div className="font-heading text-2xl font-bold text-white">{stats.total}</div>
+          <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">TOTAL ENQUIRIES</div>
+          <div className="font-heading text-2xl font-bold text-[#111111]">{stats.total}</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('NEW')}
-          className={`bg-[#111111] border p-4 cursor-pointer transition-colors ${
-            statusFilter === 'NEW' ? 'border-white bg-white/10' : 'border-[rgba(255,255,255,0.15)] hover:border-white/50'
+          className={`bg-white border p-4 cursor-pointer transition-colors ${
+            statusFilter === 'NEW' ? 'border-[#111111] bg-[#F7F7F7]' : 'border-[#E5E5E5] hover:border-[#111111]'
           }`}
         >
-          <div className="font-mono text-[10px] text-white uppercase tracking-wider mb-1">NEW / UNREAD</div>
-          <div className="font-heading text-2xl font-bold text-white">{stats.countNew}</div>
+          <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">NEW / UNREAD</div>
+          <div className="font-heading text-2xl font-bold text-[#111111]">{stats.countNew}</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('CONTACTED')}
-          className={`bg-[#111111] border p-4 cursor-pointer transition-colors ${
-            statusFilter === 'CONTACTED' ? 'border-white bg-white/10' : 'border-[rgba(255,255,255,0.15)] hover:border-white/50'
+          className={`bg-white border p-4 cursor-pointer transition-colors ${
+            statusFilter === 'CONTACTED' ? 'border-[#111111] bg-[#F7F7F7]' : 'border-[#E5E5E5] hover:border-[#111111]'
           }`}
         >
-          <div className="font-mono text-[10px] text-white uppercase tracking-wider mb-1">CONTACTED</div>
-          <div className="font-heading text-2xl font-bold text-white">{stats.countContacted}</div>
+          <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">CONTACTED</div>
+          <div className="font-heading text-2xl font-bold text-[#111111]">{stats.countContacted}</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('IN_PROGRESS')}
-          className={`bg-[#111111] border p-4 cursor-pointer transition-colors ${
-            statusFilter === 'IN_PROGRESS' ? 'border-white bg-white/10' : 'border-[rgba(255,255,255,0.15)] hover:border-white/50'
+          className={`bg-white border p-4 cursor-pointer transition-colors ${
+            statusFilter === 'IN_PROGRESS' ? 'border-[#111111] bg-[#F7F7F7]' : 'border-[#E5E5E5] hover:border-[#111111]'
           }`}
         >
-          <div className="font-mono text-[10px] text-white uppercase tracking-wider mb-1">IN PROGRESS</div>
-          <div className="font-heading text-2xl font-bold text-white">{stats.countInProgress}</div>
+          <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">IN PROGRESS</div>
+          <div className="font-heading text-2xl font-bold text-[#111111]">{stats.countInProgress}</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('QUALIFIED')}
-          className={`bg-[#111111] border p-4 cursor-pointer transition-colors ${
-            statusFilter === 'QUALIFIED' ? 'border-white bg-white/10' : 'border-[rgba(255,255,255,0.15)] hover:border-white/50'
+          className={`bg-white border p-4 cursor-pointer transition-colors ${
+            statusFilter === 'QUALIFIED' ? 'border-[#111111] bg-[#F7F7F7]' : 'border-[#E5E5E5] hover:border-[#111111]'
           }`}
         >
-          <div className="font-mono text-[10px] text-white uppercase tracking-wider mb-1">QUALIFIED / CONVERTED</div>
-          <div className="font-heading text-2xl font-bold text-white">{stats.countQualified}</div>
+          <div className="font-mono text-[10px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">QUALIFIED</div>
+          <div className="font-heading text-2xl font-bold text-[#111111]">{stats.countQualified}</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('CLOSED')}
-          className={`bg-[#111111] border p-4 cursor-pointer transition-colors ${
-            statusFilter === 'CLOSED' ? 'border-neutral-400 bg-white/10' : 'border-[rgba(255,255,255,0.15)] hover:border-white/50'
+          className={`bg-white border p-4 cursor-pointer transition-colors ${
+            statusFilter === 'CLOSED' ? 'border-[#111111] bg-[#F7F7F7]' : 'border-[#E5E5E5] hover:border-[#111111]'
           }`}
         >
-          <div className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider mb-1">CLOSED</div>
-          <div className="font-heading text-2xl font-bold text-neutral-400">{stats.countClosed}</div>
+          <div className="font-mono text-[10px] text-[#888888] uppercase tracking-wider mb-1 font-semibold">CLOSED</div>
+          <div className="font-heading text-2xl font-bold text-[#888888]">{stats.countClosed}</div>
         </div>
       </div>
 
       {/* Filter & Search Toolbar */}
-      <div className="bg-[#111111] border border-[rgba(255,255,255,0.15)] p-4 space-y-3">
+      <div className="bg-[#F7F7F7] border border-[#E5E5E5] p-4 space-y-3">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
           {/* Search bar */}
           <div className="md:col-span-5 relative">
@@ -336,9 +335,9 @@ export default function AdminBookCallPage() {
               placeholder="Search by Name, Company, Email, Phone, or Message..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="admin-input pl-9 text-xs w-full"
+              className="bg-white border border-[#E5E5E5] text-[#111111] pl-9 pr-3 py-2 text-xs w-full focus:border-[#111111] focus:outline-none placeholder-[#888888] font-mono"
             />
-            <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#666666]" />
+            <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#888888]" />
           </div>
 
           {/* Status Filter */}
@@ -346,7 +345,7 @@ export default function AdminBookCallPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="admin-input text-xs w-full"
+              className="bg-white border border-[#E5E5E5] text-[#111111] p-2 text-xs w-full focus:border-[#111111] focus:outline-none font-mono cursor-pointer"
             >
               <option value="ALL">All Statuses</option>
               <option value="NEW">NEW / Unread</option>
@@ -362,7 +361,7 @@ export default function AdminBookCallPage() {
             <select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value)}
-              className="admin-input text-xs w-full"
+              className="bg-white border border-[#E5E5E5] text-[#111111] p-2 text-xs w-full focus:border-[#111111] focus:outline-none font-mono cursor-pointer"
             >
               <option value="ALL">All Priorities</option>
               <option value="HIGH">High / Urgent</option>
@@ -376,7 +375,7 @@ export default function AdminBookCallPage() {
             <select
               value={serviceFilter}
               onChange={(e) => setServiceFilter(e.target.value)}
-              className="admin-input text-xs w-full truncate"
+              className="bg-white border border-[#E5E5E5] text-[#111111] p-2 text-xs w-full truncate focus:border-[#111111] focus:outline-none font-mono cursor-pointer"
             >
               <option value="ALL">All Service Areas</option>
               {uniqueServices.map((s) => (
@@ -389,29 +388,29 @@ export default function AdminBookCallPage() {
 
       {/* Requests Table / List */}
       {loading ? (
-        <div className="font-mono text-sm text-[#666666] py-16 text-center">
+        <div className="font-mono text-sm text-[#888888] py-16 text-center">
           LOADING_DATABASE_ENQUIRIES...
         </div>
       ) : (
-        <BlueprintWrapper dark className="admin-surface">
-          <div className="admin-table-wrapper overflow-x-auto">
-            <table className="admin-table w-full text-left">
+        <div className="bg-white border border-[#E5E5E5]">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs font-mono border-collapse">
               <thead>
-                <tr>
-                  <th className="w-24">State</th>
-                  <th className="w-16">Prio</th>
-                  <th>Full Name &amp; Role</th>
-                  <th>Company &amp; Work Email</th>
-                  <th>Service &amp; Preferred Slot</th>
-                  <th>Source</th>
-                  <th>Date</th>
-                  <th className="text-right">Actions</th>
+                <tr className="border-b border-[#E5E5E5] bg-[#F7F7F7] text-[#111111] uppercase tracking-wider font-bold">
+                  <th className="p-3.5 w-24">State</th>
+                  <th className="p-3.5 w-16">Prio</th>
+                  <th className="p-3.5">Full Name &amp; Role</th>
+                  <th className="p-3.5">Company &amp; Work Email</th>
+                  <th className="p-3.5">Service &amp; Preferred Slot</th>
+                  <th className="p-3.5">Source</th>
+                  <th className="p-3.5">Date</th>
+                  <th className="p-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-[#E5E5E5]">
                 {filteredRequests.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="text-center font-mono text-xs text-[#666666] py-12">
+                    <td colSpan="8" className="text-center font-mono text-xs text-[#888888] py-12">
                       NO BOOK A CALL REQUESTS MATCH THE SELECTED FILTERS.
                     </td>
                   </tr>
@@ -422,49 +421,49 @@ export default function AdminBookCallPage() {
                       <tr
                         key={req.id}
                         className={`transition-colors ${
-                          isNew ? 'bg-white/5 font-semibold' : 'hover:bg-white/5'
+                          isNew ? 'bg-[#F7F7F7] font-semibold' : 'hover:bg-[#F7F7F7]'
                         }`}
                       >
-                        <td>{getStatusBadge(req.status)}</td>
-                        <td>{getPriorityBadge(req.priority)}</td>
-                        <td>
-                          <div className="text-white font-bold text-xs">{req.full_name || req.name}</div>
+                        <td className="p-3.5">{getStatusBadge(req.status)}</td>
+                        <td className="p-3.5">{getPriorityBadge(req.priority)}</td>
+                        <td className="p-3.5">
+                          <div className="text-[#111111] font-bold text-xs">{req.full_name || req.name}</div>
                           {req.job_title && <div className="text-[11px] text-[#666666] font-mono">{req.job_title}</div>}
                         </td>
-                        <td>
-                          <div className="text-xs text-white font-medium">{req.company_name || req.company || 'N/A'}</div>
-                          <div className="font-mono text-[11px] text-white">{req.email}</div>
+                        <td className="p-3.5">
+                          <div className="text-xs text-[#111111] font-medium">{req.company_name || req.company || 'N/A'}</div>
+                          <div className="font-mono text-[11px] text-[#333333]">{req.email}</div>
                           {req.phone && <div className="font-mono text-[10px] text-[#666666]">{req.phone}</div>}
                         </td>
-                        <td>
-                          <div className="text-xs text-white font-medium truncate max-w-[200px]">
+                        <td className="p-3.5">
+                          <div className="text-xs text-[#111111] font-medium truncate max-w-[200px]">
                             {req.requirement_type || req.service}
                           </div>
                           {(req.preferred_date || req.preferredDate) && (
-                            <div className="font-mono text-[10px] text-white flex items-center gap-1 mt-0.5">
-                              <Calendar className="w-3 h-3" />
+                            <div className="font-mono text-[10px] text-[#555555] flex items-center gap-1 mt-0.5">
+                              <Calendar className="w-3 h-3 text-[#111111]" />
                               {req.preferred_date || req.preferredDate} ({req.preferred_time || req.preferredTime || '10:00 AM'})
                             </div>
                           )}
                         </td>
-                        <td className="font-mono text-[11px] text-[#666666]">
+                        <td className="p-3.5 font-mono text-[11px] text-[#666666]">
                           {req.source || 'Public Form'}
                         </td>
-                        <td className="font-mono text-xs text-[#666666] whitespace-nowrap">
+                        <td className="p-3.5 font-mono text-xs text-[#666666] whitespace-nowrap">
                           {new Date(req.created_at).toLocaleDateString()}
                         </td>
-                        <td className="text-right whitespace-nowrap">
+                        <td className="p-3.5 text-right whitespace-nowrap">
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               onClick={() => openDetailModal(req)}
                               className="admin-btn text-xs py-1 px-2.5 flex items-center gap-1 cursor-pointer"
                               title="View & Edit Details"
                             >
-                              <Eye className="w-3.5 h-3.5 text-white" /> Review
+                              <Eye className="w-3.5 h-3.5 text-[#111111]" /> Review
                             </button>
                             <button
                               onClick={() => handleDeleteRequest(req.id)}
-                              className="p-1.5 text-neutral-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/30 transition-colors cursor-pointer"
+                              className="p-1.5 text-[#888888] hover:text-[#111111] hover:bg-[#F7F7F7] border border-transparent hover:border-[#E5E5E5] transition-colors cursor-pointer"
                               title="Delete Record"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -478,26 +477,26 @@ export default function AdminBookCallPage() {
               </tbody>
             </table>
           </div>
-        </BlueprintWrapper>
+        </div>
       )}
 
       {/* DETAIL VIEW & EDIT MODAL */}
       {selectedRequest && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-3xl my-auto bg-[#111111] border border-[rgba(255,255,255,0.2)] p-6 md:p-8 text-white shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm overflow-y-auto">
+          <div className="relative w-full max-w-3xl my-auto bg-white border border-[#E5E5E5] p-6 md:p-8 text-[#111111] shadow-2xl">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.15)] pb-4 mb-6">
+            <div className="flex items-center justify-between border-b border-[#E5E5E5] pb-4 mb-6">
               <div>
-                <div className="font-mono text-xs text-white uppercase tracking-widest mb-1 flex items-center gap-2">
-                  <UserCheck className="w-4 h-4" /> ENQUIRY &amp; CALL REQUEST SPECIFICATION
+                <div className="font-mono text-xs text-[#888888] uppercase tracking-widest mb-1 flex items-center gap-2 font-semibold">
+                  <UserCheck className="w-4 h-4 text-[#111111]" /> ENQUIRY &amp; CALL REQUEST SPECIFICATION
                 </div>
-                <h2 className="font-heading text-2xl font-bold uppercase text-white">
+                <h2 className="font-heading text-xl md:text-2xl font-bold uppercase text-[#111111]">
                   {selectedRequest.full_name || selectedRequest.name} — {selectedRequest.company_name || selectedRequest.company}
                 </h2>
               </div>
               <button
                 onClick={() => setSelectedRequest(null)}
-                className="p-2 text-neutral-400 hover:text-white border border-[rgba(255,255,255,0.2)] hover:border-white"
+                className="p-1.5 text-[#666666] hover:text-[#111111] border border-[#E5E5E5] hover:border-[#111111] cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -506,75 +505,75 @@ export default function AdminBookCallPage() {
             {/* Modal Body */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Left Column: Contact & Request Specs */}
-              <div className="space-y-4 bg-[#000000] border border-[rgba(255,255,255,0.1)] p-4 text-xs">
-                <div className="font-mono text-[11px] text-white font-bold uppercase tracking-wider border-b border-[rgba(255,255,255,0.1)] pb-2 mb-3">
+              <div className="space-y-4 bg-[#F7F7F7] border border-[#E5E5E5] p-4 text-xs font-mono">
+                <div className="text-[11px] text-[#111111] font-bold uppercase tracking-wider border-b border-[#E5E5E5] pb-2 mb-3">
                   CONTACT INFORMATION
                 </div>
 
                 <div className="space-y-2.5">
                   <div className="flex items-start gap-2">
-                    <User className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
+                    <User className="w-4 h-4 text-[#666666] shrink-0 mt-0.5" />
                     <div>
-                      <div className="font-bold text-white text-sm">{selectedRequest.full_name || selectedRequest.name}</div>
-                      {selectedRequest.job_title && <div className="text-gray-400 font-mono text-[11px]">{selectedRequest.job_title}</div>}
+                      <div className="font-bold text-[#111111] text-sm">{selectedRequest.full_name || selectedRequest.name}</div>
+                      {selectedRequest.job_title && <div className="text-[#666666] font-mono text-[11px]">{selectedRequest.job_title}</div>}
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Building className="w-4 h-4 text-gray-400 shrink-0" />
-                    <div className="text-gray-200 font-semibold">{selectedRequest.company_name || selectedRequest.company || 'N/A'}</div>
+                    <Building className="w-4 h-4 text-[#666666] shrink-0" />
+                    <div className="text-[#333333] font-semibold">{selectedRequest.company_name || selectedRequest.company || 'N/A'}</div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-white shrink-0" />
-                    <a href={`mailto:${selectedRequest.email}`} className="text-white hover:underline font-mono">
+                    <Mail className="w-4 h-4 text-[#111111] shrink-0" />
+                    <a href={`mailto:${selectedRequest.email}`} className="text-[#111111] hover:underline font-mono">
                       {selectedRequest.email}
                     </a>
                   </div>
 
                   {selectedRequest.phone && (
                     <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-white shrink-0" />
-                      <a href={`tel:${selectedRequest.phone}`} className="text-white hover:underline font-mono">
+                      <Phone className="w-4 h-4 text-[#111111] shrink-0" />
+                      <a href={`tel:${selectedRequest.phone}`} className="text-[#111111] hover:underline font-mono">
                         {selectedRequest.phone}
                       </a>
                     </div>
                   )}
                 </div>
 
-                <div className="font-mono text-[11px] text-white font-bold uppercase tracking-wider border-b border-[rgba(255,255,255,0.1)] pt-4 pb-2 mb-3">
+                <div className="text-[11px] text-[#111111] font-bold uppercase tracking-wider border-b border-[#E5E5E5] pt-4 pb-2 mb-3">
                   REQUEST DETAILS
                 </div>
 
                 <div className="space-y-2">
                   <div>
-                    <span className="text-gray-400 font-mono">Service Area:</span>
-                    <div className="font-bold text-white mt-0.5">{selectedRequest.requirement_type || selectedRequest.service}</div>
+                    <span className="text-[#666666]">Service Area:</span>
+                    <div className="font-bold text-[#111111] mt-0.5">{selectedRequest.requirement_type || selectedRequest.service}</div>
                   </div>
 
                   {(selectedRequest.preferred_date || selectedRequest.preferredDate) && (
                     <div>
-                      <span className="text-gray-400 font-mono">Preferred Slot:</span>
-                      <div className="font-mono text-white font-bold">
+                      <span className="text-[#666666]">Preferred Slot:</span>
+                      <div className="text-[#111111] font-bold">
                         {selectedRequest.preferred_date || selectedRequest.preferredDate} @ {selectedRequest.preferred_time || selectedRequest.preferredTime || '10:00 AM'}
                       </div>
                     </div>
                   )}
 
                   <div>
-                    <span className="text-gray-400 font-mono">Channel Source:</span>
-                    <div className="font-mono text-gray-300">{selectedRequest.source || 'Public Website'}</div>
+                    <span className="text-[#666666]">Channel Source:</span>
+                    <div className="text-[#333333]">{selectedRequest.source || 'Public Website'}</div>
                   </div>
 
                   <div>
-                    <span className="text-gray-400 font-mono">Submitted Date:</span>
-                    <div className="font-mono text-gray-300">{new Date(selectedRequest.created_at).toLocaleString()}</div>
+                    <span className="text-[#666666]">Submitted Date:</span>
+                    <div className="text-[#333333]">{new Date(selectedRequest.created_at).toLocaleString()}</div>
                   </div>
                 </div>
 
-                <div className="border-t border-[rgba(255,255,255,0.1)] pt-3">
-                  <span className="text-gray-400 font-mono">Message / Requirements:</span>
-                  <p className="mt-1 p-3 bg-[#111111] border border-[rgba(255,255,255,0.1)] text-gray-200 leading-relaxed font-normal whitespace-pre-wrap max-h-36 overflow-y-auto">
+                <div className="border-t border-[#E5E5E5] pt-3">
+                  <span className="text-[#666666]">Message / Requirements:</span>
+                  <p className="mt-1 p-3 bg-white border border-[#E5E5E5] text-[#333333] leading-relaxed font-sans whitespace-pre-wrap max-h-36 overflow-y-auto">
                     {selectedRequest.message || 'No additional message text provided.'}
                   </p>
                 </div>
@@ -582,8 +581,8 @@ export default function AdminBookCallPage() {
 
               {/* Right Column: Admin Management & Notes Form */}
               <form onSubmit={handleSaveDetail} className="space-y-4 flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="font-mono text-[11px] text-white font-bold uppercase tracking-wider border-b border-[rgba(255,255,255,0.1)] pb-2">
+                <div className="space-y-4 font-mono">
+                  <div className="text-[11px] text-[#111111] font-bold uppercase tracking-wider border-b border-[#E5E5E5] pb-2">
                     ADMIN LEAD STATUS &amp; ASSIGNMENT
                   </div>
 
@@ -591,25 +590,25 @@ export default function AdminBookCallPage() {
                     <div
                       className={`p-3 text-xs flex items-center gap-2 border-l-4 ${
                         modalFeedback.type === 'success'
-                          ? 'border-white bg-white/10 text-white'
-                          : 'border-white bg-neutral-900 text-white'
+                          ? 'border-[#111111] bg-[#F7F7F7] text-[#111111]'
+                          : 'border-[#111111] bg-[#F7F7F7] text-[#111111]'
                       }`}
                     >
-                      {modalFeedback.type === 'success' ? <CheckCircle2 className="w-4 h-4 shrink-0 text-white" /> : <AlertTriangle className="w-4 h-4 shrink-0 text-white" />}
+                      {modalFeedback.type === 'success' ? <CheckCircle2 className="w-4 h-4 shrink-0 text-[#111111]" /> : <AlertTriangle className="w-4 h-4 shrink-0 text-[#111111]" />}
                       <span>{modalFeedback.msg}</span>
                     </div>
                   )}
 
                   {/* Status Dropdown */}
                   <div>
-                    <label htmlFor="admin-status" className="block text-[11px] font-mono text-gray-400 uppercase tracking-wider mb-1">
+                    <label htmlFor="admin-status" className="block text-[11px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">
                       Lead Pipeline Status *
                     </label>
                     <select
                       id="admin-status"
                       value={detailForm.status}
                       onChange={(e) => setDetailForm({ ...detailForm, status: e.target.value })}
-                      className="admin-input text-xs w-full font-bold"
+                      className="bg-white border border-[#E5E5E5] text-[#111111] p-2 text-xs w-full font-bold focus:border-[#111111] focus:outline-none cursor-pointer"
                     >
                       <option value="NEW">NEW (Unread / Needs Contact)</option>
                       <option value="CONTACTED">CONTACTED (Follow-up Email/Call Sent)</option>
@@ -622,14 +621,14 @@ export default function AdminBookCallPage() {
 
                   {/* Priority Dropdown */}
                   <div>
-                    <label htmlFor="admin-priority" className="block text-[11px] font-mono text-gray-400 uppercase tracking-wider mb-1">
+                    <label htmlFor="admin-priority" className="block text-[11px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">
                       Lead Priority *
                     </label>
                     <select
                       id="admin-priority"
                       value={detailForm.priority}
                       onChange={(e) => setDetailForm({ ...detailForm, priority: e.target.value })}
-                      className="admin-input text-xs w-full font-semibold"
+                      className="bg-white border border-[#E5E5E5] text-[#111111] p-2 text-xs w-full font-semibold focus:border-[#111111] focus:outline-none cursor-pointer"
                     >
                       <option value="URGENT">URGENT (24-Hour SLA Target)</option>
                       <option value="HIGH">HIGH (Enterprise Opportunity)</option>
@@ -640,7 +639,7 @@ export default function AdminBookCallPage() {
 
                   {/* Assigned To */}
                   <div>
-                    <label htmlFor="admin-assigned" className="block text-[11px] font-mono text-gray-400 uppercase tracking-wider mb-1">
+                    <label htmlFor="admin-assigned" className="block text-[11px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">
                       Assigned Engineering Lead / Owner
                     </label>
                     <input
@@ -649,13 +648,13 @@ export default function AdminBookCallPage() {
                       placeholder="e.g. Ramesh Kumar — Lead Architect"
                       value={detailForm.assigned_to}
                       onChange={(e) => setDetailForm({ ...detailForm, assigned_to: e.target.value })}
-                      className="admin-input text-xs w-full"
+                      className="bg-white border border-[#E5E5E5] text-[#111111] p-2 text-xs w-full focus:border-[#111111] focus:outline-none"
                     />
                   </div>
 
                   {/* Internal Admin Notes */}
                   <div>
-                    <label htmlFor="admin-notes" className="block text-[11px] font-mono text-gray-400 uppercase tracking-wider mb-1">
+                    <label htmlFor="admin-notes" className="block text-[11px] text-[#666666] uppercase tracking-wider mb-1 font-semibold">
                       Internal Admin &amp; Discovery Notes
                     </label>
                     <textarea
@@ -664,24 +663,24 @@ export default function AdminBookCallPage() {
                       placeholder="Log call notes, technical requirements, follow-up dates, proposed budget..."
                       value={detailForm.admin_notes}
                       onChange={(e) => setDetailForm({ ...detailForm, admin_notes: e.target.value })}
-                      className="admin-input text-xs w-full"
+                      className="bg-white border border-[#E5E5E5] text-[#111111] p-2.5 text-xs w-full focus:border-[#111111] focus:outline-none font-sans"
                     />
                   </div>
                 </div>
 
                 {/* Modal Actions */}
-                <div className="pt-4 border-t border-[rgba(255,255,255,0.1)] flex items-center justify-end gap-3">
+                <div className="pt-4 border-t border-[#E5E5E5] flex items-center justify-end gap-3 font-mono">
                   <button
                     type="button"
                     onClick={() => setSelectedRequest(null)}
-                    className="admin-btn text-xs py-2 px-4"
+                    className="admin-btn text-xs py-2 px-4 cursor-pointer"
                   >
                     Close
                   </button>
                   <button
                     type="submit"
                     disabled={savingDetail}
-                    className="btn btn-primary text-xs py-2 px-6 font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer"
+                    className="admin-btn-primary text-xs py-2 px-6 font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer"
                   >
                     {savingDetail ? 'SAVING...' : 'SAVE LEAD STATUS & NOTES'}
                   </button>

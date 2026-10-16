@@ -12,25 +12,6 @@
   ],
   "posts": [
     {
-      "title": "High-Throughput Time-Series Architecture for Discrete Manufacturing",
-      "slug": "high-throughput-time-series-manufacturing",
-      "category": "Industrial IoT",
-      "excerpt": "Engineering low-latency sensor ingestion pipelines capable of handling millions of telemetry points per minute.",
-      "content": "## Deterministic Sensor Ingestion\n\nModern shop floor machinery demands sub-50ms ingestion latency across distributed PLC networks.",
-      "tags": [
-        "IIoT",
-        "TimescaleDB",
-        "OPC-UA",
-        "Python"
-      ],
-      "author": "SMRIKAAM Core Engineering",
-      "status": "draft",
-      "id": "pos_1787826861055_2vur",
-      "created_at": "2026-08-27T10:34:21.055Z",
-      "updated_at": "2026-10-14T12:08:10.731Z",
-      "published_at": "2026-08-27T10:34:21.055Z"
-    },
-    {
       "id": "post_01",
       "title": "Architecting Low-Latency IIoT Telemetry for High-Speed Manufacturing",
       "slug": "iiot-telemetry-coimbatore",
@@ -1398,49 +1379,312 @@
       "published_at": "2026-08-20T08:00:00.000Z"
     }
   ],
-  "media": [
-    {
-      "id": "med_pdf_1788430010211_rdta",
-      "filename": "it_blog_article_1788430010199_qatwu9.pdf",
-      "originalName": "it_blog_article.pdf",
-      "url": "/uploads/it_blog_article_1788430010199_qatwu9.pdf",
-      "mimetype": "application/pdf",
-      "size": 54021,
-      "type": "pdf",
-      "created_at": "2026-09-03T10:06:50.211Z"
-    },
-    {
-      "id": "med_pdf_1788428569816_2rh2",
-      "filename": "it_blog_article_1788428569814_p7skpv.pdf",
-      "originalName": "it_blog_article.pdf",
-      "url": "/uploads/it_blog_article_1788428569814_p7skpv.pdf",
-      "mimetype": "application/pdf",
-      "size": 54021,
-      "type": "pdf",
-      "created_at": "2026-09-03T09:42:49.816Z"
-    },
-    {
-      "id": "med_pdf_1788428470103_dez8",
-      "filename": "it_blog_article_1788428470097_oq57nt.pdf",
-      "originalName": "it_blog_article.pdf",
-      "url": "/uploads/it_blog_article_1788428470097_oq57nt.pdf",
-      "mimetype": "application/pdf",
-      "size": 54021,
-      "type": "pdf",
-      "created_at": "2026-09-03T09:41:10.103Z"
-    },
-    {
-      "id": "med_pdf_1788428101090_unj4",
-      "filename": "it_blog_article_1788428101087_he3p4m.pdf",
-      "originalName": "it_blog_article.pdf",
-      "url": "/uploads/it_blog_article_1788428101087_he3p4m.pdf",
-      "mimetype": "application/pdf",
-      "size": 54021,
-      "type": "pdf",
-      "created_at": "2026-09-03T09:35:01.090Z"
-    }
-  ],
+  "media": [],
   "activityLogs": [
+    {
+      "id": "log_1792153915604_ffqt",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Intelligence Dashboard",
+      "description": "Admin bitxhift@gmail.com inspected visitor intelligence telemetry list.",
+      "type": "visitor_admin_access",
+      "timestamp": "2026-10-16T12:31:55.604Z"
+    },
+    {
+      "id": "log_1792153915482_206j",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Intelligence Dashboard",
+      "description": "Admin bitxhift@gmail.com inspected visitor intelligence telemetry list.",
+      "type": "visitor_admin_access",
+      "timestamp": "2026-10-16T12:31:55.482Z"
+    },
+    {
+      "id": "log_1792153568363_ihxv",
+      "date": "16 OCT",
+      "title": "Exported Visitor Intelligence CSV",
+      "description": "Admin bitxhift@gmail.com generated and exported full visitor intelligence CSV.",
+      "type": "visitor_csv_export",
+      "timestamp": "2026-10-16T12:26:08.363Z"
+    },
+    {
+      "id": "log_1792153518500_niki",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Journey v_test_1792151374773_alpha",
+      "description": "Admin bitxhift@gmail.com viewed touchpoint journey for v_test_1792151374773_alpha.",
+      "type": "visitor_profile_access",
+      "timestamp": "2026-10-16T12:25:18.500Z"
+    },
+    {
+      "id": "log_1792153242064_gf38",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Intelligence Dashboard",
+      "description": "Admin bitxhift@gmail.com inspected visitor intelligence telemetry list.",
+      "type": "visitor_admin_access",
+      "timestamp": "2026-10-16T12:20:42.064Z"
+    },
+    {
+      "id": "log_1792153241860_bzah",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Intelligence Dashboard",
+      "description": "Admin bitxhift@gmail.com inspected visitor intelligence telemetry list.",
+      "type": "visitor_admin_access",
+      "timestamp": "2026-10-16T12:20:41.860Z"
+    },
+    {
+      "id": "log_1792153193695_we1u",
+      "date": "16 OCT",
+      "title": "Deleted Visitor Record v_synth_formula_1792153193516",
+      "description": "Admin bitxhift@gmail.com deleted visitor v_synth_formula_1792153193516 and associated sessions under retention/privacy controls.",
+      "type": "visitor_delete",
+      "timestamp": "2026-10-16T12:19:53.695Z"
+    },
+    {
+      "id": "log_1792153193656_d6ba",
+      "date": "16 OCT",
+      "title": "Deleted Visitor Record v_synth_unconsented_1792153193356",
+      "description": "Admin bitxhift@gmail.com deleted visitor v_synth_unconsented_1792153193356 and associated sessions under retention/privacy controls.",
+      "type": "visitor_delete",
+      "timestamp": "2026-10-16T12:19:53.656Z"
+    },
+    {
+      "id": "log_1792153193620_ndf2",
+      "date": "16 OCT",
+      "title": "Deleted Visitor Record v_synth_1792153192128_99a",
+      "description": "Admin bitxhift@gmail.com deleted visitor v_synth_1792153192128_99a and associated sessions under retention/privacy controls.",
+      "type": "visitor_delete",
+      "timestamp": "2026-10-16T12:19:53.620Z"
+    },
+    {
+      "id": "log_1792153193595_krs1",
+      "date": "16 OCT",
+      "title": "Exported Visitor Intelligence CSV",
+      "description": "Admin bitxhift@gmail.com generated and exported full visitor intelligence CSV.",
+      "type": "visitor_csv_export",
+      "timestamp": "2026-10-16T12:19:53.595Z"
+    },
+    {
+      "id": "log_1792153193570_1xzi",
+      "date": "16 OCT",
+      "title": "New Contact Inquiry: @EVIL_FORMULA",
+      "description": "=cmd|’ /C calc’!A0 (+malicious@test.com) - Technology Transformation",
+      "type": "engagement",
+      "timestamp": "2026-10-16T12:19:53.570Z"
+    },
+    {
+      "id": "log_1792153193494_vn57",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Journey v_synth_1792153192128_99a",
+      "description": "Admin bitxhift@gmail.com viewed touchpoint journey for v_synth_1792153192128_99a.",
+      "type": "visitor_profile_access",
+      "timestamp": "2026-10-16T12:19:53.494Z"
+    },
+    {
+      "id": "log_1792153193465_p2xw",
+      "date": "16 OCT",
+      "title": "New Book a Call Request: Hyperion BioTech Labs",
+      "description": "Dr. Anita Roy (anita.roy@hyperionbio.com) requested session for Data Engineering & Cloud Transformation",
+      "type": "engagement",
+      "timestamp": "2026-10-16T12:19:53.465Z"
+    },
+    {
+      "id": "log_1792153193431_b084",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Journey v_synth_unconsented_1792153193356",
+      "description": "Admin bitxhift@gmail.com viewed touchpoint journey for v_synth_unconsented_1792153193356.",
+      "type": "visitor_profile_access",
+      "timestamp": "2026-10-16T12:19:53.431Z"
+    },
+    {
+      "id": "log_1792153193415_u8y4",
+      "date": "16 OCT",
+      "title": "New Contact Inquiry: Direct Inquirer",
+      "description": "Private Citizen (private.citizen@example.com) - Technology Transformation",
+      "type": "engagement",
+      "timestamp": "2026-10-16T12:19:53.415Z"
+    },
+    {
+      "id": "log_1792153193344_x00a",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Intelligence Dashboard",
+      "description": "Admin bitxhift@gmail.com inspected visitor intelligence telemetry list.",
+      "type": "visitor_admin_access",
+      "timestamp": "2026-10-16T12:19:53.344Z"
+    },
+    {
+      "id": "log_1792153193081_vpzg",
+      "date": "16 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from 127.0.0.1",
+      "type": "auth_login",
+      "timestamp": "2026-10-16T12:19:53.074Z"
+    },
+    {
+      "id": "log_1792152955723_s6bn",
+      "date": "16 OCT",
+      "title": "Exported Visitor Intelligence CSV",
+      "description": "Admin bitxhift@gmail.com generated and exported full visitor intelligence CSV.",
+      "type": "visitor_csv_export",
+      "timestamp": "2026-10-16T12:15:55.723Z"
+    },
+    {
+      "id": "log_1792152803877_q0ts",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Journey v_mvaw0m2q_6cdbpoc0",
+      "description": "Admin bitxhift@gmail.com viewed touchpoint journey for v_mvaw0m2q_6cdbpoc0.",
+      "type": "visitor_profile_access",
+      "timestamp": "2026-10-16T12:13:23.877Z"
+    },
+    {
+      "id": "log_1792152790705_zy9u",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Journey v_test_1792151374773_alpha",
+      "description": "Admin bitxhift@gmail.com viewed touchpoint journey for v_test_1792151374773_alpha.",
+      "type": "visitor_profile_access",
+      "timestamp": "2026-10-16T12:13:10.705Z"
+    },
+    {
+      "id": "log_1792152784007_737j",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Intelligence Dashboard",
+      "description": "Admin bitxhift@gmail.com inspected visitor intelligence telemetry list.",
+      "type": "visitor_admin_access",
+      "timestamp": "2026-10-16T12:13:04.007Z"
+    },
+    {
+      "id": "log_1792152783962_326y",
+      "date": "16 OCT",
+      "title": "Viewed Visitor Intelligence Dashboard",
+      "description": "Admin bitxhift@gmail.com inspected visitor intelligence telemetry list.",
+      "type": "visitor_admin_access",
+      "timestamp": "2026-10-16T12:13:03.961Z"
+    },
+    {
+      "id": "log_1792151375463_64r3",
+      "date": "16 OCT",
+      "title": "Purged Anonymous Visitors older than 90 days",
+      "description": "Purged 0 visitors and 2 sessions",
+      "type": "visitors_purge",
+      "timestamp": "2026-10-16T11:49:35.463Z"
+    },
+    {
+      "id": "log_1792151375394_xufc",
+      "date": "16 OCT",
+      "title": "New Book a Call Request: Vanguard Industrial Automation Ltd",
+      "description": "Suresh Kumar (suresh.kumar@vanguardauto.in) requested session for Artificial Intelligence & Machine Learning",
+      "type": "engagement",
+      "timestamp": "2026-10-16T11:49:35.394Z"
+    },
+    {
+      "id": "log_1792151375255_g8hp",
+      "date": "16 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from 127.0.0.1",
+      "type": "auth_login",
+      "timestamp": "2026-10-16T11:49:35.253Z"
+    },
+    {
+      "id": "log_1792150651227_nvgk",
+      "date": "16 OCT",
+      "title": "Deleted media file: \"it_blog_article.pdf\"",
+      "description": "Removed by Admin",
+      "type": "media_delete",
+      "timestamp": "2026-10-16T11:37:31.227Z"
+    },
+    {
+      "id": "log_1792150647462_6jnj",
+      "date": "16 OCT",
+      "title": "Deleted media file: \"it_blog_article.pdf\"",
+      "description": "Removed by Admin",
+      "type": "media_delete",
+      "timestamp": "2026-10-16T11:37:27.462Z"
+    },
+    {
+      "id": "log_1792150645537_vni6",
+      "date": "16 OCT",
+      "title": "Deleted media file: \"it_blog_article.pdf\"",
+      "description": "Removed by Admin",
+      "type": "media_delete",
+      "timestamp": "2026-10-16T11:37:25.537Z"
+    },
+    {
+      "id": "log_1792150643729_km5e",
+      "date": "16 OCT",
+      "title": "Deleted media file: \"it_blog_article.pdf\"",
+      "description": "Removed by Admin",
+      "type": "media_delete",
+      "timestamp": "2026-10-16T11:37:23.729Z"
+    },
+    {
+      "id": "log_1792150493083_uj85",
+      "date": "16 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-10-16T11:34:53.083Z"
+    },
+    {
+      "id": "log_1792150161961_4l52",
+      "date": "16 OCT",
+      "title": "New Book a Call Request: Vanguard Industrial Automation Ltd",
+      "description": "Suresh Kumar (suresh.kumar@vanguardauto.in) requested session for Artificial Intelligence & Machine Learning",
+      "type": "engagement",
+      "timestamp": "2026-10-16T11:29:21.961Z"
+    },
+    {
+      "id": "log_1792150161866_2yb5",
+      "date": "16 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from 127.0.0.1",
+      "type": "auth_login",
+      "timestamp": "2026-10-16T11:29:21.865Z"
+    },
+    {
+      "id": "log_1792150110427_fe8x",
+      "date": "16 OCT",
+      "title": "New Book a Call Request: Vanguard Industrial Automation Ltd",
+      "description": "Suresh Kumar (suresh.kumar@vanguardauto.in) requested session for Artificial Intelligence & Machine Learning",
+      "type": "engagement",
+      "timestamp": "2026-10-16T11:28:30.427Z"
+    },
+    {
+      "id": "log_1792150110311_57i0",
+      "date": "16 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from 127.0.0.1",
+      "type": "auth_login",
+      "timestamp": "2026-10-16T11:28:30.311Z"
+    },
+    {
+      "id": "log_1792150030750_ggf5",
+      "date": "16 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from 127.0.0.1",
+      "type": "auth_login",
+      "timestamp": "2026-10-16T11:27:10.749Z"
+    },
+    {
+      "id": "log_1792149255406_2tgn",
+      "date": "16 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-10-16T11:14:15.406Z"
+    },
+    {
+      "id": "log_1792149219983_3doj",
+      "date": "16 OCT",
+      "title": "Created post: \"Zero Downtime Telemetry Verification Test\"",
+      "description": "Status: draft by BitXhift SuperAdmin",
+      "type": "posts_create",
+      "timestamp": "2026-10-16T11:13:39.983Z"
+    },
+    {
+      "id": "log_1792149219913_7myw",
+      "date": "16 OCT",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from 127.0.0.1",
+      "type": "auth_login",
+      "timestamp": "2026-10-16T11:13:39.912Z"
+    },
     {
       "id": "log_1791971009678_l4ey",
       "date": "14 OCT",
@@ -1936,38 +2180,6 @@
       "description": "User \"SMRIKAAM Master Admin\" logged in from ::1",
       "type": "auth_login",
       "timestamp": "2026-08-27T10:34:21.023Z"
-    },
-    {
-      "id": "log_01",
-      "date": "27 AUG",
-      "title": "New Services flash report published",
-      "description": "Report \"Edge Telemetry & OPC-UA Ingestion Benchmark\" published by Admin.",
-      "type": "report_publish",
-      "timestamp": "2026-08-27T08:00:00.000Z"
-    },
-    {
-      "id": "log_02",
-      "date": "25 AUG",
-      "title": "Blog article published",
-      "description": "Article \"Deploying Deterministic LLM Agents in Regulated Enterprise Environments\" published.",
-      "type": "blog_publish",
-      "timestamp": "2026-08-25T09:15:00.000Z"
-    },
-    {
-      "id": "log_03",
-      "date": "22 AUG",
-      "title": "Data Lakehouse Migration Case Study added",
-      "description": "Enterprise database cutover case study published to public website.",
-      "type": "case_study_create",
-      "timestamp": "2026-08-22T14:30:00.000Z"
-    },
-    {
-      "id": "log_04",
-      "date": "20 AUG",
-      "title": "BitXhift IIoT Telemetry Accelerator updated",
-      "description": "Added Modbus and OPC-UA connection protocols specification.",
-      "type": "accelerator_update",
-      "timestamp": "2026-08-20T10:00:00.000Z"
     }
   ],
   "settings": {
@@ -2110,144 +2322,566 @@
   ],
   "engagements": [
     {
-      "id": "eng_1788430976410_56v67f",
-      "full_name": "Supabase Test User",
-      "company_name": "Test Enterprise Inc",
-      "email": "test.user@enterprise.example",
-      "phone": "+91 9876543210",
-      "job_title": "",
-      "requirement_type": "Enterprise Data Engineering",
-      "message": "Testing Supabase database flow",
-      "preferred_date": "",
-      "preferred_time": "",
-      "source": "Public Website",
-      "status": "NEW",
-      "priority": "MEDIUM",
-      "assigned_to": "",
-      "admin_notes": "",
-      "is_read": false,
-      "created_at": "2026-09-03T10:22:56.410Z",
-      "updated_at": "2026-09-03T10:22:56.410Z"
-    },
-    {
-      "id": "eng_1788427194618_v6wr54",
-      "full_name": "Sunita Narayanan",
-      "company_name": "Apex Healthcare Cloud",
-      "email": "sunita.n@apexhealth.io",
-      "phone": "+91 91234 56789",
-      "job_title": "Director of Platform Engineering",
-      "requirement_type": "Healthcare & Life Sciences",
-      "message": "Require HIPAA-compliant cloud migration & FHIR integration for 12 regional hospitals.",
-      "preferred_date": "2026-09-15",
-      "preferred_time": "02:00 PM - 04:00 PM",
-      "source": "Public Web Form",
-      "status": "QUALIFIED",
-      "priority": "URGENT",
-      "assigned_to": "Dr. Ananya Sharma — Cloud Architect Lead",
-      "admin_notes": "Verified HIPAA compliance requirements. Proposal deck sent.",
-      "is_read": true,
-      "created_at": "2026-09-03T09:19:54.618Z",
-      "updated_at": "2026-09-03T09:19:55.005Z"
-    },
-    {
-      "id": "eng_1788427169911_i8u8d2",
-      "full_name": "akil",
-      "company_name": "Apex",
-      "email": "bitxhift@gmail.com",
-      "phone": "6382950334",
+      "id": "eng_1792153193557_mf8hbh",
+      "full_name": "=cmd|’ /C calc’!A0",
+      "company_name": "@EVIL_FORMULA",
+      "email": "+malicious@test.com",
+      "phone": "-1234567890",
       "job_title": "",
       "requirement_type": "Technology Transformation",
-      "message": "bnm,",
+      "message": "Formula injection test",
       "preferred_date": "",
       "preferred_time": "",
-      "source": "Contact Page",
-      "status": "CONTACTED",
-      "priority": "MEDIUM",
-      "assigned_to": "",
-      "admin_notes": "",
-      "is_read": true,
-      "created_at": "2026-09-03T09:19:29.911Z",
-      "updated_at": "2026-09-03T09:39:03.027Z"
-    },
-    {
-      "id": "eng_1788426929084_x0gpvb",
-      "full_name": "Sunita Narayanan",
-      "company_name": "Apex Healthcare Cloud",
-      "email": "sunita.n@apexhealth.io",
-      "phone": "+91 91234 56789",
-      "job_title": "Director of Platform Engineering",
-      "requirement_type": "Healthcare & Life Sciences",
-      "message": "Require HIPAA-compliant cloud migration & FHIR integration for 12 regional hospitals.",
-      "preferred_date": "2026-09-15",
-      "preferred_time": "02:00 PM - 04:00 PM",
-      "source": "Public Web Form",
-      "status": "QUALIFIED",
-      "priority": "URGENT",
-      "assigned_to": "Dr. Ananya Sharma — Cloud Architect Lead",
-      "admin_notes": "Verified HIPAA compliance requirements. Proposal deck sent.",
-      "is_read": true,
-      "created_at": "2026-09-03T09:15:29.084Z",
-      "updated_at": "2026-09-03T09:15:29.859Z"
-    },
-    {
-      "id": "eng_1788426398160_mlc391",
-      "full_name": "Vikram Malhotra",
-      "company_name": "Titan Manufacturing Corp",
-      "email": "vikram.m@titanmfg.in",
-      "phone": "+91 98765 12345",
-      "job_title": "VP Operations",
-      "requirement_type": "Industrial IoT (IIoT)",
-      "message": "We operate 450 CNC machining centers in Hosur and need real-time edge telemetry and OEE tracking.",
-      "preferred_date": "2026-09-10",
-      "preferred_time": "11:00 AM - 01:00 PM",
-      "source": "E2E Test Script",
-      "status": "CONTACTED",
-      "priority": "HIGH",
-      "assigned_to": "Ramesh Kumar - Lead Solution Architect",
-      "admin_notes": "Initial discovery call scheduled for Sept 10th at 11:00 AM IST.",
-      "is_read": true,
-      "created_at": "2026-09-03T09:06:38.160Z",
-      "updated_at": "2026-09-03T09:06:38.258Z"
-    },
-    {
-      "id": "eng_1788426378299_ffy88x",
-      "full_name": "Vikram Malhotra",
-      "company_name": "Titan Manufacturing Corp",
-      "email": "vikram.m@titanmfg.in",
-      "phone": "+91 98765 12345",
-      "job_title": "VP Operations",
-      "requirement_type": "Industrial IoT (IIoT)",
-      "message": "We operate 450 CNC machining centers in Hosur and need real-time edge telemetry and OEE tracking.",
-      "preferred_date": "2026-09-10",
-      "preferred_time": "11:00 AM - 01:00 PM",
-      "source": "E2E Test Script",
+      "source": "Contact Form",
+      "visitor_id": "v_synth_formula_1792153193516",
       "status": "NEW",
       "priority": "MEDIUM",
       "assigned_to": "",
       "admin_notes": "",
       "is_read": false,
-      "created_at": "2026-09-03T09:06:18.299Z",
-      "updated_at": "2026-09-03T09:59:09.703Z"
+      "created_at": "2026-10-16T12:19:53.557Z",
+      "updated_at": "2026-10-16T12:19:53.557Z"
     },
     {
-      "id": "eng_1788426358688_3b4scd",
-      "full_name": "Vikram Malhotra",
-      "company_name": "Titan Manufacturing Corp",
-      "email": "vikram.m@titanmfg.in",
-      "phone": "+91 98765 12345",
-      "job_title": "VP Operations",
-      "requirement_type": "Industrial IoT (IIoT)",
-      "message": "We operate 450 CNC machining centers in Hosur and need real-time edge telemetry and OEE tracking.",
-      "preferred_date": "2026-09-10",
-      "preferred_time": "11:00 AM - 01:00 PM",
-      "source": "E2E Test Script",
-      "status": "CONTACTED",
+      "id": "eng_1792153193448_eshj50",
+      "full_name": "Dr. Anita Roy",
+      "company_name": "Hyperion BioTech Labs",
+      "email": "anita.roy@hyperionbio.com",
+      "phone": "+91 99887 76655",
+      "job_title": "Head of Computational Biology",
+      "requirement_type": "Data Engineering & Cloud Transformation",
+      "message": "Seeking secure pipeline deployment for genomic sequencing workloads.",
+      "preferred_date": "2026-11-15",
+      "preferred_time": "02:00 PM - 04:00 PM",
+      "source": "Book a Call Form",
+      "visitor_id": "v_synth_1792153192128_99a",
+      "status": "NEW",
       "priority": "MEDIUM",
       "assigned_to": "",
       "admin_notes": "",
-      "is_read": true,
-      "created_at": "2026-09-03T09:05:58.688Z",
-      "updated_at": "2026-09-03T09:59:00.643Z"
+      "is_read": false,
+      "created_at": "2026-10-16T12:19:53.448Z",
+      "updated_at": "2026-10-16T12:19:53.448Z"
+    },
+    {
+      "id": "eng_1792153193401_l2rd84",
+      "full_name": "Private Citizen",
+      "company_name": "Direct Inquirer",
+      "email": "private.citizen@example.com",
+      "phone": "",
+      "job_title": "",
+      "requirement_type": "Technology Transformation",
+      "message": "Please keep my telemetry separate and unlinked.",
+      "preferred_date": "",
+      "preferred_time": "",
+      "source": "Contact Form",
+      "visitor_id": "v_synth_unconsented_1792153193356",
+      "status": "NEW",
+      "priority": "MEDIUM",
+      "assigned_to": "",
+      "admin_notes": "",
+      "is_read": false,
+      "created_at": "2026-10-16T12:19:53.401Z",
+      "updated_at": "2026-10-16T12:19:53.401Z"
+    },
+    {
+      "id": "eng_1792151375385_bypfwg",
+      "full_name": "Suresh Kumar",
+      "company_name": "Vanguard Industrial Automation Ltd",
+      "email": "suresh.kumar@vanguardauto.in",
+      "phone": "+91 98765 43210",
+      "job_title": "VP of Technology",
+      "requirement_type": "Artificial Intelligence & Machine Learning",
+      "message": "Looking to evaluate industrial predictive maintenance with edge computer vision.",
+      "preferred_date": "2026-10-25",
+      "preferred_time": "10:00 AM - 12:00 PM",
+      "source": "Book a Call Form",
+      "visitor_id": "v_test_1792151374773_alpha",
+      "status": "NEW",
+      "priority": "MEDIUM",
+      "assigned_to": "",
+      "admin_notes": "",
+      "is_read": false,
+      "created_at": "2026-10-16T11:49:35.385Z",
+      "updated_at": "2026-10-16T11:49:35.385Z"
+    }
+  ],
+  "visitor_sessions": [
+    {
+      "id": "s_test_1792151374773_beta",
+      "visitor_id": "v_test_1792151374773_alpha",
+      "started_at": "2026-10-16T11:49:35.295Z",
+      "last_active_at": "2026-10-16T11:49:35.325Z",
+      "referrer": "https://www.google.com/search?q=smrikaam+enterprise+cloud",
+      "user_agent_category": "Desktop",
+      "pages_viewed": [
+        {
+          "path": "/services/cloud-engineering",
+          "title": "Cloud Engineering | SMRIKAAM",
+          "timestamp": "2026-10-16T11:49:35.295Z",
+          "duration": 45
+        },
+        {
+          "path": "/contact",
+          "title": "Contact SMRIKAAM Engineering",
+          "timestamp": "2026-10-16T11:49:35.325Z",
+          "duration": 120
+        }
+      ],
+      "total_duration_sec": 165,
+      "created_at": "2026-10-16T11:49:35.295Z"
+    },
+    {
+      "id": "s_mvaw4g47_9op4a4",
+      "visitor_id": "v_mvaw0m2q_6cdbpoc0",
+      "started_at": "2026-10-16T11:34:39.577Z",
+      "last_active_at": "2026-10-16T12:52:34.742Z",
+      "referrer": "localhost",
+      "user_agent_category": "Desktop",
+      "pages_viewed": [
+        {
+          "path": "/admin/login",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:34:39.577Z",
+          "duration": 4
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:34:53.160Z",
+          "duration": 12
+        },
+        {
+          "path": "/smrikaam-admin/visitors",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:35:11.682Z",
+          "duration": 3
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:35:30.144Z",
+          "duration": 18
+        },
+        {
+          "path": "/smrikaam-admin/blogs",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:35:30.959Z",
+          "duration": 12
+        },
+        {
+          "path": "/smrikaam-admin/book-a-call",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:36:26.883Z",
+          "duration": 59
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:37:15.878Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/media",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:37:19.157Z",
+          "duration": 16
+        },
+        {
+          "path": "/smrikaam-admin/book-a-call",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:38:41.416Z",
+          "duration": 1
+        },
+        {
+          "path": "/smrikaam-admin/drafts",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:38:42.718Z",
+          "duration": 1
+        },
+        {
+          "path": "/smrikaam-admin/blogs",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:38:44.294Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/book-a-call",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:38:46.395Z",
+          "duration": 6
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:39:54.753Z",
+          "duration": 36
+        },
+        {
+          "path": "/smrikaam-admin/visitors",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:41:42.134Z",
+          "duration": 5
+        },
+        {
+          "path": "/smrikaam-admin/settings",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:42:05.071Z",
+          "duration": 23
+        },
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:05.092Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/visitors",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:09.568Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/trash",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:12.029Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/published",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:13.983Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/drafts",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:17.441Z",
+          "duration": 11
+        },
+        {
+          "path": "/smrikaam-admin/locations",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:44.155Z",
+          "duration": 9
+        },
+        {
+          "path": "/smrikaam-admin/staffing",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:46.067Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/reports",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:47.878Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/case-studies",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:50.191Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/industries",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:51.306Z",
+          "duration": 1
+        },
+        {
+          "path": "/smrikaam-admin/accelerators",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:52.187Z",
+          "duration": 1
+        },
+        {
+          "path": "/smrikaam-admin/services",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:52.931Z",
+          "duration": 1
+        },
+        {
+          "path": "/smrikaam-admin/blogs",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:42:53.390Z",
+          "duration": 7
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:43:09.036Z",
+          "duration": 20
+        },
+        {
+          "path": "/smrikaam-admin/settings",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T11:51:55.729Z",
+          "duration": 3
+        },
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:51:55.758Z",
+          "duration": 0
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:51:58.644Z",
+          "duration": 14
+        },
+        {
+          "path": "/smrikaam-admin/book-a-call",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:52:44.195Z",
+          "duration": 1
+        },
+        {
+          "path": "/smrikaam-admin/visitors",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:52:45.807Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/blogs",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:52:48.407Z",
+          "duration": 3
+        },
+        {
+          "path": "/smrikaam-admin/services",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:52:50.139Z",
+          "duration": 2
+        },
+        {
+          "path": "/smrikaam-admin/accelerators",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:53:01.382Z",
+          "duration": 25
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T12:01:43.393Z",
+          "duration": 13
+        },
+        {
+          "path": "/smrikaam-admin/visitors",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T12:13:01.890Z",
+          "duration": 139
+        },
+        {
+          "path": "/smrikaam-admin/book-a-call",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T12:33:02.480Z",
+          "duration": 5
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T12:33:06.115Z",
+          "duration": 4
+        },
+        {
+          "path": "/smrikaam-admin/settings",
+          "title": "SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics",
+          "timestamp": "2026-10-16T12:33:12.389Z",
+          "duration": 6
+        },
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T12:33:12.495Z",
+          "duration": 0
+        },
+        {
+          "path": "/smrikaam-admin/dashboard",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T12:33:14.329Z",
+          "duration": 36
+        }
+      ],
+      "total_duration_sec": 517,
+      "created_at": "2026-10-16T11:34:39.577Z"
+    },
+    {
+      "id": "s_mvaw4448_9wmejh",
+      "visitor_id": "v_mvaw0m2q_6cdbpoc0",
+      "started_at": "2026-10-16T11:34:23.968Z",
+      "last_active_at": "2026-10-16T12:52:44.000Z",
+      "referrer": "localhost",
+      "user_agent_category": "Desktop",
+      "pages_viewed": [
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:34:23.968Z",
+          "duration": 9
+        },
+        {
+          "path": "/blog",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:35:42.024Z",
+          "duration": 12
+        },
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:38:53.999Z",
+          "duration": 39
+        },
+        {
+          "path": "/blog",
+          "title": "Blog | SMRIKAAM Technologies",
+          "timestamp": "2026-10-16T11:42:30.648Z",
+          "duration": 24
+        },
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T12:03:37.450Z",
+          "duration": 7
+        },
+        {
+          "path": "/blog",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T12:04:00.475Z",
+          "duration": 3
+        },
+        {
+          "path": "/careers",
+          "title": "Blog | SMRIKAAM Technologies",
+          "timestamp": "2026-10-16T12:04:03.063Z",
+          "duration": 3
+        },
+        {
+          "path": "/industries/manufacturing",
+          "title": "Careers | SMRIKAAM Technologies",
+          "timestamp": "2026-10-16T12:04:05.863Z",
+          "duration": 3
+        },
+        {
+          "path": "/blog",
+          "title": "Blog | SMRIKAAM Technologies",
+          "timestamp": "2026-10-16T12:04:07.989Z",
+          "duration": 2
+        },
+        {
+          "path": "/case-studies",
+          "title": "Blog | SMRIKAAM Technologies",
+          "timestamp": "2026-10-16T12:04:09.364Z",
+          "duration": 1
+        },
+        {
+          "path": "/blog",
+          "title": "Blog | SMRIKAAM Technologies",
+          "timestamp": "2026-10-16T12:04:14.438Z",
+          "duration": 37
+        },
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T12:23:35.571Z",
+          "duration": 23
+        }
+      ],
+      "total_duration_sec": 163,
+      "created_at": "2026-10-16T11:34:23.968Z"
+    },
+    {
+      "id": "s_mvaw3yvo_5fkc9h",
+      "visitor_id": "v_mvaw0m2q_6cdbpoc0",
+      "started_at": "2026-10-16T11:34:17.205Z",
+      "last_active_at": "2026-10-16T11:34:19.340Z",
+      "referrer": "",
+      "user_agent_category": "Desktop",
+      "pages_viewed": [
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:34:17.205Z",
+          "duration": 2
+        }
+      ],
+      "total_duration_sec": 2,
+      "created_at": "2026-10-16T11:34:17.205Z"
+    },
+    {
+      "id": "s_mvaw0m2q_w7l6ip",
+      "visitor_id": "v_mvaw0m2q_6cdbpoc0",
+      "started_at": "2026-10-16T11:31:40.677Z",
+      "last_active_at": "2026-10-16T11:31:49.241Z",
+      "referrer": "http://localhost:5173/",
+      "user_agent_category": "Desktop",
+      "pages_viewed": [
+        {
+          "path": "/",
+          "title": "SMRIKAAM | Enterprise Technology & Engineering",
+          "timestamp": "2026-10-16T11:31:40.677Z",
+          "duration": 2
+        }
+      ],
+      "total_duration_sec": 2,
+      "created_at": "2026-10-16T11:31:40.677Z"
+    }
+  ],
+  "visitors": [
+    {
+      "id": "v_test_1792151374773_alpha",
+      "anonymized_ip": "127.0.0.0",
+      "network_org": "Localhost / Internal Development",
+      "network_domain": "localhost",
+      "network_type": "Local Development Network",
+      "network_confidence": "Verified (Voluntary Submission)",
+      "country": "UNKNOWN",
+      "region": "",
+      "city": "",
+      "first_seen": "2026-10-16T11:49:35.295Z",
+      "last_seen": "2026-10-16T11:49:35.325Z",
+      "total_visits": 1,
+      "total_pageviews": 2,
+      "lead_status": "Contacted",
+      "admin_notes": "Reviewed journey: spent 120s on contact page after reading cloud engineering. High priority lead.",
+      "voluntary_name": "Suresh Kumar",
+      "voluntary_company": "Vanguard Industrial Automation Ltd",
+      "voluntary_email": "suresh.kumar@vanguardauto.in",
+      "voluntary_phone": "+91 98765 43210",
+      "voluntary_lead_id": "eng_1792151375385_bypfwg",
+      "is_opted_out": false,
+      "created_at": "2026-10-16T11:49:35.295Z",
+      "updated_at": "2026-10-16T11:49:35.413Z"
+    },
+    {
+      "id": "v_mvaw0m2q_6cdbpoc0",
+      "anonymized_ip": "::1::",
+      "network_org": "Localhost / Internal Development",
+      "network_domain": "localhost",
+      "network_type": "Local Development Network",
+      "network_confidence": "Verified (Local)",
+      "country": "UNKNOWN",
+      "region": "",
+      "city": "",
+      "first_seen": "2026-10-16T11:31:40.677Z",
+      "last_seen": "2026-10-16T12:52:44.000Z",
+      "total_visits": 4,
+      "total_pageviews": 372,
+      "lead_status": "New",
+      "admin_notes": "",
+      "voluntary_name": null,
+      "voluntary_company": null,
+      "voluntary_email": null,
+      "voluntary_phone": null,
+      "voluntary_lead_id": null,
+      "is_opted_out": false,
+      "created_at": "2026-10-16T11:31:40.677Z",
+      "updated_at": "2026-10-16T12:52:44.000Z",
+      "consent_status": "Consented",
+      "device_category": "Desktop",
+      "browser_category": "Chrome",
+      "referral_source": "localhost"
     }
   ]
 }
